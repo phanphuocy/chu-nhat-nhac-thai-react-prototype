@@ -1,0 +1,21 @@
+{
+  "sections": [
+    {
+      "id": "sc01",
+      "name": "Nghe Gì Hôm Nay",
+      "playlists": ["pp01", "pp02"]
+    }
+  ],
+  "playlists": [
+    {
+      "id": "pp01",
+      "name": "Tinh Yeu Tuoi 17 Cua Toi",
+      "dateCreated": "0124852414"
+    },
+    {
+      "id": "pp02",
+      "name": "Swag Cùng Chúng Bạn",
+      "dateCreated": "0129872414"
+    }
+  ]
+}
