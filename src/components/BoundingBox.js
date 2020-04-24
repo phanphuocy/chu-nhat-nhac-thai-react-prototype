@@ -1,9 +1,12 @@
 import React from "react";
+import PropTypes from "prop-types";
+
 import styled from "styled-components";
 
 const StyledBoundingBox = styled.div`
   width: 100%;
   margin: 0 auto;
+  max-width: ${(props) => `${props.maxwidth}px`};
 
   @media (min-width: 640px) {
     width: 640px;
@@ -22,8 +25,12 @@ const StyledBoundingBox = styled.div`
   }
 `;
 
-const BoundingBox = ({ children }) => (
-  <StyledBoundingBox>{children}</StyledBoundingBox>
+const BoundingBox = ({ children, maxwidth }) => (
+  <StyledBoundingBox maxwidth={maxwidth}>{children}</StyledBoundingBox>
 );
+
+BoundingBox.propTypes = {
+  maxwidth: PropTypes.number,
+};
 
 export default BoundingBox;

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import styled from "styled-components";
+import { useSpring, animated } from "react-spring";
+import GroupWithSlider from "./styled-components/GroupWithSlider";
 
 // Import React GA
 import ReactGa from "react-ga";
@@ -22,8 +23,30 @@ const PlaylistGroup = ({
 }) => {
   const [showPreview, setShowPreview] = useState(false);
   const [previewSongs, setPreviewSongs] = useState([]);
+  const [firstIndex, setFirstIndex] = useState(0);
+  const [reachEnd, setReachEnd] = useState(false);
+  const [reachStart, setReachStart] = useState(true);
 
   const { name, items } = group;
+
+  function increaseIndexHandler() {
+    if (firstIndex + columns + columns >= items.length) {
+      setFirstIndex(items.length - columns);
+      setReachEnd(true);
+    } else {
+      setFirstIndex(firstIndex + columns);
+    }
+    setReachStart(false);
+  }
+  function decreaseIndexHandler() {
+    if (firstIndex - columns < 0) {
+      setFirstIndex(0);
+      setReachStart(true);
+    } else {
+      setFirstIndex(firstIndex - columns);
+    }
+    setReachEnd(false);
+  }
 
   function onCardClickedHandler(songs) {
     ReactGa.event({
@@ -39,7 +62,6 @@ const PlaylistGroup = ({
     setShowPreview(false);
   }
 
-  var boxes = [];
   var columns = 2;
   if (matches.medium) {
     columns = 3;
@@ -55,129 +77,56 @@ const PlaylistGroup = ({
     setShowPreview(!showPreview);
   }
 
-  for (var i = 0; i < items.length; i++) {
-    boxes.push(
-      <PlaylistCard
-        columns={columns}
-        playlist={group.items[i]}
-        onCardClickedHandler={onCardClickedHandler}
-      />
-    );
-  }
+  const props = useSpring({
+    transform: `translateX(calc(-1 * ${firstIndex} * (100% - 1rem) / ${columns}))`,
+  });
+
   return (
-    <Container>
-      <Header disabled={items.length <= columns}>
-        <h3>{name}</h3>
+    <GroupWithSlider columns={columns} disabled={items.length <= columns}>
+      <div className="header">
+        <h3 className="groupName">{name}</h3>
         <div className="buttonGroup">
-          <Button>
-            <TiChevronLeft size={24} />
-          </Button>
-          <Button>
-            <TiChevronRight size={24} />
-          </Button>
+          <button
+            className="navButton"
+            disabled={items.length <= columns || reachStart === true}
+          >
+            <TiChevronLeft onClick={decreaseIndexHandler} size={24} />
+          </button>
+          <button
+            className="navButton"
+            disabled={items.length <= columns || reachEnd === true}
+          >
+            <TiChevronRight onClick={increaseIndexHandler} size={24} />
+          </button>
         </div>
-      </Header>
-      <Slider>{boxes}</Slider>
+      </div>
+      <div
+        className="sliderContainer"
+        style={{ height: `calc(100vw  / ${columns})` }}
+      >
+        <animated.div style={{ ...props }} className="slider">
+          {items.map((item, i) => (
+            <div
+              className="item"
+              style={{ left: `calc((100% - 1rem) * ${i / columns})` }}
+            >
+              <PlaylistCard
+                playlist={group.items[i]}
+                onCardClickedHandler={onCardClickedHandler}
+              />
+            </div>
+          ))}
+        </animated.div>
+      </div>
       {showPreview && uniqueShowPanel === group.id && (
         <PreviewPanel
           songs={previewSongs}
           onClosePreviewPanel={onClosePreviewPanel}
         />
       )}
-    </Container>
+    </GroupWithSlider>
   );
 };
-
-const Container = styled.div`
-  max-width: 1600px;
-  margin: 2rem auto 0rem;
-`;
-
-const Button = styled.button``;
-
-const Header = styled.div`
-  align-items: center;
-  margin-bottom: 1rem;
-  margin-left: 1rem;
-  display: flex;
-  justify-content: space-between;
-  .buttonGroup {
-    margin-right: 1rem;
-  }
-
-  button {
-    background-color: ${(props) =>
-      props.disabled ? "rgba(0, 0, 0, 0.1)" : "rgba(255, 255, 255, 0.1)"};
-    border-radius: 2rem;
-    border: none;
-    padding: 0.5rem;
-    margin-right: 8px;
-
-    svg {
-      color: ${(props) => (props.disabled ? "rgba(0, 0, 0, 0.1)" : "#ccc")};
-    }
-
-    &:last-child {
-      margin-right: 0rem;
-    }
-
-    &:hover,
-    &:active {
-      background-color: ${(props) =>
-        !props.disabled && "rgba(255, 255, 255, 0.3)"};
-    }
-  }
-
-  h3 {
-    font-size: 2rem;
-  }
-`;
-
-const Slider = styled.div`
-  margin-left: 1rem;
-`;
-
-const Box = styled.div`
-  /* border: 1px dotted gray; */
-  display: inline-block;
-  width: calc(100% / ${(props) => props.columns});
-  padding-bottom: calc(100% / ${(props) => props.columns});
-  position: relative;
-
-  .wrapper {
-    position: absolute;
-    overflow: hidden;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding-bottom: 1rem;
-    padding-right: 1rem;
-  }
-`;
-
-const MockImage = styled.a`
-  width: 100%;
-  height: 100%;
-  background-color: gray;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  /* Shadow */
-  -webkit-box-shadow: 0px 10px 8px -6px rgba(0, 0, 0, 0.06);
-  -moz-box-shadow: 0px 10px 8px -6px rgba(0, 0, 0, 0.06);
-  box-shadow: 0px 10px 8px -6px rgba(0, 0, 0, 0.15);
-  transition: all 0.2s ease-in-out;
-
-  &:hover {
-    box-shadow: 0px 10px 8px -6px rgba(0, 0, 0, 0.06);
-    transform: scale(0.98);
-  }
-
-  p {
-    text-align: center;
-  }
-`;
 
 function mapStateToProps(state, ownProps) {
   const { id } = ownProps;

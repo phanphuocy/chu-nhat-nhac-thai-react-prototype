@@ -10,16 +10,21 @@
     "@testing-library/user-event": "^7.1.2",
     "contentful": "^7.14.2",
     "dotenv": "^8.2.0",
+    "lodash.orderby": "^4.6.0",
+    "lodash.sortby": "^4.7.0",
     "normalizr": "^3.6.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-ga": "^2.7.0",
     "react-icons": "^3.9.0",
+    "react-markdown": "^4.3.1",
     "react-media": "^1.10.0",
     "react-player": "^1.15.3",
     "react-redux": "^7.2.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.1",
+    "react-share": "^4.1.0",
+    "react-spring": "^8.0.27",
     "redux": "^4.0.5",
     "redux-devtools-extension": "^2.13.8",
     "redux-thunk": "^2.3.0",
@@ -54,6 +59,5 @@
     "@babel/core": "^7.9.0",
     "@storybook/react": "^5.3.18",
     "babel-loader": "^8.1.0"
-  },
-  "proxy": "http://localhost:4000"
+  }
 }

@@ -13,6 +13,7 @@ const initialState = {
   artistGroupsAllIds: null,
   songs: null,
   loading: false,
+  loaded: false,
   error: null,
 };
 
@@ -23,6 +24,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         loading: false,
+        loaded: true,
         playlistGroups: action.payload.playlistGroups,
         playlistGroupsAllIds: action.payload.playlistGroupsAllIds,
         playlists: action.payload.playlists,

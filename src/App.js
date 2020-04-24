@@ -10,12 +10,13 @@ import { getAlLEntries } from "./actions/dataActions";
 
 // Import pages
 import HomePage from "./pages/homePage";
+import ArtistSinglePage from "./pages/artistSinglePage";
 
 // Import custom components
 import PlayerPage from "./pages/playerPage";
 import Header from "./components/Header";
 
-function App({ loading, playlists, getAlLEntries }) {
+function App({ loading, loaded, playlists, getAlLEntries }) {
   useEffect(() => {
     getAlLEntries();
     ReactGa.initialize("UA-158673998-2");
@@ -24,17 +25,22 @@ function App({ loading, playlists, getAlLEntries }) {
     ReactGa.pageview(window.location.pathname + window.location.search);
   }, []);
 
+  if (loading === true || loaded === false) {
+    return <p>Loading</p>;
+  }
+
   return (
     <div className="App">
       <Router>
         <Header />
         <Switch>
-          <Route path="/player">
+          <Route path="/p">
             <PlayerPage />
           </Route>
           <Route path="/playlists">
             <p>Playlists</p>
           </Route>
+          <Route path="/artists/:id" component={ArtistSinglePage} />
           <Route path="/">
             <HomePage />
           </Route>
@@ -47,6 +53,7 @@ function App({ loading, playlists, getAlLEntries }) {
 function mapStateToProps(state) {
   return {
     playlists: state.data.playlists,
+    loaded: state.data.loaded,
     loading: state.data.loading,
   };
 }

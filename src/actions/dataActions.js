@@ -32,9 +32,7 @@ export const getAlLEntries = () => async (dispatch) => {
             ...item.fields,
             id: item.sys.id,
             type: "playlist",
-            songs: item.fields.songs.map((song) => ({
-              titleEn: song.fields.titleEn,
-            })),
+            songIds: item.fields.songs.map((each) => each.fields.slug),
             cover: {
               title: item.fields.cover.fields.title,
               ...item.fields.cover.fields.file,
@@ -42,7 +40,7 @@ export const getAlLEntries = () => async (dispatch) => {
           };
           break;
         case "songs":
-          songs[slugify(item.fields.titleEn)] = {
+          songs[item.fields.slug] = {
             id: item.sys.id,
             ...item.fields,
           };
@@ -55,10 +53,21 @@ export const getAlLEntries = () => async (dispatch) => {
           artistGroupsAllIds.push(item.fields.slug);
           break;
         case "artists":
-          artists[slugify(item.fields.name)] = {
+          artists[item.fields.slug] = {
             id: item.sys.id,
             type: "artist",
-            ...item.fields,
+            name: item.fields.name,
+            avatar: item.fields.avatar.fields.file,
+            slug: item.fields.slug,
+            songs: item.fields.songs.map((each) => ({
+              releaseYear: each.fields.releaseYear,
+              playtime: 120,
+              slug: each.fields.slug,
+            })),
+            members: item.fields.members,
+            biography: item.fields.biography,
+            isBand: item.fields.isBand,
+            songIds: item.fields.songs.map((each) => each.fields.slug),
           };
           break;
         default:

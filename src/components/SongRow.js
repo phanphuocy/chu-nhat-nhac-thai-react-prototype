@@ -11,12 +11,12 @@ const StyledSongRow = styled.li`
   display: inline-grid;
   grid-template-columns: 140px 1fr 2rem;
   grid-template-areas:
-    "thumbnail title playtime"
+    "thumbnail title  title"
     "thumbnail artist playtime";
 
   @media (min-width: 768px) {
     grid-template-columns: 140px 1fr 1fr 40px;
-    grid-template-areas: "thumbnail title artist playtime";
+    grid-template-areas: "thumbnail title artist  playtime";
   }
 
   .thumbnail {
@@ -28,9 +28,11 @@ const StyledSongRow = styled.li`
   }
   .artist {
     grid-area: artist;
+    align-self: center;
   }
   .playtime {
     grid-area: playtime;
+    align-self: center;
   }
 
   .artistBadge {
@@ -62,6 +64,7 @@ const StyledSongRow = styled.li`
   }
 
   .playButton {
+    grid-area: playbutton;
     margin-left: 1rem;
     padding: 0.5rem;
     background: none;
@@ -89,7 +92,7 @@ const SongRow = ({ song, onSongRowPlayButtonClicked }) => {
         width="120"
       />
       <span className="title">
-        {song.fields.titleEn}{" "}
+        {song.fields.titleEn}
         <button
           className="playButton"
           onClick={() => onSongRowPlayButtonClicked(song)}
@@ -97,12 +100,7 @@ const SongRow = ({ song, onSongRowPlayButtonClicked }) => {
           <MdPlayArrow size={32} />
         </button>
       </span>
-      <span className="artist">
-        <div className="artistBadge">
-          {/* <img src={song.fields.artists[0].fields.avatar.fields.file.url} /> */}
-          <p>{song.fields.artists[0].fields.name}</p>
-        </div>
-      </span>
+      <span className="artist">{song.fields.artists[0].fields.name}</span>
       <span className="playtime">3:12</span>
     </StyledSongRow>
   );

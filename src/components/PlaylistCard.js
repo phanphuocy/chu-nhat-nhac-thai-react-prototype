@@ -12,8 +12,7 @@ import { registerQueueSongs, setCurrentSong } from "../actions/playerAction";
 const StyledPlaylistCard = styled.div`
   display: inline-block;
   position: relative;
-  width: calc(100% / ${(props) => props.columns});
-  /* transition: all 0.2s ease-in-out; */
+  width: 100%;
 
   img {
     width: 100%;
@@ -26,8 +25,8 @@ const StyledPlaylistCard = styled.div`
     top: 0;
     left: 0;
     text-align: center;
-    width: calc(100% - 1rem);
-    height: calc(100% - 1rem);
+    width: 100%;
+    height: 100%;
 
     button {
       padding: 1rem;
@@ -60,15 +59,14 @@ const StyledPlaylistCard = styled.div`
 `;
 
 const PlaylistCard = ({
-  columns,
   playlist,
   onCardClickedHandler,
   registerQueueSongs,
   setCurrentSong,
 }) => {
   return (
-    <StyledPlaylistCard columns={columns}>
-      <RatioBoundingBox style={{ paddingRight: "1rem", paddingBottom: "1rem" }}>
+    <StyledPlaylistCard>
+      <RatioBoundingBox>
         {/* <p>{playlist.fields.name}</p> */}
         <a>
           <img src={playlist.fields.cover.fields.file.url} />
