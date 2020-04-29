@@ -13,6 +13,9 @@ import { getAlLEntries } from "./actions/dataActions";
 // Import pages
 import HomePage from "./pages/homePage";
 import ArtistSinglePage from "./pages/artistSinglePage";
+import PlaylistPage from "./pages/playlistsPage";
+import ArtistPage from "./pages/artistsPage";
+import LoaderScreen from "./pages/loader";
 
 // Import custom components
 import PlayerPage from "./pages/playerPage";
@@ -28,7 +31,7 @@ function App({ loading, loaded, playlists, getAlLEntries }) {
   }, []);
 
   if (loading === true || loaded === false) {
-    return <p>Loading</p>;
+    return <LoaderScreen />;
   }
 
   return (
@@ -41,9 +44,10 @@ function App({ loading, loaded, playlists, getAlLEntries }) {
               <PlayerPage />
             </Route>
             <Route path="/playlists">
-              <p>Playlists</p>
+              <PlaylistPage />
             </Route>
             <Route path="/artists/:id" component={ArtistSinglePage} />
+            <Route path="/artists" component={ArtistPage} />
             <Route path="/">
               <HomePage />
             </Route>

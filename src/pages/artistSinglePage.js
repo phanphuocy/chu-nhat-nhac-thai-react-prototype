@@ -16,7 +16,7 @@ import { connect } from "react-redux";
 // Import custom components
 import BoundingBox from "../components/BoundingBox";
 import ArtistInfo from "../components/ArtistInfo";
-import NewSongRow from "../components/NewSongRow";
+import ArtistSongRow from "../components/ArtistSongRow";
 
 const FilterGroup = styled.div`
   width: 100%;
@@ -84,28 +84,28 @@ const TabGroup = styled.div`
   }
 `;
 
-const ArtistSinglePage = (artist) => {
+const ArtistSinglePage = ({ artist, songs }) => {
   let history = useHistory();
 
-  if (!artist.artist) {
+  console.log(artist);
+  console.log("songs", songs);
+
+  if (!artist) {
     history.push("/404");
   }
 
-  const [slugs, setSlugs] = useState(artist.artist.songIds);
+  const [sortedSongs, setSortedSongs] = useState(songs);
   const [choseAttr, setAttr] = useState("slug");
 
   function sortButtonHandler(attr, by) {
-    var newSongs = orderBy(artist.artist.songs, attr, by);
-    var newIds = newSongs.map((each) => each.slug);
-    setSlugs(newIds);
+    var newSongs = orderBy(songs, attr, by);
+    setSortedSongs(newSongs);
     setAttr(attr);
   }
 
-  var test = orderBy(artist.artist.songs, "releaseYear");
-
   return (
     <BoundingBox maxwidth={1024}>
-      <ArtistInfo artist={artist.artist} />
+      <ArtistInfo artist={artist} />
 
       <TabGroup>
         <button className={"active"}>
@@ -123,11 +123,18 @@ const ArtistSinglePage = (artist) => {
         </div>
         <div className="buttonGroup">
           <FilterButton
-            onClick={() => sortButtonHandler("slug")}
+            onClick={() => sortButtonHandler("titleEn")}
             active={choseAttr === "slug"}
           >
             <RiCheckboxBlankCircleLine size={24} />
             Theo Tên
+          </FilterButton>
+          <FilterButton
+            onClick={() => sortButtonHandler("stars", "desc")}
+            active={choseAttr === "stars"}
+          >
+            <RiCheckboxBlankCircleLine size={24} />
+            Theo Sao
           </FilterButton>
           <FilterButton
             onClick={() => sortButtonHandler("releaseYear", "desc")}
@@ -137,32 +144,41 @@ const ArtistSinglePage = (artist) => {
             Theo Năm Phát Hành
           </FilterButton>
           <FilterButton
-            onClick={() => sortButtonHandler("playtime")}
-            active={choseAttr === "playtime"}
+            onClick={() => sortButtonHandler("duration")}
+            active={choseAttr === "duration"}
           >
             <RiCheckboxBlankCircleLine size={24} />
             Theo Thời Gian
           </FilterButton>
         </div>
       </FilterGroup>
-      {slugs.map((each) => (
-        <NewSongRow slug={each} />
+
+      {sortedSongs.map((song) => (
+        <ArtistSongRow key={song.slug} song={song} />
       ))}
       <div className="dummyheight" style={{ height: "20rem" }}></div>
     </BoundingBox>
   );
 };
 
-function mapStateToPageProps(state, ownProps) {
-  console.log(ownProps.match.params.id);
+function getArtistsSongs(data, id) {
+  let songs = [];
+  data.artists.byIds[id].songs.forEach((songId) => {
+    if (data.songs.allIds.indexOf(songId) !== -1) {
+      songs.push(data.songs.byIds[songId]);
+      console.log(songId);
+    }
+  });
+  return songs;
+}
+
+function mapStateToPageProps({ data }, ownProps) {
   const id = ownProps.match.params.id;
-  if (state.data.artists === null) {
-    return {};
-  } else {
-    return {
-      artist: state.data.artists[ownProps.match.params.id],
-    };
-  }
+
+  return {
+    artist: data.artists.byIds[id],
+    songs: getArtistsSongs(data, id),
+  };
 }
 
 export default connect(mapStateToPageProps)(ArtistSinglePage);

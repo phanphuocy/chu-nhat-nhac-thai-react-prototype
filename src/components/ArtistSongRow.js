@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import { connect } from "react-redux";
 import { RiStarLine } from "react-icons/ri";
 import convertLargeNumber from "../utils/convertLargeNumber";
 import convertToDuration from "../utils/covertToDuration";
@@ -8,7 +7,7 @@ import convertToDuration from "../utils/covertToDuration";
 const StyledNewSongRow = styled.div`
   width: 100%;
   padding: 0.5rem 1rem;
-  background-color: rgba(255,255,255,3%);
+  background-color: rgba(255, 255, 255, 3%);
   display: inline-grid;
   grid-template-columns: 140px 2fr 1fr 1fr 2rem;
   grid-template-areas: "thumbnail title stars releaseYear playtime";
@@ -46,10 +45,7 @@ const StyledNewSongRow = styled.div`
   }
 `;
 
-const NewSongRow = ({ slug, song }) => {
-  if (song === null) {
-    return <p>Loading...</p>;
-  }
+const ArtistSongRow = ({ song }) => {
   return (
     <StyledNewSongRow>
       <img
@@ -68,17 +64,4 @@ const NewSongRow = ({ slug, song }) => {
   );
 };
 
-function mapStateToProps(state, ownProps) {
-  const { slug } = ownProps;
-  if (state.data.songs === null) {
-    return {
-      song: null,
-    };
-  } else {
-    return {
-      song: state.data.songs[slug],
-    };
-  }
-}
-
-export default connect(mapStateToProps)(NewSongRow);
+export default ArtistSongRow;

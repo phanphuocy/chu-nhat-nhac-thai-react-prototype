@@ -13,57 +13,55 @@ export const getAlLEntries = () => async (dispatch) => {
 
     const res = await Client.getEntries();
 
-    var playlistGroups = {},
-      playlists = {},
-      songs = {},
-      artistGroups = {},
-      artists = {};
-    var playlistGroupsAllIds = [],
-      artistGroupsAllIds = [];
+    var playlistGroups = { byIds: {}, allIds: [] },
+      playlists = { byIds: {}, allIds: [] },
+      songs = { byIds: {}, allIds: [] },
+      artistGroups = { byIds: {}, allIds: [] },
+      artists = { byIds: {}, allIds: [] };
 
     function filter(item) {
       switch (item.sys.contentType.sys.id) {
         case "playlistGroup":
-          playlistGroups[item.fields.slug] = {
+          playlistGroups.byIds[item.fields.slug] = {
             ...item.fields,
-            id: item.sys.id,
+            items: item.fields.items.map((item) => item.fields.slug),
           };
-          playlistGroupsAllIds.push(item.fields.slug);
+          playlistGroups.allIds.push(item.fields.slug);
           break;
         case "playlists":
-          playlists[slugify(item.fields.name)] = {
+          playlists.byIds[item.fields.slug] = {
             ...item.fields,
-            id: item.sys.id,
-            type: "playlist",
-            songIds: item.fields.songs.map((each) => each.fields.slug),
+            songs: item.fields.songs.map((song) => song.fields.slug),
             cover: {
               title: item.fields.cover.fields.title,
               ...item.fields.cover.fields.file,
             },
           };
+          playlists.allIds.push(item.fields.slug);
           break;
         case "songs":
-          songs[item.fields.slug] = { ...item.fields, id: item.sys.id };
-          break;
-        case "artistGroup":
-          artistGroups[item.fields.slug] = {
+          songs.byIds[item.fields.slug] = {
             ...item.fields,
             id: item.sys.id,
+            artists: item.fields.artists.map((artist) => artist.fields.slug),
           };
-          artistGroupsAllIds.push(item.fields.slug);
+          songs.allIds.push(item.fields.slug);
+          break;
+        case "artistGroup":
+          artistGroups.byIds[item.fields.slug] = {
+            ...item.fields,
+            items: item.fields.items.map((item) => item.fields.slug),
+          };
+          artistGroups.allIds.push(item.fields.slug);
           break;
         case "artists":
-          artists[item.fields.slug] = {
-            id: item.sys.id,
-            type: "artist",
-            name: item.fields.name,
+          artists.byIds[item.fields.slug] = {
+            ...item.fields,
             avatar: item.fields.avatar.fields.file,
-            slug: item.fields.slug,
-            members: item.fields.members,
-            biography: item.fields.biography,
-            isBand: item.fields.isBand,
-            songIds: item.fields.songs.map((each) => each.fields.slug),
+            // cover: item.fields.coverImage.fields.file,
+            songs: item.fields.songs.map((each) => each.fields.slug),
           };
+          artists.allIds.push(item.fields.slug);
           break;
         default:
           return;
@@ -77,12 +75,10 @@ export const getAlLEntries = () => async (dispatch) => {
     dispatch({
       type: GET_ALL_ENTRIES,
       payload: {
-        playlistGroupsAllIds,
         playlistGroups,
         playlists,
         songs,
         artistGroups,
-        artistGroupsAllIds,
         artists,
       },
     });

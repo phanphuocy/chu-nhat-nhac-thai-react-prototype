@@ -52,7 +52,7 @@ const ArtistCard = ({ artist }) => {
         </RatioBoundingBox>
         <div className="info">
           <h3>{artist.name}</h3>
-          <p>{`${artist.songIds.length} bài hát`}</p>
+          <p>{`${artist.songs.length} bài hát`}</p>
         </div>
       </StyledArtistCard>
     </Link>
@@ -63,15 +63,10 @@ ArtistCard.propTypes = {
   columns: PropTypes.number.isRequired,
 };
 
-function mapStateToProps(state, ownProps) {
-  const slug = ownProps.slug;
-  if (state.data.loaded === false) {
-    return {};
-  } else {
-    return {
-      artist: state.data.artists[slug],
-    };
-  }
+function mapStateToProps({ data }, { id }) {
+  return {
+    artist: data.artists.byIds[id],
+  };
 }
 
 export default connect(mapStateToProps, { registerQueueSongs, setCurrentSong })(

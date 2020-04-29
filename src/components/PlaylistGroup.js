@@ -17,6 +17,7 @@ import PlaylistCard from "./PlaylistCard";
 
 const PlaylistGroup = ({
   matches,
+  columns,
   group,
   uniqueShowPanel,
   onRegisterUniquePanel,
@@ -62,17 +63,6 @@ const PlaylistGroup = ({
     setShowPreview(false);
   }
 
-  var columns = 2;
-  if (matches.medium) {
-    columns = 3;
-  }
-  if (matches.large) {
-    columns = 4;
-  }
-  if (matches.extraLarge) {
-    columns = 5;
-  }
-
   function setShowPreviewHandler() {
     setShowPreview(!showPreview);
   }
@@ -111,7 +101,7 @@ const PlaylistGroup = ({
               style={{ left: `calc((100% - 1rem) * ${i / columns})` }}
             >
               <PlaylistCard
-                playlist={group.items[i]}
+                id={group.items[i]}
                 onCardClickedHandler={onCardClickedHandler}
               />
             </div>
@@ -128,10 +118,10 @@ const PlaylistGroup = ({
   );
 };
 
-function mapStateToProps(state, ownProps) {
+function mapStateToProps({ data }, ownProps) {
   const { id } = ownProps;
   return {
-    group: state.data.playlistGroups[id],
+    group: data.playlistGroups.byIds[id],
   };
 }
 

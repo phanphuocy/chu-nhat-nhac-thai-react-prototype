@@ -9,22 +9,14 @@ import PlaylistGroup from "../components/PlaylistGroup";
 import ArtistGroup from "../components/ArtistGroup";
 // import Group from "../components/Group";
 
-const HomePage = ({
-  playlistGroupsAllIds,
-  artistGroupsAllIds,
-  dataIsLoading,
-}) => {
+const HomePage = ({ dataIsLoading }) => {
   const [uniqueShowPanel, setUniqueShowPanel] = useState(null);
 
   function onRegisterUniquePanel(name) {
     setUniqueShowPanel(name);
   }
 
-  if (
-    dataIsLoading ||
-    playlistGroupsAllIds === null ||
-    artistGroupsAllIds === null
-  ) {
+  if (dataIsLoading) {
     return <p>Loading</p>;
   }
 
@@ -40,7 +32,7 @@ const HomePage = ({
       >
         {(matches) => (
           <Fragment>
-            {playlistGroupsAllIds.map((each) => (
+            {/* {playlistGroupsAllIds.map((each) => (
               <PlaylistGroup
                 key={each}
                 matches={matches}
@@ -57,7 +49,7 @@ const HomePage = ({
                 uniqueShowPanel={uniqueShowPanel}
                 onRegisterUniquePanel={onRegisterUniquePanel}
               />
-            ))}
+            ))} */}
             {/* <Group
               matches={matches}
               group={playlistGroups["group-1"]}
@@ -77,8 +69,6 @@ const HomePage = ({
 };
 function mapStateToPageProps(state) {
   return {
-    playlistGroupsAllIds: state.data.playlistGroupsAllIds,
-    artistGroupsAllIds: state.data.artistGroupsAllIds,
     dataIsLoading: state.data.loading,
   };
 }

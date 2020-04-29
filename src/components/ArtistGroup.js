@@ -14,19 +14,8 @@ import { connect } from "react-redux";
 // Import custom components
 import ArtistCard from "./ArtistCard";
 
-const ArtistGroup = ({ matches, group }) => {
+const ArtistGroup = ({ columns, group }) => {
   const { name, items } = group;
-
-  var columns = 2;
-  if (matches.medium) {
-    columns = 4;
-  }
-  if (matches.large) {
-    columns = 5;
-  }
-  if (matches.extraLarge) {
-    columns = 7;
-  }
 
   // Creating animation
   const [firstIndex, setFirstIndex] = useState(0);
@@ -88,7 +77,7 @@ const ArtistGroup = ({ matches, group }) => {
               className="item"
               style={{ left: `calc((100% - 1rem) * ${i / columns})` }}
             >
-              <ArtistCard slug={items[i].fields.slug} />
+              <ArtistCard id={items[i]} />
             </div>
           ))}
         </animated.div>
@@ -97,10 +86,9 @@ const ArtistGroup = ({ matches, group }) => {
   );
 };
 
-function mapStateToProps(state, ownProps) {
-  const { id } = ownProps;
+function mapStateToProps({ data }, { id }) {
   return {
-    group: state.data.artistGroups[id],
+    group: data.artistGroups.byIds[id],
   };
 }
 

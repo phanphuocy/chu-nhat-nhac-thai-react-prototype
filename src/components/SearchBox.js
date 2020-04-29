@@ -16,8 +16,7 @@ const StyledContainer = styled.div`
 const StyledSearchBox = styled.form`
   display: none;
   height: 2rem;
-  position:relative;
-
+  position: relative;
 
   @media (min-width: 768px) {
     display: flex;
@@ -36,7 +35,6 @@ const StyledSearchBox = styled.form`
     color: white;
   }
 
-
   #clearButton {
     display: ${(props) => (props.clearButtonShow ? "block" : "none")};
     position: absolute;
@@ -45,8 +43,6 @@ const StyledSearchBox = styled.form`
     border: none;
     color: white;
   }
-
- 
 `;
 
 const NoResult = styled.div`

@@ -67,19 +67,18 @@ const PlaylistCard = ({
   return (
     <StyledPlaylistCard>
       <RatioBoundingBox>
-        {/* <p>{playlist.fields.name}</p> */}
         <a>
-          <img src={playlist.fields.cover.fields.file.url} />
+          <img src={playlist.cover.url} />
         </a>
 
         <div className="mask">
-          <button onClick={() => onCardClickedHandler(playlist.fields.songs)}>
+          <button onClick={() => onCardClickedHandler(playlist.songs)}>
             <TiEye size={32} />
           </button>
           <button
             onClick={() => {
-              setCurrentSong(playlist.fields.songs[0]);
-              registerQueueSongs(playlist.fields.songs);
+              setCurrentSong(playlist.songs[0]);
+              registerQueueSongs(playlist.songs);
             }}
           >
             <MdPlayArrow size={32} />
@@ -94,6 +93,13 @@ PlaylistCard.propTypes = {
   columns: PropTypes.number.isRequired,
 };
 
-export default connect(null, { registerQueueSongs, setCurrentSong })(
-  PlaylistCard
-);
+function mapStateToProps({ data }, { id }) {
+  return {
+    playlist: data.playlists.byIds[id],
+  };
+}
+
+export default connect(mapStateToProps, {
+  registerQueueSongs,
+  setCurrentSong,
+})(PlaylistCard);

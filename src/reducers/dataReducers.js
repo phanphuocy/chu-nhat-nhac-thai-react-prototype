@@ -8,10 +8,8 @@ import {
 
 const initialState = {
   playlistGroups: null,
-  playlistGroupsAllIds: null,
   playlists: null,
   artists: null,
-  artistGroupsAllIds: null,
   songs: null,
   loading: false,
   loaded: false,
@@ -28,11 +26,9 @@ export default (state = initialState, action) => {
         loading: false,
         loaded: true,
         playlistGroups: action.payload.playlistGroups,
-        playlistGroupsAllIds: action.payload.playlistGroupsAllIds,
         playlists: action.payload.playlists,
         songs: action.payload.songs,
         artistGroups: action.payload.artistGroups,
-        artistGroupsAllIds: action.payload.artistGroupsAllIds,
         artists: action.payload.artists,
       };
     case SET_DATA_LOADING:
