@@ -37,7 +37,7 @@ function App({ loading, loaded, playlists, getAlLEntries }) {
         <Router>
           <Header />
           <Switch>
-            <Route path="/p">
+            <Route path="/p/:songId">
               <PlayerPage />
             </Route>
             <Route path="/playlists">

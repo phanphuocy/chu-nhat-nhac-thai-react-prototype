@@ -3,11 +3,12 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 import convertToDuration from "../utils/covertToDuration";
 import { MdPlayArrow } from "react-icons/md";
+import { useHistory } from "react-router-dom";
 
 const StyledSongRow = styled.li`
   width: 100%;
   padding: 0.5rem 1rem;
-  background-color: #232527;
+  background-color: ${(props) => props.theme.colors.background};
   display: inline-grid;
   grid-template-columns: 140px 1fr 2rem;
   grid-template-areas:
@@ -53,11 +54,11 @@ const StyledSongRow = styled.li`
   }
 
   &:nth-child(odd) {
-    background-color: #252729;
+    background-color: #161616;
   }
 
   &:hover {
-    background-color: #232527;
+    background-color: #1e1e1e;
     span {
       color: white;
     }
@@ -84,6 +85,10 @@ const StyledSongRow = styled.li`
 `;
 
 const SongRow = ({ song, onSongRowPlayButtonClicked }) => {
+  let history = useHistory();
+  function playButtonHandler(url) {
+    history.push(`/p/${url}`);
+  }
   return (
     <StyledSongRow>
       <img
@@ -95,7 +100,7 @@ const SongRow = ({ song, onSongRowPlayButtonClicked }) => {
         {song.fields.titleEn}
         <button
           className="playButton"
-          onClick={() => onSongRowPlayButtonClicked(song)}
+          onClick={() => playButtonHandler(song.fields.slug)}
         >
           <MdPlayArrow size={32} />
         </button>

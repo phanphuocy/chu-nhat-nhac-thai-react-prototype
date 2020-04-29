@@ -72,7 +72,6 @@ export const getAlLEntries = () => async (dispatch) => {
 
     res.items.forEach((item) => {
       filter(item);
-      console.log(item.sys.contentType.sys.id, item.fields);
     });
 
     dispatch({
