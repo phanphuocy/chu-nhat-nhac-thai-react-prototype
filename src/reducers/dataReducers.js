@@ -3,6 +3,7 @@ import {
   GET_ALL_ENTRIES,
   SET_DATA_LOADING,
   SET_DATA_ERROR,
+  SEARCH_ENTRIES,
 } from "../actions/types";
 
 const initialState = {
@@ -15,6 +16,7 @@ const initialState = {
   loading: false,
   loaded: false,
   error: null,
+  searchResults: null,
 };
 
 export default (state = initialState, action) => {
@@ -46,6 +48,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         error: action.payload,
+      };
+    case SEARCH_ENTRIES:
+      return {
+        ...state,
+        searchResults: action.payload,
       };
     default:
       return state;

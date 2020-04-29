@@ -1,5 +1,7 @@
 import React, { useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import darktheme from "./themes/darktheme";
+import { ThemeProvider } from "styled-components";
 
 // Import React Analytics
 import ReactGa from "react-ga";
@@ -31,21 +33,23 @@ function App({ loading, loaded, playlists, getAlLEntries }) {
 
   return (
     <div className="App">
-      <Router>
-        <Header />
-        <Switch>
-          <Route path="/p">
-            <PlayerPage />
-          </Route>
-          <Route path="/playlists">
-            <p>Playlists</p>
-          </Route>
-          <Route path="/artists/:id" component={ArtistSinglePage} />
-          <Route path="/">
-            <HomePage />
-          </Route>
-        </Switch>
-      </Router>
+      <ThemeProvider theme={darktheme}>
+        <Router>
+          <Header />
+          <Switch>
+            <Route path="/p">
+              <PlayerPage />
+            </Route>
+            <Route path="/playlists">
+              <p>Playlists</p>
+            </Route>
+            <Route path="/artists/:id" component={ArtistSinglePage} />
+            <Route path="/">
+              <HomePage />
+            </Route>
+          </Switch>
+        </Router>
+      </ThemeProvider>
     </div>
   );
 }

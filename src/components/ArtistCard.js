@@ -64,7 +64,6 @@ ArtistCard.propTypes = {
 };
 
 function mapStateToProps(state, ownProps) {
-  console.log("From card", ownProps);
   const slug = ownProps.slug;
   if (state.data.loaded === false) {
     return {};

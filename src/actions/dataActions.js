@@ -1,15 +1,18 @@
-import { GET_ALL_ENTRIES, SET_DATA_LOADING, SET_DATA_ERROR } from "./types";
+import {
+  GET_ALL_ENTRIES,
+  SET_DATA_LOADING,
+  SET_DATA_ERROR,
+  SEARCH_ENTRIES,
+} from "./types";
 import Client from "../contentful";
-import { normalize, schema } from "normalizr";
 import slugify from "slugify";
-
-const item = new schema.Entity("item");
 
 export const getAlLEntries = () => async (dispatch) => {
   try {
     setDataLoading();
 
     const res = await Client.getEntries();
+
     var playlistGroups = {},
       playlists = {},
       songs = {},
@@ -40,10 +43,7 @@ export const getAlLEntries = () => async (dispatch) => {
           };
           break;
         case "songs":
-          songs[item.fields.slug] = {
-            id: item.sys.id,
-            ...item.fields,
-          };
+          songs[item.fields.slug] = { ...item.fields, id: item.sys.id };
           break;
         case "artistGroup":
           artistGroups[item.fields.slug] = {
@@ -59,11 +59,6 @@ export const getAlLEntries = () => async (dispatch) => {
             name: item.fields.name,
             avatar: item.fields.avatar.fields.file,
             slug: item.fields.slug,
-            songs: item.fields.songs.map((each) => ({
-              releaseYear: each.fields.releaseYear,
-              playtime: 120,
-              slug: each.fields.slug,
-            })),
             members: item.fields.members,
             biography: item.fields.biography,
             isBand: item.fields.isBand,
@@ -77,6 +72,7 @@ export const getAlLEntries = () => async (dispatch) => {
 
     res.items.forEach((item) => {
       filter(item);
+      console.log(item.sys.contentType.sys.id, item.fields);
     });
 
     dispatch({
@@ -103,4 +99,22 @@ export const setDataLoading = () => {
   return {
     type: SET_DATA_LOADING,
   };
+};
+
+export const searchEntries = (query) => async (dispatch) => {
+  try {
+    setDataLoading();
+
+    const res = await Client.getEntries({ query: query.toLowerCase() });
+    // console.log(res);
+    dispatch({
+      type: SEARCH_ENTRIES,
+      payload: res.items,
+    });
+  } catch (error) {
+    dispatch({
+      type: SET_DATA_ERROR,
+      payload: error.message,
+    });
+  }
 };

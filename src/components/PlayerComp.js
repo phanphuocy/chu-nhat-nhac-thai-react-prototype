@@ -21,6 +21,11 @@ const Comp = styled.div`
     flex-direction: row;
     height: 47rem;
   }
+
+  .sticky {
+    position: sticky;
+    top: 0;
+  }
 `;
 
 const LyricsBox = styled.div`

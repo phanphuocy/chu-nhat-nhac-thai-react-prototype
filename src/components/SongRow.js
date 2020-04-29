@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
-
+import convertToDuration from "../utils/covertToDuration";
 import { MdPlayArrow } from "react-icons/md";
 
 const StyledSongRow = styled.li`
@@ -101,7 +101,9 @@ const SongRow = ({ song, onSongRowPlayButtonClicked }) => {
         </button>
       </span>
       <span className="artist">{song.fields.artists[0].fields.name}</span>
-      <span className="playtime">3:12</span>
+      <span className="playtime">
+        {convertToDuration(song.fields.duration)}
+      </span>
     </StyledSongRow>
   );
 };

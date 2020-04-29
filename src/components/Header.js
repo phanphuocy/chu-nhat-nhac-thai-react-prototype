@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-
+import SearchBox from "./SearchBox";
 import {
   RiPlayListLine,
   RiGroup2Line,
@@ -12,14 +12,16 @@ import {
 import { Link } from "react-router-dom";
 
 const StyledHeader = styled.div`
-  background-color: #3f3f3f;
+  background-color: ${(props) => props.theme.colors.surface};
 
   min-height: 64px;
   padding: 8px 16px;
 
   .wrapper {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
     justify-content: space-between;
+    align-items: center;
     max-width: 1280px;
     margin: 0 auto;
   }
@@ -28,12 +30,24 @@ const StyledHeader = styled.div`
     flex-basis: 2;
     display: flex;
     align-items: center;
+    
+    a {
+        text-decoration: none;
+      }
+
+      a:hover, a:active {
+        text-decoration: underline;
+      }
 
     .logotype {
       display: none;
+      
 
       @media (min-width: 768px) {
-        display: inline-block;
+        display: inline-block; 
+        font-family: 'Kodchasan', sans-serif;
+        
+        margin-left: 0.5rem;
       }
     }
   }
@@ -44,25 +58,9 @@ const StyledHeader = styled.div`
     align-items: center;
   }
 
-  .searchBox {
-    display: none;
-    @media (min-width: 768px) {
-      display: flex;
-      align-items: center;
-    }
-
-    input {
-      background-color: hsl(0, 0%, 20%);
-      border: 2px solid hsl(0, 0%, 18%);
-      border-radius: 2px;
-      height: 2rem;
-      padding: 0 0.5rem;
-      width: 20rem;
-    }
-  }
-
   .navLinkGroup {
     display: flex;
+    justify-content: flex-end;
   }
 
   .navLink {
@@ -95,9 +93,7 @@ const Header = () => {
             <p className="logotype">Chủ Nhật Nhạc Thái</p>
           </Link>
         </div>
-        <div className="searchBox">
-          <input type="text" placeholder="Search.."></input>
-        </div>
+        <SearchBox />
         <div className="navLinkGroup">
           <Link to="/p">
             <div className="navLink">
