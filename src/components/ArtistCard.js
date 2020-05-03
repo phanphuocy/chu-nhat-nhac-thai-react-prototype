@@ -5,6 +5,8 @@ import { TiEye } from "react-icons/ti";
 import { MdPlayArrow } from "react-icons/md";
 import RatioBoundingBox from "./RatioBoundingBox";
 import { Link } from "react-router-dom";
+import Img from "react-image";
+import dummySquare from "../images/dummy-post-square-1-300x300.jpg";
 
 // Import Redux's
 import { connect } from "react-redux";
@@ -46,9 +48,11 @@ const ArtistCard = ({ artist }) => {
     <Link to={`/artists/${artist.slug}`}>
       <StyledArtistCard>
         <RatioBoundingBox ratio={1}>
-          <a>
-            <img src={artist.avatar.url} />
-          </a>
+          <Img
+            src={artist.avatar.url}
+            alt={artist.name}
+            loader={<img src={dummySquare} alt="dummy" />}
+          />
         </RatioBoundingBox>
         <div className="info">
           <h3>{artist.name}</h3>

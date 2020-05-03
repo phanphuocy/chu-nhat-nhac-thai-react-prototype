@@ -73,16 +73,34 @@ const ChartBoard = ({ charts }) => {
       </div>
       <div>
         {selectedButton === "currentWeek" &&
-          currentWeekChart.items.map((song) => (
-            <SongRow songId={song} key={song} />
+          currentWeekChart.items.map((song, i) => (
+            <SongRow
+              songId={song}
+              key={song}
+              minimum
+              isSorted
+              sortNumber={i + 1}
+            />
           ))}
         {selectedButton === "pastWeek" &&
-          pastWeekChart.items.map((song) => (
-            <SongRow songId={song} key={song} />
+          pastWeekChart.items.map((song, i) => (
+            <SongRow
+              songId={song}
+              key={song}
+              minimum
+              isSorted
+              sortNumber={i + 1}
+            />
           ))}
         {selectedButton === "thisMonth" &&
-          thisMonthChart.items.map((song) => (
-            <SongRow songId={song} key={song} />
+          thisMonthChart.items.map((song, i) => (
+            <SongRow
+              songId={song}
+              key={song}
+              minimum
+              isSorted
+              sortNumber={i + 1}
+            />
           ))}
       </div>
     </StyledChartBoard>

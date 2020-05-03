@@ -21,7 +21,10 @@ const StyledSongRow = styled.li`
     grid-template-columns: auto 1fr 1fr 40px;
     grid-template-areas: "thumbnail title artist playtime";
   }
-
+  .sortNumber {
+    grid-area: thumbnail;
+    margin-right: 0.5rem;
+  }
   .thumbnail {
     grid-area: thumbnail;
     margin-right: 0.5rem;
@@ -90,18 +93,29 @@ const StyledSongRow = styled.li`
   }
 `;
 
-const SongRow = ({ song, artist, onSongRowPlayButtonClicked }) => {
+const SongRow = ({
+  song,
+  artist,
+  minimum,
+  isSorted,
+  sortNumber,
+  onSongRowPlayButtonClicked,
+}) => {
   let history = useHistory();
   function playButtonHandler(url) {
     history.push(`/p/${url}`);
   }
   return (
     <StyledSongRow>
-      <img
-        className="thumbnail"
-        src={`https://img.youtube.com/vi/${song.url}/mqdefault.jpg`}
-        width="120"
-      />
+      {isSorted && <span className="sortNumber">{`#${sortNumber}`}</span>}
+      {!minimum && (
+        <img
+          className="thumbnail"
+          src={`https://img.youtube.com/vi/${song.url}/mqdefault.jpg`}
+          width="120"
+        />
+      )}
+
       <span className="title">
         {song.titleEn}
         <button

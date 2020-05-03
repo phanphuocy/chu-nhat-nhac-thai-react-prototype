@@ -12,11 +12,12 @@ export const getAlLEntries = () => async (dispatch) => {
 
     const res = await Client.getEntries();
 
-    var playlistGroups = { byIds: {}, allIds: [] },
+    var playlistGroups = { byIds: {}, allIds: [], featuredIds: [] },
       playlists = { byIds: {}, allIds: [] },
       songs = { byIds: {}, allIds: [] },
-      artistGroups = { byIds: {}, allIds: [] },
-      artists = { byIds: {}, allIds: [] };
+      artistGroups = { byIds: {}, allIds: [], featuredIds: [] },
+      artists = { byIds: {}, allIds: [] },
+      news = { byIds: {}, allIds: [] };
 
     var currentWeekChart = {},
       pastWeekChart = {},
@@ -30,6 +31,9 @@ export const getAlLEntries = () => async (dispatch) => {
             items: item.fields.items.map((item) => item.fields.slug),
           };
           playlistGroups.allIds.push(item.fields.slug);
+          if (item.fields.isFeatured) {
+            playlistGroups.featuredIds.push(item.fields.slug);
+          }
           break;
         case "playlists":
           playlists.byIds[item.fields.slug] = {
@@ -56,6 +60,9 @@ export const getAlLEntries = () => async (dispatch) => {
             items: item.fields.items.map((item) => item.fields.slug),
           };
           artistGroups.allIds.push(item.fields.slug);
+          if (item.fields.isFeatured) {
+            artistGroups.featuredIds.push(item.fields.slug);
+          }
           break;
         case "artists":
           artists.byIds[item.fields.slug] = {
@@ -67,6 +74,12 @@ export const getAlLEntries = () => async (dispatch) => {
                 : [],
           };
           artists.allIds.push(item.fields.slug);
+          break;
+        case "news":
+          news.byIds[item.fields.id.toString()] = {
+            ...item.fields,
+          };
+          news.allIds.push(item.fields.id.toString());
           break;
         case "chartBoard":
           console.log(item.fields.title);
@@ -100,9 +113,8 @@ export const getAlLEntries = () => async (dispatch) => {
               }
             }
           }
-          console.log("Current week", currentWeekChart);
-          console.log("Past week", pastWeekChart);
           break;
+
         default:
           return;
       }
@@ -120,6 +132,7 @@ export const getAlLEntries = () => async (dispatch) => {
         songs,
         artistGroups,
         artists,
+        news,
         charts: {
           currentWeekChart,
           pastWeekChart,

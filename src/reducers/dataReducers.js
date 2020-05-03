@@ -16,6 +16,7 @@ const initialState = {
   error: null,
   searchResults: null,
   charts: null,
+  news: null,
 };
 
 export default (state = initialState, action) => {
@@ -32,6 +33,7 @@ export default (state = initialState, action) => {
         artistGroups: action.payload.artistGroups,
         artists: action.payload.artists,
         charts: action.payload.charts,
+        news: action.payload.news,
       };
     case SET_DATA_LOADING:
       return {

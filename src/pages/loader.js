@@ -3,7 +3,13 @@ import BarLoader from "react-spinners/BarLoader";
 
 const LoaderScreen = () => {
   return (
-    <div>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignContent: "center",
+      }}
+    >
       <BarLoader height={8} width={500} />
     </div>
   );
