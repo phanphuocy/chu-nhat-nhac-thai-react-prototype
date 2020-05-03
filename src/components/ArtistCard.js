@@ -59,10 +59,6 @@ const ArtistCard = ({ artist }) => {
   );
 };
 
-ArtistCard.propTypes = {
-  columns: PropTypes.number.isRequired,
-};
-
 function mapStateToProps({ data }, { id }) {
   return {
     artist: data.artists.byIds[id],

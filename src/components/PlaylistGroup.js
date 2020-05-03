@@ -97,6 +97,7 @@ const PlaylistGroup = ({
         <animated.div style={{ ...props }} className="slider">
           {items.map((item, i) => (
             <div
+              key={group.items[i]}
               className="item"
               style={{ left: `calc((100% - 1rem) * ${i / columns})` }}
             >

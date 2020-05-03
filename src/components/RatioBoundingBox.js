@@ -30,4 +30,8 @@ RatioBoundingBox.propTypes = {
   ratio: PropTypes.number.isRequired,
 };
 
+RatioBoundingBox.defaultProps = {
+  ratio: 1,
+};
+
 export default RatioBoundingBox;

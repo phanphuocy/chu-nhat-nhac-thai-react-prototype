@@ -5,7 +5,6 @@ import {
   SEARCH_ENTRIES,
 } from "./types";
 import Client from "../contentful";
-import slugify from "slugify";
 
 export const getAlLEntries = () => async (dispatch) => {
   try {
@@ -18,6 +17,10 @@ export const getAlLEntries = () => async (dispatch) => {
       songs = { byIds: {}, allIds: [] },
       artistGroups = { byIds: {}, allIds: [] },
       artists = { byIds: {}, allIds: [] };
+
+    var currentWeekChart = {},
+      pastWeekChart = {},
+      thisMonthChart = {};
 
     function filter(item) {
       switch (item.sys.contentType.sys.id) {
@@ -58,10 +61,47 @@ export const getAlLEntries = () => async (dispatch) => {
           artists.byIds[item.fields.slug] = {
             ...item.fields,
             avatar: item.fields.avatar.fields.file,
-            // cover: item.fields.coverImage.fields.file,
-            songs: item.fields.songs.map((each) => each.fields.slug),
+            songs:
+              item.fields.songs !== undefined
+                ? item.fields.songs.map((each) => each.fields.slug)
+                : [],
           };
           artists.allIds.push(item.fields.slug);
+          break;
+        case "chartBoard":
+          console.log(item.fields.title);
+          if (item.fields.isWeek) {
+            if (Object.keys(currentWeekChart).length === 0) {
+              currentWeekChart = {
+                ...item.fields,
+                items: item.fields.items.map((song) => song.fields.slug),
+              };
+            } else {
+              if (item.fields.endDate > currentWeekChart.endDate) {
+                pastWeekChart = { ...currentWeekChart };
+                currentWeekChart = {
+                  ...item.fields,
+                  items: item.fields.items.map((song) => song.fields.slug),
+                };
+              }
+            }
+          } else {
+            if (Object.keys(thisMonthChart).length === 0) {
+              thisMonthChart = {
+                ...item.fields,
+                items: item.fields.items.map((song) => song.fields.slug),
+              };
+            } else {
+              if (item.fields.endDate > thisMonthChart.endDate) {
+                thisMonthChart = {
+                  ...item.fields,
+                  items: item.fields.items.map((song) => song.fields.slug),
+                };
+              }
+            }
+          }
+          console.log("Current week", currentWeekChart);
+          console.log("Past week", pastWeekChart);
           break;
         default:
           return;
@@ -80,6 +120,11 @@ export const getAlLEntries = () => async (dispatch) => {
         songs,
         artistGroups,
         artists,
+        charts: {
+          currentWeekChart,
+          pastWeekChart,
+          thisMonthChart,
+        },
       },
     });
   } catch (error) {

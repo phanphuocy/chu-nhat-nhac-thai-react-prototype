@@ -1,70 +1,31 @@
 import React, { Fragment, useState } from "react";
-import Media from "react-media";
-
+import styled from "styled-components";
+import BoundingBox from "../components/BoundingBox";
+import ChartBoard from "../components/ChartBoard";
 // Import Redux
 import { connect } from "react-redux";
 
 // Import custom components
-import PlaylistGroup from "../components/PlaylistGroup";
-import ArtistGroup from "../components/ArtistGroup";
-// import Group from "../components/Group";
+// import PlaylistGroup from "../components/PlaylistGroup";
+// import ArtistGroup from "../components/ArtistGroup";
+
+const EngagementContainer = styled.div`
+  width: 100%;
+  padding: 1rem;
+
+  @media (min-width: 768px) {
+    display: grid;
+    grid-template-columns: 11fr 5fr;
+  }
+`;
 
 const HomePage = ({ dataIsLoading }) => {
-  const [uniqueShowPanel, setUniqueShowPanel] = useState(null);
-
-  function onRegisterUniquePanel(name) {
-    setUniqueShowPanel(name);
-  }
-
-  if (dataIsLoading) {
-    return <p>Loading</p>;
-  }
-
   return (
-    <Fragment>
-      <Media
-        queries={{
-          small: "(max-width: 639px)",
-          medium: "(min-width: 640px) and (max-width: 959px)",
-          large: "(min-width: 960px) and (max-width: 1279px)",
-          extraLarge: "(min-width: 1280px)",
-        }}
-      >
-        {(matches) => (
-          <Fragment>
-            {/* {playlistGroupsAllIds.map((each) => (
-              <PlaylistGroup
-                key={each}
-                matches={matches}
-                id={each}
-                uniqueShowPanel={uniqueShowPanel}
-                onRegisterUniquePanel={onRegisterUniquePanel}
-              />
-            ))}
-            {artistGroupsAllIds.map((each) => (
-              <ArtistGroup
-                key={each}
-                matches={matches}
-                id={each}
-                uniqueShowPanel={uniqueShowPanel}
-                onRegisterUniquePanel={onRegisterUniquePanel}
-              />
-            ))} */}
-            {/* <Group
-              matches={matches}
-              group={playlistGroups["group-1"]}
-              type="playlist"
-            />
-            <Group
-              matches={matches}
-              group={artistGroups["artist-group-1"]}
-              type="artist"
-            /> */}
-          </Fragment>
-        )}
-      </Media>
-      <div className="dummyheight" style={{ height: "20rem" }}></div>
-    </Fragment>
+    <BoundingBox maxwidth={1280}>
+      <EngagementContainer>
+        <ChartBoard /> <p>pp</p>
+      </EngagementContainer>
+    </BoundingBox>
   );
 };
 function mapStateToPageProps(state) {

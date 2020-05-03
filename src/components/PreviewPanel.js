@@ -7,15 +7,15 @@ import SongRow from "./SongRow";
 const PreviewPanel = ({ songs, onClosePreviewPanel }) => {
   return (
     <Container>
-      <Header>
-        <p>{`${songs.length} bài hát`}</p>
-        <button onClick={() => onClosePreviewPanel()}>
-          <MdClose size={32} />
-        </button>
-      </Header>
+      {/* //   <Header>
+    //     <p>{`${songs.length} bài hát`}</p>
+    //     <button onClick={() => onClosePreviewPanel()}>
+    //       <MdClose size={32} />
+    //     </button>
+    //   </Header> */}
       <ul>
         {songs.map((song) => (
-          <SongRow song={song} key={song.sys.id} />
+          <SongRow songId={song} key={song} />
         ))}
       </ul>
     </Container>

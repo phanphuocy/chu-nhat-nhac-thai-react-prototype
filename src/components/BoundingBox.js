@@ -33,4 +33,8 @@ BoundingBox.propTypes = {
   maxwidth: PropTypes.number,
 };
 
+BoundingBox.defaultProps = {
+  maxwidth: 1600,
+};
+
 export default BoundingBox;

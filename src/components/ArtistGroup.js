@@ -74,6 +74,7 @@ const ArtistGroup = ({ columns, group }) => {
         <animated.div style={{ ...props }} className="slider">
           {items.map((item, i) => (
             <div
+              key={items[i]}
               className="item"
               style={{ left: `calc((100% - 1rem) * ${i / columns})` }}
             >

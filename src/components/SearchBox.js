@@ -79,7 +79,7 @@ const SearchBox = ({ searchEntries, searchResults }) => {
       >
         <input
           id="searchBox"
-          autocomplete="off"
+          autoComplete="off"
           type="text"
           placeholder="Tìm kiếm.."
           value={searchTerm}

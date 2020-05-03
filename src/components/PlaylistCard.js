@@ -89,10 +89,6 @@ const PlaylistCard = ({
   );
 };
 
-PlaylistCard.propTypes = {
-  columns: PropTypes.number.isRequired,
-};
-
 function mapStateToProps({ data }, { id }) {
   return {
     playlist: data.playlists.byIds[id],

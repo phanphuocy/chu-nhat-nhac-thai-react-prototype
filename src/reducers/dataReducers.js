@@ -15,6 +15,7 @@ const initialState = {
   loaded: false,
   error: null,
   searchResults: null,
+  charts: null,
 };
 
 export default (state = initialState, action) => {
@@ -30,6 +31,7 @@ export default (state = initialState, action) => {
         songs: action.payload.songs,
         artistGroups: action.payload.artistGroups,
         artists: action.payload.artists,
+        charts: action.payload.charts,
       };
     case SET_DATA_LOADING:
       return {
