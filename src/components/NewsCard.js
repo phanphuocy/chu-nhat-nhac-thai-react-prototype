@@ -6,44 +6,44 @@ import { FacebookShareButton } from "react-share";
 import { RiShareLine } from "react-icons/ri";
 
 const StyledNewsCard = styled.div`
-    background-color: ${(props) => props.theme.colors.surface};
-    padding: 1rem;
-    overflow: hidden;
-    border-radius: 0.5rem;
+  background-color: ${(props) => props.theme.colors.surface};
+  padding: 1rem;
+  overflow: hidden;
+  border-radius: 0.5rem;
+  margin-top: 1rem;
 
-    .category {
-        margin-bottom:0.5rem;
-        color: ${(props) => props.theme.colors.primary}
+  .category {
+    margin-bottom: 0.5rem;
+    color: ${(props) => props.theme.colors.primary};
+  }
+  .identifier {
+    margin-bottom: 1rem;
+  }
+  .content {
+    background-color: rgba(255, 255, 255, 0.05);
+
+    p {
+      padding: 1rem;
     }
-    .identifier {
-        margin-bottom: 1rem;
+  }
+  img {
+    width: 100%;
+  }
+
+  .actions {
+    margin-top: 1rem;
+    button {
+      background-color: transparent;
+      border: none;
+      color: white;
+      display: flex;
+      align-items: center;
+
+      svg {
+        margin-right: 0.5rem;
+      }
     }
-        .content {
-            background-color: rgba(255,255,255,0.05);
-
-            p {
-                padding: 1rem;
-            }
-        }
-    img {
-        width: 100%;
-    }
-
-    .actions {
-        margin-top: 1rem;
-        button {
-            background-color: transparent;
-            border: none;
-            color: white;
-            display: flex;
-            align-items: center;
-
-            svg {
-                margin-right: 0.5rem;
-            }
-        } 
-
-    }
+  }
 `;
 
 const NewsCard = ({ news }) => {

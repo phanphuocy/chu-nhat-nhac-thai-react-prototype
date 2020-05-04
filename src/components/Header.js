@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import SearchBox from "./SearchBox";
 import {
@@ -6,7 +6,13 @@ import {
   RiGroup2Line,
   RiNewspaperLine,
   RiMvLine,
+  RiMoonClearLine,
+  RiSunLine,
 } from "react-icons/ri";
+import Switch from "react-switch";
+
+import { connect } from "react-redux";
+import { switchTheme } from "../actions/interfaceActions";
 
 // Import React Router for navigation
 import { Link } from "react-router-dom";
@@ -30,23 +36,23 @@ const StyledHeader = styled.div`
     flex-basis: 2;
     display: flex;
     align-items: center;
-    
-    a {
-        text-decoration: none;
-      }
 
-      a:hover, a:active {
-        text-decoration: underline;
-      }
+    a {
+      text-decoration: none;
+    }
+
+    a:hover,
+    a:active {
+      text-decoration: underline;
+    }
 
     .logotype {
       display: none;
-      
 
       @media (min-width: 768px) {
-        display: inline-block; 
-        font-family: 'Kodchasan', sans-serif;
-        
+        display: inline-block;
+        font-family: "Kodchasan", sans-serif;
+
         margin-left: 0.5rem;
       }
     }
@@ -60,7 +66,11 @@ const StyledHeader = styled.div`
 
   .navLinkGroup {
     display: flex;
+    align-items: center;
     justify-content: flex-end;
+  }
+
+  .react-switch {
   }
 
   .navLink {
@@ -83,7 +93,19 @@ const StyledHeader = styled.div`
   }
 `;
 
-const Header = () => {
+const Header = ({ theme, switchTheme }) => {
+  const [checked, setChecked] = useState(theme === "light" ? false : true);
+
+  function switchThemeHandler() {
+    if (theme === "dark") {
+      switchTheme("light");
+      setChecked(false);
+    } else if (theme === "light") {
+      switchTheme("dark");
+      setChecked(true);
+    }
+  }
+
   return (
     <StyledHeader>
       <div className="wrapper">
@@ -95,6 +117,20 @@ const Header = () => {
         </div>
         <SearchBox />
         <div className="navLinkGroup">
+          <Switch
+            onChange={switchThemeHandler}
+            handleDiameter={24}
+            height={20}
+            width={48}
+            offColor="#333"
+            offHandleColor="#555"
+            onColor="#ddd"
+            onHandleColor="#fff"
+            className="react-switch"
+            checked={checked}
+            uncheckedIcon={<RiSunLine size={18} />}
+            checkedIcon={<RiMoonClearLine size={18} color="#333" />}
+          />
           <Link to="/news">
             <div className="navLink">
               <RiNewspaperLine size={24} />
@@ -116,4 +152,10 @@ const Header = () => {
   );
 };
 
-export default Header;
+function mapStateToProps(state) {
+  return {
+    theme: state.interface.theme,
+  };
+}
+
+export default connect(mapStateToProps, { switchTheme })(Header);

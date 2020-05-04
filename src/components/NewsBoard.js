@@ -6,15 +6,20 @@ import NewsCard from "../components/NewsCard";
 
 const StyledNewsBoard = styled.div`
   padding-left: 1rem;
+
   .header {
-      padding: 1.5rem 1rem;
-      background: rgb(131, 58, 180);
-   
-      font-weight: bold;
-      color: whitesmoke;
-      font-size: 1.25rem;
-      text-align: center;
-    }
+    padding: 1.5rem 1rem;
+    background: rgb(131, 58, 180);
+    font-weight: bold;
+    color: whitesmoke;
+    font-size: 1.25rem;
+    text-align: center;
+  }
+
+  .items {
+    height: 40rem;
+    overflow-y: scroll;
+  }
 `;
 
 const NewsBoard = ({ allIds }) => {
@@ -22,7 +27,7 @@ const NewsBoard = ({ allIds }) => {
   return (
     <StyledNewsBoard>
       <div className="header">Có Gì Hot</div>
-      <div>
+      <div className="items">
         {allIds.map((id) => (
           <NewsCard newsId={id} />
         ))}

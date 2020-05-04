@@ -25,9 +25,9 @@ const StyledArtistCard = styled.div`
   .info {
     text-align: center;
     padding: 1rem 0rem;
-    background-color: rgba(0, 0, 0, 0.1);
-
+    background-color: ${(props) => props.theme.colors.surface};
     h3 {
+      color: ${(props) => props.theme.colors.onSurface};
       font-size: 1.2rem;
       margin-bottom: 0.5rem;
     }

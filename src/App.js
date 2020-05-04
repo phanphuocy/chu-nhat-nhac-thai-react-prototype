@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import darktheme from "./themes/darktheme";
+import lighttheme from "./themes/lighttheme";
 import { ThemeProvider } from "styled-components";
 
 // Import React Analytics
@@ -9,6 +10,7 @@ import ReactGa from "react-ga";
 // Import Redux's
 import { connect } from "react-redux";
 import { getAlLEntries } from "./actions/dataActions";
+import styled from "styled-components";
 
 // Import pages
 import HomePage from "./pages/homePage";
@@ -22,7 +24,16 @@ import NewsPage from "./pages/newsPage";
 import PlayerPage from "./pages/playerPage";
 import Header from "./components/Header";
 
-function App({ loading, loaded, playlists, getAlLEntries }) {
+const StyledApp = styled.div`
+  background-color: ${(props) => props.theme.colors.background};
+  color: ${(props) => props.theme.colors.onBackground};
+
+  svg {
+    color: ${(props) => props.theme.colors.onBackground};
+  }
+`;
+
+function App({ theme, loading, loaded, playlists, getAlLEntries }) {
   useEffect(() => {
     getAlLEntries();
     ReactGa.initialize("UA-158673998-2");
@@ -36,8 +47,8 @@ function App({ loading, loaded, playlists, getAlLEntries }) {
   }
 
   return (
-    <div className="App">
-      <ThemeProvider theme={darktheme}>
+    <ThemeProvider theme={theme === "dark" ? darktheme : lighttheme}>
+      <StyledApp>
         <Router>
           <Header />
           <Switch>
@@ -51,8 +62,8 @@ function App({ loading, loaded, playlists, getAlLEntries }) {
             </Route>
           </Switch>
         </Router>
-      </ThemeProvider>
-    </div>
+      </StyledApp>
+    </ThemeProvider>
   );
 }
 
@@ -61,6 +72,7 @@ function mapStateToProps(state) {
     playlists: state.data.playlists,
     loaded: state.data.loaded,
     loading: state.data.loading,
+    theme: state.interface.theme,
   };
 }
 
