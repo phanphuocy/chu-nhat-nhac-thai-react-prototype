@@ -16,6 +16,7 @@ import ArtistSinglePage from "./pages/artistSinglePage";
 import PlaylistPage from "./pages/playlistsPage";
 import ArtistPage from "./pages/artistsPage";
 import LoaderScreen from "./pages/loader";
+import NewsPage from "./pages/newsPage";
 
 // Import custom components
 import PlayerPage from "./pages/playerPage";
@@ -40,14 +41,11 @@ function App({ loading, loaded, playlists, getAlLEntries }) {
         <Router>
           <Header />
           <Switch>
-            <Route path="/p/:songId">
-              <PlayerPage />
-            </Route>
-            <Route path="/playlists">
-              <PlaylistPage />
-            </Route>
+            <Route path="/p/:songId" component={PlayerPage} />
+            <Route path="/playlists" component={PlaylistPage} />
             <Route path="/artists/:id" component={ArtistSinglePage} />
             <Route path="/artists" component={ArtistPage} />
+            <Route path="/news" component={NewsPage} />
             <Route path="/">
               <HomePage />
             </Route>

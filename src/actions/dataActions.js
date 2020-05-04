@@ -78,6 +78,7 @@ export const getAlLEntries = () => async (dispatch) => {
         case "news":
           news.byIds[item.fields.id.toString()] = {
             ...item.fields,
+            image: item.fields.image && { ...item.fields.image.fields.file },
           };
           news.allIds.push(item.fields.id.toString());
           break;

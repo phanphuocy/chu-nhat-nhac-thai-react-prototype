@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Media from "react-media";
 import BoundingBox from "../components/BoundingBox";
 import ChartBoard from "../components/ChartBoard";
+import NewsBoard from "../components/NewsBoard";
 import GradientBackground from "../components/GradientBackground";
 // Import Redux
 import { connect } from "react-redux";
@@ -27,7 +28,8 @@ const HomePage = ({ playlistIds, artistIds }) => {
       <GradientBackground>
         <BoundingBox maxwidth={1280}>
           <EngagementContainer>
-            <ChartBoard /> <p>pp</p>
+            <ChartBoard />
+            <NewsBoard />
           </EngagementContainer>
         </BoundingBox>
       </GradientBackground>

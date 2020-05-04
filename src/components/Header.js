@@ -95,7 +95,7 @@ const Header = () => {
         </div>
         <SearchBox />
         <div className="navLinkGroup">
-          <Link to="/p">
+          <Link to="/news">
             <div className="navLink">
               <RiNewspaperLine size={24} />
             </div>
