@@ -61,10 +61,8 @@ const NewsCard = ({ news }) => {
         <FacebookShareButton
           url={`https://chu-nhat-nhac-thai.netlify.app${news.url}`}
         >
-          <button>
-            <RiShareLine size={24} />
-            Chia Sẻ
-          </button>
+          <RiShareLine size={24} />
+          Chia Sẻ
         </FacebookShareButton>
       </div>
     </StyledNewsCard>

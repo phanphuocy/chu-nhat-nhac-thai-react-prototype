@@ -5,7 +5,8 @@ import { connect } from "react-redux";
 import NewsCard from "../components/NewsCard";
 
 const StyledNewsBoard = styled.div`
-  padding-left: 1rem;
+  margin-left: 1rem;
+  background-color: ${(props) => props.theme.colors.background};
 
   .header {
     padding: 1.5rem 1rem;

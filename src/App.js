@@ -25,9 +25,12 @@ import PlayerPage from "./pages/playerPage";
 import Header from "./components/Header";
 
 const StyledApp = styled.div`
+  min-height: 100vh;
   background-color: ${(props) => props.theme.colors.background};
   color: ${(props) => props.theme.colors.onBackground};
-
+  a {
+    color: ${(props) => props.theme.colors.onBackground};
+  }
   svg {
     color: ${(props) => props.theme.colors.onBackground};
   }

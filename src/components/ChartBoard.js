@@ -4,15 +4,18 @@ import { connect } from "react-redux";
 import SongRow from "./SongRow";
 
 const StyledChartBoard = styled.div`
+
+  @media (min-width: 768px ){}
   .header {
     padding: 1.5rem 1rem;
-    background: rgb(131, 58, 180);
-    background: linear-gradient(
+    background: ${(props) =>
+      props.light ? "#D13A64" : props.theme.colors.surface};
+    /* background: linear-gradient(
       90deg,
       rgba(131, 58, 180, 1) 0%,
       rgba(253, 29, 29, 1) 50%,
       rgba(252, 176, 69, 1) 100%
-    );
+    ); */
     font-weight: bold;
     color: whitesmoke;
     font-size: 1.25rem;
@@ -42,14 +45,14 @@ const StyledChartBoard = styled.div`
   }
 `;
 
-const ChartBoard = ({ charts }) => {
+const ChartBoard = ({ charts, theme }) => {
   const { currentWeekChart, pastWeekChart, thisMonthChart } = charts;
   const [selectedButton, setSelectedButton] = useState("currentWeek");
   function switchButton(label) {
     setSelectedButton(label);
   }
   return (
-    <StyledChartBoard>
+    <StyledChartBoard light={theme === "light"}>
       <div className="header">Bảng Xếp Hạng</div>
       <div className="switchButtonGroup">
         <button
@@ -106,9 +109,10 @@ const ChartBoard = ({ charts }) => {
     </StyledChartBoard>
   );
 };
-function mapStateToProps({ data }) {
+function mapStateToProps(state) {
   return {
-    charts: data.charts,
+    charts: state.data.charts,
+    theme: state.interface.theme,
   };
 }
 export default connect(mapStateToProps)(ChartBoard);

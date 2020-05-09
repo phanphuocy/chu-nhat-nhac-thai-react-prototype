@@ -59,7 +59,7 @@ const NewsPage = ({ allIds }) => {
               columnClassName="my-masonry-grid_column"
             >
               {allIds.map((id) => (
-                <NewsCard newsId={id} />
+                <NewsCard newsId={id} key={id} />
               ))}
             </Masonry>
           );

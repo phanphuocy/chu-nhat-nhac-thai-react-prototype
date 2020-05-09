@@ -10,7 +10,8 @@ import { connect } from "react-redux";
 const StyledSongRow = styled.li`
   width: 100%;
   padding: 0.5rem 1rem;
-  background-color: ${(props) => props.theme.colors.background};
+  /* background-color: ${(props) => props.theme.colors.background}; */
+  background-color: rgba(255, 255, 255, 0.1);
   display: inline-grid;
   grid-template-columns: auto 1fr 2rem;
   grid-template-areas:
@@ -63,13 +64,13 @@ const StyledSongRow = styled.li`
   }
 
   &:nth-child(odd) {
-    background-color: #161616;
+    background-color: ${(props) => props.theme.colors.surface};
   }
 
   &:hover {
-    background-color: #1e1e1e;
+    background-color:${(props) => props.theme.colors.background};
     span {
-      color: white;
+      color: ${(props) => props.theme.colors.onBackground};
     }
   }
 
@@ -118,12 +119,12 @@ const SongRow = ({
 
       <span className="title">
         {song.titleEn}
-        <button
+        {/* <button
           className="playButton"
           onClick={() => playButtonHandler(song.slug)}
         >
           <MdPlayArrow size={32} />
-        </button>
+        </button> */}
       </span>
       <span className="artist">
         <ArtistBadge artist={artist} />

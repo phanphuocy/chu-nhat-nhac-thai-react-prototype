@@ -5,6 +5,7 @@ import BoundingBox from "../components/BoundingBox";
 import ChartBoard from "../components/ChartBoard";
 import NewsBoard from "../components/NewsBoard";
 import GradientBackground from "../components/GradientBackground";
+import FeaturedBanner from "../components/FeaturedBanner";
 // Import Redux
 import { connect } from "react-redux";
 
@@ -25,6 +26,7 @@ const EngagementContainer = styled.div`
 const HomePage = ({ playlistIds, artistIds }) => {
   return (
     <React.Fragment>
+      <FeaturedBanner />
       <GradientBackground>
         <BoundingBox maxwidth={1280}>
           <EngagementContainer>

@@ -88,7 +88,7 @@ const StyledHeader = styled.div`
     }
 
     svg {
-      color: whitesmoke;
+      color: ${(props) => props.theme.colors.onSurface};
     }
   }
 `;
