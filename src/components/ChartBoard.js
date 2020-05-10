@@ -4,18 +4,35 @@ import { connect } from "react-redux";
 import SongRow from "./SongRow";
 
 const StyledChartBoard = styled.div`
+  margin: 0 auto;
+  padding: 1rem 0;
+  max-width: 1280px;
+  .chartContainer {
+    display: grid;
+    grid-template-rows: repeat(10, 1fr);
+  }
 
-  @media (min-width: 768px ){}
+  @media (min-width: 768px) {
+    .header {
+      margin: 0;
+    }
+    .chartContainer {
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: repeat(5, 1fr);
+      grid-auto-flow: column;
+    }
+  }
   .header {
+    margin: 0 0.5rem;
     padding: 1.5rem 1rem;
     background: ${(props) =>
       props.light ? "#D13A64" : props.theme.colors.surface};
-    /* background: linear-gradient(
+    background: linear-gradient(
       90deg,
       rgba(131, 58, 180, 1) 0%,
       rgba(253, 29, 29, 1) 50%,
       rgba(252, 176, 69, 1) 100%
-    ); */
+    );
     font-weight: bold;
     color: whitesmoke;
     font-size: 1.25rem;
@@ -74,7 +91,7 @@ const ChartBoard = ({ charts, theme }) => {
           Tháng Này
         </button>
       </div>
-      <div>
+      <div className="chartContainer">
         {selectedButton === "currentWeek" &&
           currentWeekChart.items.map((song, i) => (
             <SongRow

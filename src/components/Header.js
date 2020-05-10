@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import Media from "react-media";
+import MobileHeader from "./MobileHeader";
 import SearchBox from "./SearchBox";
 import {
   RiPlayListLine,
@@ -13,8 +15,6 @@ import Switch from "react-switch";
 
 import { connect } from "react-redux";
 import { switchTheme } from "../actions/interfaceActions";
-
-// Import React Router for navigation
 import { Link } from "react-router-dom";
 
 const StyledHeader = styled.div`
@@ -107,48 +107,56 @@ const Header = ({ theme, switchTheme }) => {
   }
 
   return (
-    <StyledHeader>
-      <div className="wrapper">
-        <div className="logoContainer">
-          <Link to="/">
-            <RiMvLine size={32} />
-            <p className="logotype">Chủ Nhật Nhạc Thái</p>
-          </Link>
-        </div>
-        <SearchBox />
-        <div className="navLinkGroup">
-          <Switch
-            onChange={switchThemeHandler}
-            handleDiameter={24}
-            height={20}
-            width={48}
-            offColor="#333"
-            offHandleColor="#555"
-            onColor="#ddd"
-            onHandleColor="#fff"
-            className="react-switch"
-            checked={checked}
-            uncheckedIcon={<RiSunLine size={18} />}
-            checkedIcon={<RiMoonClearLine size={18} color="#333" />}
-          />
-          <Link to="/news">
-            <div className="navLink">
-              <RiNewspaperLine size={24} />
+    <Media queries={{ small: { maxWidth: 767 } }}>
+      {(matches) =>
+        matches.small ? (
+          <MobileHeader />
+        ) : (
+          <StyledHeader>
+            <div className="wrapper">
+              <div className="logoContainer">
+                <Link to="/">
+                  <RiMvLine size={32} />
+                  <p className="logotype">Chủ Nhật Nhạc Thái</p>
+                </Link>
+              </div>
+              <SearchBox />
+              <div className="navLinkGroup">
+                <Switch
+                  onChange={switchThemeHandler}
+                  handleDiameter={24}
+                  height={20}
+                  width={48}
+                  offColor="#333"
+                  offHandleColor="#555"
+                  onColor="#ddd"
+                  onHandleColor="#fff"
+                  className="react-switch"
+                  checked={checked}
+                  uncheckedIcon={<RiSunLine size={18} />}
+                  checkedIcon={<RiMoonClearLine size={18} color="#333" />}
+                />
+                <Link to="/news">
+                  <div className="navLink">
+                    <RiNewspaperLine size={24} />
+                  </div>
+                </Link>
+                <Link to="/playlists">
+                  <div className="navLink">
+                    <RiPlayListLine size={24} />
+                  </div>
+                </Link>
+                <Link to="/artists">
+                  <div className="navLink">
+                    <RiGroup2Line size={24} />
+                  </div>
+                </Link>
+              </div>
             </div>
-          </Link>
-          <Link to="/playlists">
-            <div className="navLink">
-              <RiPlayListLine size={24} />
-            </div>
-          </Link>
-          <Link to="/artists">
-            <div className="navLink">
-              <RiGroup2Line size={24} />
-            </div>
-          </Link>
-        </div>
-      </div>
-    </StyledHeader>
+          </StyledHeader>
+        )
+      }
+    </Media>
   );
 };
 

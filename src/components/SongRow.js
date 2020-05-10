@@ -11,7 +11,7 @@ const StyledSongRow = styled.li`
   width: 100%;
   padding: 0.5rem 1rem;
   /* background-color: ${(props) => props.theme.colors.background}; */
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: ${(props) => props.theme.colors.surface};
   display: inline-grid;
   grid-template-columns: auto 1fr 2rem;
   grid-template-areas:

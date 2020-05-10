@@ -13,27 +13,12 @@ import { connect } from "react-redux";
 import PlaylistGroup from "../components/PlaylistGroup";
 import ArtistGroup from "../components/ArtistGroup";
 
-const EngagementContainer = styled.div`
-  width: 100%;
-  padding: 1rem;
-
-  @media (min-width: 768px) {
-    display: grid;
-    grid-template-columns: 11fr 5fr;
-  }
-`;
-
 const HomePage = ({ playlistIds, artistIds }) => {
   return (
     <React.Fragment>
       <FeaturedBanner />
       <GradientBackground>
-        <BoundingBox maxwidth={1280}>
-          <EngagementContainer>
-            <ChartBoard />
-            <NewsBoard />
-          </EngagementContainer>
-        </BoundingBox>
+        <ChartBoard />
       </GradientBackground>
       <Media
         queries={{

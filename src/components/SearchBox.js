@@ -10,11 +10,9 @@ import { RiSearchLine, RiCloseLine } from "react-icons/ri";
 const StyledContainer = styled.div`
   position: relative;
   width: 100%;
-  padding: 0 4rem;
 `;
 
 const StyledSearchBox = styled.form`
-  display: none;
   height: 2rem;
   position: relative;
 
