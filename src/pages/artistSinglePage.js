@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import SEO from "../components/SEO";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import {
@@ -105,6 +106,7 @@ const ArtistSinglePage = ({ artist, songs }) => {
 
   return (
     <BoundingBox maxwidth={1024}>
+      <SEO title={artist.name} description="asdad" ogImage={artist.avatar} />
       <ArtistInfo artist={artist} />
 
       <TabGroup>

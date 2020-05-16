@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 // Import Redux's
 import { connect } from "react-redux";
@@ -12,33 +12,42 @@ import PlayerComp from "../components/PlayerComp";
 import PlayerSongInfo from "../components/PlayerSongInfo";
 import PlayerQueue from "../components/PlayerQueue";
 
-const PlayerPage = ({ playerQueue }) => {
-  console.log(useParams());
-
-  const { songId } = useParams();
-
-  if (!songId) {
-    return (
-      <div>
-        <h1>Sorry, you haven't chose songs to play</h1>
-      </div>
-    );
+const PlayerPage = ({ playerQueue, song, lyricsLang }) => {
+  //
+  // If song param is incorrect, redirect to 404 page
+  const history = useHistory();
+  if (!song) {
+    history.push("/404");
   }
 
   return (
     <div>
       <FullWidthBox constraint={1200}>
-        <PlayerComp songId={songId} />
+        <PlayerComp song={song} lyricsLang={lyricsLang} />
         {/* <PlayerSongInfo currentSong={currentSong} /> */}
-        {/* <PlayerQueue playerQueue={playerQueue} /> */}
+        {playerQueue && playerQueue.indexOf(song.slug) !== -1 && (
+          <PlayerQueue currentSong={song.slug} playerQueue={playerQueue} />
+        )}
       </FullWidthBox>
     </div>
   );
 };
 
-function mapStateToPageProps(state) {
+function getSongById(state, id) {
+  if (!state.data.loaded) {
+    return null;
+  }
+  console.log(state.data.songs.byIds);
+  return state.data.songs.byIds[id];
+}
+
+function mapStateToPageProps(state, { match }) {
+  const { songId } = match.params;
+  console.log(songId);
   return {
     playerQueue: state.player.playerQueue,
+    song: getSongById(state, songId),
+    lyricsLang: state.interface.lyricsLang,
   };
 }
 

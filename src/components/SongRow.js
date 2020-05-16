@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import convertToDuration from "../utils/covertToDuration";
 import ArtistBadge from "./ArtistBadge";
 import { MdPlayArrow } from "react-icons/md";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import { connect } from "react-redux";
 
 const StyledSongRow = styled.li`
@@ -94,14 +94,7 @@ const StyledSongRow = styled.li`
   }
 `;
 
-const SongRow = ({
-  song,
-  artist,
-  minimum,
-  isSorted,
-  sortNumber,
-  onSongRowPlayButtonClicked,
-}) => {
+const SongRow = ({ song, artist, minimum, isSorted, sortNumber, playing }) => {
   let history = useHistory();
   function playButtonHandler(url) {
     history.push(`/p/${url}`);
@@ -118,13 +111,9 @@ const SongRow = ({
       )}
 
       <span className="title">
-        {song.titleEn}
-        {/* <button
-          className="playButton"
-          onClick={() => playButtonHandler(song.slug)}
-        >
-          <MdPlayArrow size={32} />
-        </button> */}
+        <Link to={`/p/${song.slug}`}>{song.titleEn}</Link>
+        {playing && <p>Playing</p>}
+        {}
       </span>
       <span className="artist">
         <ArtistBadge artist={artist} />
@@ -135,11 +124,13 @@ const SongRow = ({
 };
 
 SongRow.propTypes = {
+  playing: PropTypes.bool,
   song: PropTypes.object.isRequired,
   onSongRowPlayButtonClicked: PropTypes.func,
 };
 
 SongRow.defaultProps = {
+  playing: false,
   onSongRowPlayButtonClicked: () => {
     console.log("Clicked");
   },

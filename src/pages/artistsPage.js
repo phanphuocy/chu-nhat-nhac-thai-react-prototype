@@ -2,10 +2,15 @@ import React, { Fragment, useState } from "react";
 import { connect } from "react-redux";
 import Media from "react-media";
 import ArtistGroup from "../components/ArtistGroup";
+import SEO from "../components/SEO";
 
 const ArtistsPage = ({ allIds }) => {
   return (
     <Fragment>
+      <SEO
+        title="Danh Sách Nghệ Sĩ Thái Lan"
+        description="Ullamco consequat eu enim do pariatur id. Dmco exercitation qui laborum id fugiat."
+      />
       <Media
         queries={{
           small: "(max-width: 639px)",

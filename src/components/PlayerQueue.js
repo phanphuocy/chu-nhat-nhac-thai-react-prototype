@@ -27,11 +27,7 @@ const Stroke = styled.div`
   background-color: #292929;
 `;
 
-const PlayerQueue = ({ playerQueue, setCurrentSong }) => {
-  function onSongRowPlayButtonClicked(song) {
-    setCurrentSong(song);
-  }
-
+const PlayerQueue = ({ playerQueue, currentSong }) => {
   return (
     <Container>
       <Header>
@@ -39,12 +35,8 @@ const PlayerQueue = ({ playerQueue, setCurrentSong }) => {
       </Header>
       <Stroke />
       <ul>
-        {playerQueue.map((song) => (
-          <SongRow
-            song={song}
-            key={song.sys.id}
-            onSongRowPlayButtonClicked={onSongRowPlayButtonClicked}
-          />
+        {playerQueue.map((id) => (
+          <SongRow playing={id === currentSong} songId={id} key={id} />
         ))}
       </ul>
     </Container>

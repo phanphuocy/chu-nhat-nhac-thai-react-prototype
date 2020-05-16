@@ -1,14 +1,9 @@
 import React, { useState } from "react";
-import YouTubePlayer from "react-player/lib/players/YouTube";
+import ReactPlayer from "react-player";
 import styled from "styled-components";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 import ReactMarkdown from "react-markdown";
 import RatioBoundingBox from "./RatioBoundingBox";
-import YouTube from "react-youtube";
-
-// Import actions
-import { connect } from "react-redux";
-import { switchLyricsLang } from "../actions/interfaceActions";
 
 // Import custom components
 import TabGroup from "./styled-components/TabGroup";
@@ -53,7 +48,7 @@ const LyricsBox = styled.div`
 `;
 
 const PlayerComp = ({ song, songId, lyricsLang, switchLyricsLang }) => {
-  const [urlState, setUrlState] = useState("");
+  const url = `https://www.youtube.com/watch?v=${song.url}`;
 
   if (!song) {
     return <p>ERROR</p>;
@@ -85,10 +80,8 @@ const PlayerComp = ({ song, songId, lyricsLang, switchLyricsLang }) => {
   return (
     <Comp>
       <RatioBoundingBox ratio={0.4625}>
-        <YouTubePlayer
-          url={
-            urlState ? urlState : "https://www.youtube.com/watch?v=75E5z_uDHdQ"
-          }
+        <ReactPlayer
+          url={url}
           width="100%"
           height="100%"
           controls
@@ -105,20 +98,7 @@ const PlayerComp = ({ song, songId, lyricsLang, switchLyricsLang }) => {
           onDuration={() => console.log("onDuration")}
         />
       </RatioBoundingBox>
-      <button
-        onClick={() =>
-          setUrlState("https://www.youtube.com/watch?v=PdjbRvvJAzg")
-        }
-      >
-        Change URL
-      </button>
-      <button
-        onClick={() =>
-          setUrlState("https://www.youtube.com/watch?v=ivUXdC-ipOs")
-        }
-      >
-        Change URL
-      </button>
+
       <LyricsBox>
         <div className="header">
           <h3 className="header-text">Lyrics</h3>
@@ -169,18 +149,4 @@ const LyricsRender = styled.div`
   }
 `;
 
-function getSongById(state, id) {
-  if (!state.data.songs || !state.data.songs[id]) {
-    return null;
-  }
-  return state.data.songs[id];
-}
-
-function mapStateToProps(state, ownProps) {
-  const { songId } = ownProps;
-  const song = getSongById(state, songId);
-
-  return { lyricsLang: state.interface.lyricsLang, song };
-}
-
-export default connect(mapStateToProps, { switchLyricsLang })(PlayerComp);
+export default PlayerComp;

@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import { TiEye } from "react-icons/ti";
 import { MdPlayArrow } from "react-icons/md";
 import RatioBoundingBox from "./RatioBoundingBox";
+import { useHistory } from "react-router-dom";
 
 // Import Redux's
 import { connect } from "react-redux";
@@ -64,6 +65,7 @@ const PlaylistCard = ({
   registerQueueSongs,
   setCurrentSong,
 }) => {
+  const history = useHistory();
   return (
     <StyledPlaylistCard>
       <RatioBoundingBox>
@@ -79,6 +81,7 @@ const PlaylistCard = ({
             onClick={() => {
               setCurrentSong(playlist.songs[0]);
               registerQueueSongs(playlist.songs);
+              history.push(`/p/${playlist.songs[0]}`);
             }}
           >
             <MdPlayArrow size={32} />
