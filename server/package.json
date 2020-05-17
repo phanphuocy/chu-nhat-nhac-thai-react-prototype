@@ -1,0 +1,22 @@
+{
+  "name": "server-for-cnnt",
+  "version": "0.1.0",
+  "description": "this server dedicated for suplementary tasks like finding revelant songs, tracking trending song,etc..",
+  "main": "index.js",
+  "scripts": {
+    "start": "NODE_ENV=production node index.js",
+    "dev": "set NODE_ENV=dev && nodemon index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "contentful": "^7.14.4",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.9.14"
+  }
+}
