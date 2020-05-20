@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Media from "react-media";
 import MobileHeader from "./MobileHeader";
 import SearchBox from "./SearchBox";
+import { ReactComponent as Logo } from "../images/logo-24px.svg";
 import {
   RiPlayListLine,
   RiGroup2Line,
@@ -116,7 +117,7 @@ const Header = ({ theme, switchTheme }) => {
             <div className="wrapper">
               <div className="logoContainer">
                 <Link to="/">
-                  <RiMvLine size={32} />
+                  <Logo />
                   <p className="logotype">Chủ Nhật Nhạc Thái</p>
                 </Link>
               </div>

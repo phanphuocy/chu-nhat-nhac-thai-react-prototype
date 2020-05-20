@@ -1,4 +1,10 @@
 @import url("https://fonts.googleapis.com/css2?family=Kodchasan&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans&display=swap");
+
+@font-face {
+  font-family: "Proxima Nova";
+  src: local("Proxima Nova"), url("./fonts/regular.otf") format("opentype");
+}
 
 html {
   overflow-x: hidden;
@@ -6,7 +12,7 @@ html {
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont,  "Segoe UI",
+  font-family: -apple-system, BlinkMacSystemFont, "Proxima Nova", "Segoe UI",
     "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
     "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;

@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import darktheme from "./themes/darktheme";
 import lighttheme from "./themes/lighttheme";
+import defaultheme from "./themes/defaulttheme";
 import { ThemeProvider } from "styled-components";
 
 // Import React Analytics
@@ -23,13 +24,22 @@ import NewsPage from "./pages/newsPage";
 // Import custom components
 import PlayerPage from "./pages/playerPage";
 import Header from "./components/Header";
+import ScrollToTop from "./components/ScrollToTop";
 
 const StyledApp = styled.div`
   min-height: 100vh;
   background-color: ${(props) => props.theme.colors.background};
   color: ${(props) => props.theme.colors.onBackground};
+  p {
+    line-height: 1.4;
+  }
   a {
+    text-decoration: none;
     color: ${(props) => props.theme.colors.onBackground};
+  }
+  a:hover,
+  a:active {
+    text-decoration: underline;
   }
   svg {
     color: ${(props) => props.theme.colors.onBackground};
@@ -50,20 +60,28 @@ function App({ theme, loading, loaded, playlists, getAlLEntries }) {
   }
 
   return (
-    <ThemeProvider theme={theme === "dark" ? darktheme : lighttheme}>
+    <ThemeProvider
+      theme={
+        theme === "dark"
+          ? { ...defaultheme, ...darktheme }
+          : { ...defaultheme, ...lighttheme }
+      }
+    >
       <StyledApp>
         <Router>
-          <Header />
-          <Switch>
-            <Route path="/p/:songId" component={PlayerPage} />
-            <Route path="/playlists" component={PlaylistPage} />
-            <Route path="/artists/:id" component={ArtistSinglePage} />
-            <Route path="/artists" component={ArtistPage} />
-            <Route path="/news" component={NewsPage} />
-            <Route path="/">
-              <HomePage />
-            </Route>
-          </Switch>
+          <ScrollToTop>
+            <Header />
+            <Switch>
+              <Route path="/p/:songId" component={PlayerPage} />
+              <Route path="/playlists" component={PlaylistPage} />
+              <Route path="/artists/:id" component={ArtistSinglePage} />
+              <Route path="/artists" component={ArtistPage} />
+              <Route path="/news" component={NewsPage} />
+              <Route path="/">
+                <HomePage />
+              </Route>
+            </Switch>
+          </ScrollToTop>
         </Router>
       </StyledApp>
     </ThemeProvider>

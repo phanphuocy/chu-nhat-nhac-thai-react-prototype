@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useTransition, animated, config } from "react-spring";
+import { ReactComponent as Logo } from "../images/logo-24px.svg";
 import styled from "styled-components";
 import {
   RiPlayListLine,
@@ -115,7 +116,7 @@ const MobileHeader = () => {
         <div className="header">
           <div className="logoContainer">
             <Link to="/">
-              <RiMvLine />
+              <Logo />
             </Link>
           </div>
           <div className="buttonContainer">
