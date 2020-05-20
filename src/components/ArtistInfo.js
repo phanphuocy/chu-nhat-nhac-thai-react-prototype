@@ -8,11 +8,12 @@ import { RiInstagramLine, RiFacebookBoxLine } from "react-icons/ri";
 
 const StyledArtistInfo = styled.div`
   margin-top: 2rem;
-  max-width: 768px;
+  width: 100%;
   margin: 2rem auto 0;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  background-color: green;
 
   @media (min-width: 768px) {
     flex-direction: row;
@@ -115,32 +116,35 @@ const ArtistInfo = ({ artist }) => {
   return (
     <React.Fragment>
       <StyledArtistInfo fullBio={showFullBio}>
-        <div className="avatar">
-          <img src={artist.avatar.url} />
-        </div>
-        <div className="info">
-          <h3>{artist.name}</h3>
-          <div className="bioText">
-            {artist.biography
-              ? documentToReactComponents(artist.biography)
-              : "Thông tin nghệ sĩ đang được cập nhập"}
+        <div className="cover"></div>
+        <div className="content">
+          <div className="avatar">
+            <img src={artist.avatar.url} />
           </div>
-          {artist.biography && (
-            <div className="showMoreGradient">
-              <button onClick={showMoreButtonHandler}>
-                {showFullBio ? "Ẩn" : "Xem Thêm"}
-              </button>
+          <div className="info">
+            <h3>{artist.name}</h3>
+            <div className="bioText">
+              {artist.biography
+                ? documentToReactComponents(artist.biography)
+                : "Thông tin nghệ sĩ đang được cập nhập"}
             </div>
-          )}
-          <div className="social">
-            <span className="social-item">
-              <RiInstagramLine size={24} />
-              <a href="#">twitter.com/abc</a>
-            </span>
-            <span className="social-item">
-              <RiFacebookBoxLine size={24} />
-              <a href="#">facebook.com/abc</a>
-            </span>
+            {artist.biography && (
+              <div className="showMoreGradient">
+                <button onClick={showMoreButtonHandler}>
+                  {showFullBio ? "Ẩn" : "Xem Thêm"}
+                </button>
+              </div>
+            )}
+            <div className="social">
+              <span className="social-item">
+                <RiInstagramLine size={24} />
+                <a href="#">twitter.com/abc</a>
+              </span>
+              <span className="social-item">
+                <RiFacebookBoxLine size={24} />
+                <a href="#">facebook.com/abc</a>
+              </span>
+            </div>
           </div>
         </div>
       </StyledArtistInfo>
