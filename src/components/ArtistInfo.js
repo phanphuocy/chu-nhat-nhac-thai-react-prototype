@@ -15,7 +15,6 @@ import {
 
 const StyledArtistInfo = styled.div`
   position: relative;
-  margin-top: 2rem;
   width: 100%;
   margin: 2rem auto 0;
   display: grid;
@@ -174,7 +173,7 @@ const BackgroundCover = styled.div`
 
   .cover {
     background-color: ${(props) =>
-      props.color ? props.color : `rgba(221, 48, 144, 1)`}
+      props.color ? props.color : `rgba(221, 48, 144, 1)`};
     background-image: ${`url(${DefaultBackground})`};
     object-fit: cover;
     height: 15rem;
