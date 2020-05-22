@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import PropTypes from "prop-types";
 
 const StyledButton = styled.button`
   background-color: ${(props) => props.theme.colors.surface};
@@ -21,14 +22,24 @@ const StyledButton = styled.button`
   }
 `;
 
-const Button = ({ children, label, onClickFx }) => {
+const Button = ({ className, children, label, onClickFx }) => {
   return (
-    <StyledButton onClick={() => onClickFx()}>
+    <StyledButton className={className} onClick={() => onClickFx()}>
       {children}
       {children && <div style={{ width: "0.4rem", height: "100%" }}></div>}
       <span>{label}</span>
     </StyledButton>
   );
+};
+
+Button.propTypes = {
+  className: PropTypes.string,
+  label: PropTypes.string,
+  onClickFx: PropTypes.func.isRequired,
+};
+
+Button.defaultProps = {
+  onClickFx: () => console.log("YOU NEED TO PROVIDE A FUNCTION TO THIS BUTTON"),
 };
 
 export default Button;

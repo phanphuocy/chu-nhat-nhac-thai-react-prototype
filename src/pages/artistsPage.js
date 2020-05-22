@@ -3,8 +3,10 @@ import { connect } from "react-redux";
 import Media from "react-media";
 import ArtistGroup from "../components/ArtistGroup";
 import SEO from "../components/SEO";
+import Slider from "../components/Slider";
+import ArtistCard from "../components/ArtistCard";
 
-const ArtistsPage = ({ allIds }) => {
+const ArtistsPage = ({ allIds, byIds }) => {
   return (
     <Fragment>
       <SEO
@@ -31,7 +33,17 @@ const ArtistsPage = ({ allIds }) => {
             columns = 7;
           }
           return allIds.map((id) => (
-            <ArtistGroup key={id} columns={columns} id={id} />
+            // <ArtistGroup key={id} columns={columns} id={id} />
+            <Slider
+              key={id}
+              columns={columns}
+              length={byIds[id].items.length}
+              height={300}
+            >
+              {byIds[id].items.map((item, i) => (
+                <ArtistCard id={item} />
+              ))}
+            </Slider>
           ));
         }}
       </Media>
@@ -43,6 +55,7 @@ const ArtistsPage = ({ allIds }) => {
 function mapStateToPageProps({ data }) {
   return {
     allIds: data.artistGroups.allIds,
+    byIds: data.artistGroups.byIds,
   };
 }
 export default connect(mapStateToPageProps, {})(ArtistsPage);
