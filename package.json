@@ -11,7 +11,6 @@
     "contentful": "^7.14.2",
     "dotenv": "^8.2.0",
     "lodash.clamp": "^4.0.3",
-    "lodash.debounce": "^4.0.8",
     "lodash.orderby": "^4.6.0",
     "lodash.sortby": "^4.7.0",
     "normalizr": "^3.6.0",

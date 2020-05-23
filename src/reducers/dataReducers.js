@@ -4,6 +4,8 @@ import {
   SET_DATA_LOADING,
   SET_DATA_ERROR,
   SEARCH_ENTRIES,
+  SEARCHING,
+  CLEAR_SEARCH,
 } from "../actions/types";
 
 const initialState = {
@@ -14,6 +16,7 @@ const initialState = {
   loading: false,
   loaded: false,
   error: null,
+  searching: false,
   searchResults: null,
   charts: null,
   news: null,
@@ -49,9 +52,22 @@ export default (state = initialState, action) => {
         ...state,
         error: action.payload,
       };
+    case SEARCHING:
+      return {
+        ...state,
+        searching: true,
+        searchResults: null,
+      };
+    case CLEAR_SEARCH:
+      return {
+        ...state,
+        searching: false,
+        searchResults: null,
+      };
     case SEARCH_ENTRIES:
       return {
         ...state,
+        searching: false,
         searchResults: action.payload,
       };
     default:

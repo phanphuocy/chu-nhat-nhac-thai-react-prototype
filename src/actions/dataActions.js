@@ -3,6 +3,8 @@ import {
   SET_DATA_LOADING,
   SET_DATA_ERROR,
   SEARCH_ENTRIES,
+  SEARCHING,
+  CLEAR_SEARCH,
 } from "./types";
 import Client from "../contentful";
 
@@ -155,15 +157,90 @@ export const setDataLoading = () => {
   };
 };
 
+export const setSearching = () => {
+  clearSearch();
+  return {
+    type: SEARCHING,
+  };
+};
+
+export const clearSearch = () => {
+  return {
+    type: CLEAR_SEARCH,
+  };
+};
+
+function sanitizeSearchResult(items) {
+  var results = {
+    all: {
+      artists: [],
+      playlist: [],
+      songs: [],
+    },
+    quick: {
+      artists: [],
+      playlists: [],
+      songs: [],
+    },
+    total: 0,
+    totalQuick: 0,
+  };
+
+  var quickResultsLimit = 10;
+
+  items.forEach((item) => {
+    switch (item.sys.contentType.sys.id) {
+      case "artists":
+        var searchedItem = {
+          name: item.fields.name,
+          link: `/artist/${item.fields.slug}`,
+        };
+        results.all.artists.push(searchedItem);
+        if (results.totalQuick < quickResultsLimit) {
+          results.quick.artists.push(searchedItem);
+          results.totalQuick++;
+        }
+        results.total++;
+        break;
+      case "songs":
+        var searchedItem = {
+          name: item.fields.titleVi ? item.fields.titleVi : item.fields.titleRo,
+          link: `/p/${item.fields.slug}`,
+        };
+        results.all.songs.push(searchedItem);
+        if (results.totalQuick < quickResultsLimit) {
+          results.quick.songs.push(searchedItem);
+          results.totalQuick++;
+        }
+        results.total++;
+        break;
+      case "playlists":
+        var searchedItem = {
+          name: item.fields.name,
+          link: `/playlist/${item.fields.slug}`,
+        };
+        results.all.playlists.push(searchedItem);
+        if (results.totalQuick < quickResultsLimit) {
+          results.quick.playlists.push(searchedItem);
+          results.totalQuick++;
+        }
+        results.total++;
+        break;
+      default:
+        return;
+    }
+  });
+  return results;
+}
+
 export const searchEntries = (query) => async (dispatch) => {
   try {
-    setDataLoading();
-
     const res = await Client.getEntries({ query: query.toLowerCase() });
-    // console.log(res);
+    const results = sanitizeSearchResult(res.items);
+    console.log(results);
     dispatch({
       type: SEARCH_ENTRIES,
-      payload: res.items,
+      payload: results,
     });
   } catch (error) {
     dispatch({

@@ -1,11 +1,15 @@
-import React, { useState } from "react";
+import React, { Component } from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
-import { searchEntries } from "../../actions/dataActions";
-import QuickResultRow from "./QuickResultRow";
-import debounce from "lodash.debounce";
+import {
+  searchEntries,
+  setSearching,
+  clearSearch,
+} from "../../actions/dataActions";
+import _ from "lodash";
+import QuickResultBox from "./QuickResultsBox";
 
-import { RiSearchLine, RiCloseLine } from "react-icons/ri";
+import { RiCloseLine } from "react-icons/ri";
 
 const StyledContainer = styled.div`
   position: relative;
@@ -27,7 +31,7 @@ const StyledSearchBox = styled.form`
     border: 2px solid hsl(0, 0%, 5%);
     border-radius: 2px;
     height: 100%;
-    padding: 0.5rem 1rem;
+    padding: 1rem 1rem;
     font-size: 14px;
     width: 100%;
     color: white;
@@ -43,71 +47,110 @@ const StyledSearchBox = styled.form`
   }
 `;
 
-const NoResult = styled.div`
+const DropdownContainer = styled.div`
+  z-index: 1000;
   position: absolute;
+  left: 0;
+  top: 100%;
   width: 100%;
+
+  #noResult,
+  #loadingBox {
+    width: 100%;
+    background-color: ${(props) => props.theme.colors.surface};
+    padding: 1rem 2rem;
+    z-index: 500;
+  }
 `;
 
-const QuickResultBox = styled.div`
-  position: absolute;
-  width: 100%;
-  z-index: 100;
-`;
+const NoResult = () => (
+  <div id="noResult">
+    <p>No Result Found. Please Try With Another Query</p>
+  </div>
+);
 
-const SearchBox = ({ searchEntries, searchResults }) => {
-  const [searchTerm, setSearchTerm] = React.useState("");
+const LoadingBox = () => <div id="loadingBox">LOADING....</div>;
 
-  const handleChange = (event) => {
-    setSearchTerm(event.target.value);
-    if (searchTerm.length >= 3) {
-      searchEntries(searchTerm);
-    }
-  };
-
-  function submitHandler(e) {
-    e.preventDefault();
-    searchEntries(searchTerm);
+class SearchBox extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      value: this.props.value || "",
+    };
+    this.debounced = _.debounce(this.debounced, 1000);
   }
 
-  return (
-    <StyledContainer>
-      <StyledSearchBox
-        onSubmit={submitHandler}
-        clearButtonShow={searchTerm.length > 0}
-      >
-        <input
-          id="searchBox"
-          autoComplete="off"
-          type="text"
-          placeholder="Tìm kiếm.."
-          value={searchTerm}
-          onChange={handleChange}
-        ></input>
-        <button id="clearButton" onClick={() => setSearchTerm("")}>
-          <RiCloseLine size={18} />
-        </button>
-      </StyledSearchBox>
-      {searchTerm.length !== 0 &&
-        searchResults !== null &&
-        (searchResults.length === 0 ? (
-          <NoResult>
-            <p>No results</p>
-          </NoResult>
-        ) : (
-          <QuickResultBox>
-            {searchResults.map((result) => (
-              <QuickResultRow result={result} />
-            ))}
-          </QuickResultBox>
-        ))}
-    </StyledContainer>
-  );
-};
+  onChange(value) {
+    this.setState({ value });
+    if (value.length === 0) {
+      this.props.clearSearch();
+    } else {
+      this.debounced(value);
+    }
+  }
+
+  debounced = (value) => {
+    console.log("SSSS");
+    this.props.setSearching();
+    this.props.searchEntries(this.state.value);
+  };
+
+  submitHandler(e) {
+    e.preventDefault();
+  }
+
+  clearButtonHandler = () => {
+    this.props.clearSearch();
+    this.setState({ value: "" });
+  };
+
+  render() {
+    return (
+      <StyledContainer>
+        <StyledSearchBox
+          onSubmit={this.submitHandler}
+          clearButtonShow={this.state.value.length > 0}
+        >
+          <input
+            id="searchBox"
+            autoComplete="off"
+            type="text"
+            placeholder="Tìm kiếm.."
+            value={this.state.value}
+            onChange={(e) => this.onChange(e.target.value)}
+          ></input>
+
+          <button
+            type="button"
+            id="clearButton"
+            onClick={this.clearButtonHandler}
+          >
+            <RiCloseLine size={18} />
+          </button>
+        </StyledSearchBox>
+        <DropdownContainer>
+          {this.props.searching && <LoadingBox />}
+          {this.props.searchResults !== null &&
+            this.props.searchResults.total !== 0 && (
+              <QuickResultBox results={this.props.searchResults} />
+            )}
+          {this.props.searchResults !== null &&
+            this.props.searchResults.total === 0 && <NoResult />}
+        </DropdownContainer>
+      </StyledContainer>
+    );
+  }
+}
 
 function mapStateToProps(state) {
   return {
     searchResults: state.data.searchResults,
+    searching: state.data.searching,
   };
 }
 
-export default connect(mapStateToProps, { searchEntries })(SearchBox);
+export default connect(mapStateToProps, {
+  clearSearch,
+  searchEntries,
+  setSearching,
+})(SearchBox);
