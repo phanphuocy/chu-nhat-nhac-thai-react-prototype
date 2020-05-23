@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
-import ActionContainer from "./ActionContainer";
-import DefaultBackground from "../images/default-cover-image-remember-w1024-h390.jpg";
-import BackButton from "./BackButton";
+import ActionContainer from "../ActionContainer";
+import DefaultBackground from "../../images/default-cover-image-remember-w1024-h390.jpg";
+import BackButton from "../BackButton";
 
 import {
   RiInstagramLine,

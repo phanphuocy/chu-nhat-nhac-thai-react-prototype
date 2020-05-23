@@ -1,11 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 
-import SongRow from "./SongRow";
+import SongRow from "../SongRow";
 
 // Import Redux's
 import { connect } from "react-redux";
-import { setCurrentSong } from "../actions/playerAction";
+import { setCurrentSong } from "../../actions/playerAction";
 
 const Container = styled.div`
   width: 100%;

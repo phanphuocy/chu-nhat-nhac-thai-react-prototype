@@ -1,10 +1,10 @@
 import React, { Fragment, useState } from "react";
 import { connect } from "react-redux";
 import Media from "react-media";
-import ArtistGroup from "../components/ArtistGroup";
+import ArtistGroup from "../components/Artist/ArtistGroup";
 import SEO from "../components/SEO";
 import Slider from "../components/Slider";
-import ArtistCard from "../components/ArtistCard";
+import ArtistCard from "../components/Artist/ArtistCard";
 
 const ArtistsPage = ({ allIds, byIds }) => {
   return (

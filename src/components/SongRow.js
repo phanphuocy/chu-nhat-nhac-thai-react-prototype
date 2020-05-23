@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import convertToDuration from "../utils/covertToDuration";
-import ArtistBadge from "./ArtistBadge";
+import ArtistBadge from "./Artist/ArtistBadge";
 import { MdPlayArrow } from "react-icons/md";
 import { useHistory, Link } from "react-router-dom";
 import { connect } from "react-redux";

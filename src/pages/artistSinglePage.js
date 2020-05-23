@@ -16,8 +16,8 @@ import { setCurrentSong, registerQueueSongs } from "../actions/playerAction";
 
 // Import custom components
 import BoundingBox from "../components/BoundingBox";
-import ArtistInfo from "../components/ArtistInfo";
-import ArtistSongsList from "../components/ArtistSongsList";
+import ArtistInfo from "../components/Artist/ArtistInfo";
+import ArtistSongsList from "../components/Artist/ArtistSongsList";
 
 const TabGroup = styled.div`
   margin-top: 1rem;

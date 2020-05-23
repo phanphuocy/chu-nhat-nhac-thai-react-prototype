@@ -14,7 +14,7 @@ import {
   RiMenuLine,
 } from "react-icons/ri";
 import { Link } from "react-router-dom";
-import SearchBox from "./SearchBox";
+import SearchBox from "./Search/SearchBox";
 
 const Mask = styled.div`
   position: fixed;

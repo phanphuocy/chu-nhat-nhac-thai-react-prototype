@@ -3,10 +3,10 @@ import ReactPlayer from "react-player";
 import styled from "styled-components";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 import ReactMarkdown from "react-markdown";
-import RatioBoundingBox from "./RatioBoundingBox";
+import RatioBoundingBox from "../RatioBoundingBox";
 
 // Import custom components
-import TabGroup from "./styled-components/TabGroup";
+import TabGroup from "../styled-components/TabGroup";
 
 const Comp = styled.div`
   display: flex;

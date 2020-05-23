@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { MdClose } from "react-icons/md";
 
-import SongRow from "./SongRow";
+import SongRow from "../SongRow";
 
 const PreviewPanel = ({ songs, onClosePreviewPanel }) => {
   return (

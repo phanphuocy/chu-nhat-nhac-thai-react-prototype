@@ -3,14 +3,14 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 import { TiEye } from "react-icons/ti";
 import { MdPlayArrow } from "react-icons/md";
-import RatioBoundingBox from "./RatioBoundingBox";
+import RatioBoundingBox from "../RatioBoundingBox";
 import { Link } from "react-router-dom";
 import Img from "react-image";
-import dummySquare from "../images/dummy-post-square-1-300x300.jpg";
+import dummySquare from "../../images/dummy-post-square-1-300x300.jpg";
 
 // Import Redux's
 import { connect } from "react-redux";
-import { registerQueueSongs, setCurrentSong } from "../actions/playerAction";
+import { registerQueueSongs, setCurrentSong } from "../../actions/playerAction";
 
 const StyledArtistCard = styled.div`
   display: inline-block;

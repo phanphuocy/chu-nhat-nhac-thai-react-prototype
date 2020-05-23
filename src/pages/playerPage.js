@@ -8,9 +8,9 @@ import { connect } from "react-redux";
 // Import custom components
 
 import FullWidthBox from "../components/FullWidthBox";
-import PlayerComp from "../components/PlayerComp";
-import PlayerSongInfo from "../components/PlayerSongInfo";
-import PlayerQueue from "../components/PlayerQueue";
+import PlayerComp from "../components/Player/PlayerComp";
+import PlayerSongInfo from "../components/Player/PlayerSongInfo";
+import PlayerQueue from "../components/Player/PlayerQueue";
 
 const PlayerPage = ({ playerQueue, song, lyricsLang }) => {
   //

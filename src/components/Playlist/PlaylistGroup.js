@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import GroupWithSlider from "./styled-components/GroupWithSlider";
 import { useSpring, animated } from "react-spring";
+import GroupWithSlider from "../styled-components/GroupWithSlider";
 
 // Import React GA
 import ReactGa from "react-ga";
@@ -12,15 +12,23 @@ import { TiChevronLeft, TiChevronRight } from "react-icons/ti";
 import { connect } from "react-redux";
 
 // Import custom components
-import ArtistCard from "./ArtistCard";
+import PreviewPanel from "./PreviewPanel";
+import PlaylistCard from "./PlaylistCard";
 
-const ArtistGroup = ({ columns, group }) => {
-  const { name, items } = group;
-
-  // Creating animation
+const PlaylistGroup = ({
+  matches,
+  columns,
+  group,
+  uniqueShowPanel,
+  onRegisterUniquePanel,
+}) => {
+  const [showPreview, setShowPreview] = useState(false);
+  const [previewSongs, setPreviewSongs] = useState([]);
   const [firstIndex, setFirstIndex] = useState(0);
   const [reachEnd, setReachEnd] = useState(false);
   const [reachStart, setReachStart] = useState(true);
+
+  const { name, items } = group;
 
   function increaseIndexHandler() {
     if (firstIndex + columns + columns >= items.length) {
@@ -41,56 +49,81 @@ const ArtistGroup = ({ columns, group }) => {
     setReachEnd(false);
   }
 
+  function onCardClickedHandler(songs) {
+    ReactGa.event({
+      category: "Button",
+      action: `Select playlist ${name}`,
+    });
+    onRegisterUniquePanel(group.id);
+    setPreviewSongs(songs);
+    setShowPreview(true);
+  }
+
+  function onClosePreviewPanel() {
+    setShowPreview(false);
+  }
+
+  function setShowPreviewHandler() {
+    setShowPreview(!showPreview);
+  }
+
   const props = useSpring({
     transform: `translateX(calc(-1 * ${firstIndex} * (100% - 1rem) / ${columns}))`,
   });
 
   return (
-    <GroupWithSlider disabled={items.length <= columns} columns={columns}>
+    <GroupWithSlider columns={columns} disabled={items.length <= columns}>
       <div className="header">
         <h3 className="groupName">{name}</h3>
         <div className="buttonGroup">
           <button
             className="navButton"
-            onClick={decreaseIndexHandler}
             disabled={items.length <= columns || reachStart === true}
           >
-            <TiChevronLeft size={24} />
+            <TiChevronLeft onClick={decreaseIndexHandler} size={24} />
           </button>
           <button
             className="navButton"
-            onClick={increaseIndexHandler}
             disabled={items.length <= columns || reachEnd === true}
           >
-            <TiChevronRight size={24} />
+            <TiChevronRight onClick={increaseIndexHandler} size={24} />
           </button>
         </div>
       </div>
-      {/* <pre>{JSON.stringify(items, null, 2)}</pre> */}
       <div
         className="sliderContainer"
-        style={{ height: `calc(100vw * 1.3  / ${columns})` }}
+        style={{ height: `calc(100vw  / ${columns})` }}
       >
         <animated.div style={{ ...props }} className="slider">
           {items.map((item, i) => (
             <div
-              key={items[i]}
+              key={group.items[i]}
               className="item"
               style={{ left: `calc((100% - 1rem) * ${i / columns})` }}
             >
-              <ArtistCard id={items[i]} />
+              <PlaylistCard
+                id={group.items[i]}
+                onCardClickedHandler={onCardClickedHandler}
+              />
             </div>
           ))}
         </animated.div>
       </div>
+      {showPreview && uniqueShowPanel === group.id && (
+        <PreviewPanel
+          songs={previewSongs}
+          onClosePreviewPanel={onClosePreviewPanel}
+        />
+      )}
     </GroupWithSlider>
   );
 };
 
-function mapStateToProps({ data }, { id }) {
+function mapStateToProps({ data }, ownProps) {
+  const { id } = ownProps;
   return {
-    group: data.artistGroups.byIds[id],
+    group: data.playlistGroups.byIds[id],
   };
 }
 
-export default connect(mapStateToProps)(ArtistGroup);
+export default connect(mapStateToProps)(PlaylistGroup);

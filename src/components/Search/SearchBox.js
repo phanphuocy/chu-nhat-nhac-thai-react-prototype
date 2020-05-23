@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
-import { searchEntries } from "../actions/dataActions";
+import { searchEntries } from "../../actions/dataActions";
 import QuickResultRow from "./QuickResultRow";
 import debounce from "lodash.debounce";
 

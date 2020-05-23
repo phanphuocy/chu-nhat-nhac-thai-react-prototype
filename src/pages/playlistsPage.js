@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from "react";
 import { connect } from "react-redux";
 import Media from "react-media";
-import PlaylistGroup from "../components/PlaylistGroup";
+import PlaylistGroup from "../components/Playlist/PlaylistGroup";
 
 const PlaylistPage = ({ allIds }) => {
   const [uniqueShowPanel, setUniqueShowPanel] = useState(null);

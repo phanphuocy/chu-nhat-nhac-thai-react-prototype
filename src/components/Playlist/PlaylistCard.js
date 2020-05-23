@@ -3,12 +3,12 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 import { TiEye } from "react-icons/ti";
 import { MdPlayArrow } from "react-icons/md";
-import RatioBoundingBox from "./RatioBoundingBox";
+import RatioBoundingBox from "../RatioBoundingBox";
 import { useHistory } from "react-router-dom";
 
 // Import Redux's
 import { connect } from "react-redux";
-import { registerQueueSongs, setCurrentSong } from "../actions/playerAction";
+import { registerQueueSongs, setCurrentSong } from "../../actions/playerAction";
 
 const StyledPlaylistCard = styled.div`
   display: inline-block;

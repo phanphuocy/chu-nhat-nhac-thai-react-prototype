@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Media from "react-media";
 import BoundingBox from "../components/BoundingBox";
 import ChartBoard from "../components/ChartBoard";
-import NewsBoard from "../components/NewsBoard";
+import NewsBoard from "../components/News/NewsBoard";
 import GradientBackground from "../components/GradientBackground";
 import FeaturedBanner from "../components/FeaturedBanner";
 import Slider from "../components/Slider";
@@ -11,8 +11,8 @@ import Slider from "../components/Slider";
 import { connect } from "react-redux";
 
 // Import custom components
-import PlaylistGroup from "../components/PlaylistGroup";
-import ArtistGroup from "../components/ArtistGroup";
+import PlaylistGroup from "../components/Playlist/PlaylistGroup";
+import ArtistGroup from "../components/Artist/ArtistGroup";
 
 const pages = [
   "https://images.pexels.com/photos/62689/pexels-photo-62689.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",

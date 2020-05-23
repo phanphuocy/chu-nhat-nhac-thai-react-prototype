@@ -1,5 +1,5 @@
 import React from "react";
-import RatioBoundingBox from "./RatioBoundingBox";
+import RatioBoundingBox from "../RatioBoundingBoxx";
 import ReactPlayer from "react-player";
 
 const PlayerBox = ({ url }) => {

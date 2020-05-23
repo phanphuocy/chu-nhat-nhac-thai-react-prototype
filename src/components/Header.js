@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import Media from "react-media";
 import MobileHeader from "./MobileHeader";
-import SearchBox from "./SearchBox";
+import SearchBox from "./Search/SearchBox";
 import { ReactComponent as Logo } from "../images/logo-24px.svg";
 import {
   RiPlayListLine,

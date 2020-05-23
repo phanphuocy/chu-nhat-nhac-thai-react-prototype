@@ -4,7 +4,7 @@ import "react-dropdown/style.css";
 import ArtistSongRow from "./ArtistSongRow";
 import styled from "styled-components";
 import { RiFilter3Line, RiPlayLine } from "react-icons/ri";
-import Button from "./Button";
+import Button from "../Button";
 import orderBy from "lodash.orderby";
 
 const StyledArtistSongsList = styled.div`

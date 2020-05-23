@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import { RiStarLine } from "react-icons/ri";
-import convertLargeNumber from "../utils/convertLargeNumber";
-import convertToDuration from "../utils/covertToDuration";
+import convertLargeNumber from "../../utils/convertLargeNumber";
+import convertToDuration from "../../utils/covertToDuration";
 import { Link } from "react-router-dom";
 
 const StyledNewSongRow = styled.div`

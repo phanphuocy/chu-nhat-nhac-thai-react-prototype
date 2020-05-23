@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
 
-import NewsCard from "../components/NewsCard";
+import NewsCard from "./NewsCard";
 
 const StyledNewsBoard = styled.div`
   margin-left: 1rem;
