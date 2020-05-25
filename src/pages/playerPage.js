@@ -24,7 +24,7 @@ const PlayerPage = ({ playerQueue, song, lyricsLang }) => {
     <div>
       <FullWidthBox constraint={1200}>
         <PlayerComp song={song} lyricsLang={lyricsLang} />
-        {/* <PlayerSongInfo currentSong={currentSong} /> */}
+        <PlayerSongInfo song={song} />
         {playerQueue && playerQueue.indexOf(song.slug) !== -1 && (
           <PlayerQueue currentSong={song.slug} playerQueue={playerQueue} />
         )}

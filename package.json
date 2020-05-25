@@ -21,6 +21,7 @@
     "react-helmet": "^6.0.0",
     "react-icons": "^3.9.0",
     "react-image": "^2.4.0",
+    "react-loading-skeleton": "^2.0.1",
     "react-markdown": "^4.3.1",
     "react-masonry-css": "^1.0.14",
     "react-media": "^1.10.0",

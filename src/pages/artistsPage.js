@@ -41,7 +41,7 @@ const ArtistsPage = ({ allIds, byIds }) => {
               height={300}
             >
               {byIds[id].items.map((item, i) => (
-                <ArtistCard id={item} />
+                <ArtistCard key={item} id={item} />
               ))}
             </Slider>
           ));

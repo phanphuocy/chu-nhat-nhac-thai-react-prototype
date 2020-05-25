@@ -116,7 +116,7 @@ const SongRow = ({ song, artist, minimum, isSorted, sortNumber, playing }) => {
         {}
       </span>
       <span className="artist">
-        <ArtistBadge artist={artist} />
+        <ArtistBadge id={song.artists[0]} transparent />
       </span>
       <span className="playtime">{convertToDuration(song.duration)}</span>
     </StyledSongRow>
@@ -136,19 +136,9 @@ SongRow.defaultProps = {
   },
 };
 
-function getArtistBySongId(data, songId) {
-  const artistId = data.songs.byIds[songId].artists[0];
-  const artist = data.artists.byIds[artistId];
-  return {
-    name: artist.name,
-    avatar: artist.avatar,
-  };
-}
-
 function mapStateToProps({ data }, { songId }) {
   return {
     song: data.songs.byIds[songId],
-    artist: getArtistBySongId(data, songId),
   };
 }
 
