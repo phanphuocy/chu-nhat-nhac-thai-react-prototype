@@ -1,19 +1,32 @@
-import React, { useRef, useEffect } from "react";
-import { useSprings, animated } from "react-spring";
+import React, { useRef, useState, useLayoutEffect } from "react";
+import { useSpring, animated } from "react-spring";
 import styled from "styled-components";
-import { useDrag } from "react-use-gesture";
+import { useDrag, useGesture } from "react-use-gesture";
 import clamp from "lodash.clamp";
-import BoundingBox from "./BoundingBox";
+
 import Button from "./Button";
 import { RiArrowLeftSLine, RiArrowRightSLine } from "react-icons/ri";
 
 const Container = styled.div`
   overflow: hidden;
+  border: 1px dotted green;
+  margin-bottom: 2rem;
 
   .heading {
+    margin: 1rem 0;
   }
+
   .content {
+    /* Make position relative for buttons to stick */
     position: relative;
+  }
+  ul {
+    display: inline-flex;
+    position: relative;
+  }
+  li {
+    width: 200px;
+    margin-right: 1rem;
   }
   .item {
     position: absolute;
@@ -33,96 +46,85 @@ const Container = styled.div`
   }
 `;
 
-const pages = [
-  "https://images.pexels.com/photos/62689/pexels-photo-62689.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-  "https://images.pexels.com/photos/296878/pexels-photo-296878.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-  "https://images.pexels.com/photos/1509428/pexels-photo-1509428.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-  "https://images.pexels.com/photos/351265/pexels-photo-351265.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-  "https://images.pexels.com/photos/924675/pexels-photo-924675.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-  "https://images.pexels.com/photos/62689/pexels-photo-62689.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-  "https://images.pexels.com/photos/296878/pexels-photo-296878.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-  "https://images.pexels.com/photos/1509428/pexels-photo-1509428.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-  "https://images.pexels.com/photos/351265/pexels-photo-351265.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-  "https://images.pexels.com/photos/924675/pexels-photo-924675.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-];
-
 const Slider = ({ columns, length, height, children }) => {
-  const index = useRef(0);
-
-  var itemWidth = 0;
-  const container = useRef(null);
-  const [props, set] = useSprings(length, (i) => ({
-    width: 200,
-    x: i * 300,
-    sc: 1,
-  }));
-  const bind = useDrag(({ down, distance, direction, cancel, dragging }) => {
-    if (down && distance > itemWidth) {
-      console.log(direction[0] > 0 ? -1 : 1);
-      cancel(
-        (index.current = clamp(
-          index.current + (direction[0] > 0 ? -2 : 2),
-          0,
-          length - columns
-        ))
-      );
-      console.log("INDEX CURRENTTTTTTTTTTTTTT", index.current);
-    }
-    set((i) => {
-      const x =
-        itemWidth * (i - index.current) +
-        (dragging ? direction[0] * distance : 0);
-      const sc = down ? 1 - distance / window.innerWidth / 2 : 1;
-      return { x, sc };
-    });
+  const [dimensions, setDimensions] = useState({
+    container: 0,
+    slider: 0,
+    wrapped: false,
   });
 
-  useEffect(() => {
-    itemWidth = Math.floor(container.current.clientWidth / (columns + 0.5));
-    set((i) => {
-      const x = itemWidth * i;
-      return { width: itemWidth, x, display: "block" };
+  const container = useRef(null);
+  const slider = useRef(null);
+  const [props, set, stop] = useSpring(() => ({
+    opacity: 1,
+    transform: `translate3d(0px,0,0)`,
+  }));
+
+  const bind = useDrag((state) => {
+    if (container !== null && slider !== null) {
+      console.log("OFFSET", state.offset[0]);
+      set(() => {
+        if (
+          !dimensions.wrapped &&
+          dimensions.slider + 100 <= dimensions.container + -state.offset[0]
+        ) {
+          state.cancel(
+            (state.offset[0] = dimensions.container - dimensions.slider)
+          );
+          return {
+            transform: `translate3d(${
+              dimensions.container - dimensions.slider
+            }px,0,0)`,
+          };
+        } else if (state.offset[0] >= 100) {
+          state.cancel((state.offset[0] = 0));
+          return {
+            transform: `translate3d(0px,0,0)`,
+          };
+        } else if (state.down && !state.canceled && !dimensions.wrapped) {
+          return {
+            opacity: state.down ? 0.5 : 1,
+            transform: `translate3d(${state.offset[0]}px,0,0)`,
+          };
+        } else if (dimensions.wrapped) {
+          return {
+            transform: state.down
+              ? `translate3d(${state.distance * state.direction[0]}px,0,0)`
+              : "translate3d(0px,0,0)",
+          };
+        }
+      });
+    }
+  });
+  console.log(useLayoutEffect);
+  useLayoutEffect(() => {
+    console.log("CALLING LAYOUT EFFECT");
+    setDimensions({
+      container: container.current.clientWidth,
+      slider: slider.current.clientWidth,
+      wrapped: container.current.clientWidth > slider.current.clientWidth,
     });
   }, []);
 
   return (
-    <BoundingBox>
-      <Container ref={container}>
-        <div className="heading">
-          <h1>Length: {length}</h1>
-        </div>
-        <div className="content" style={{ height: height }}>
-          {props.map((prop, i) => (
-            <animated.div
-              key={i}
-              className="item"
-              style={{
-                width: prop.width,
-                transform: prop.x.interpolate((x) => `translate3d(${x}px,0,0)`),
-              }}
-            >
-              <animated.div
-                {...bind()}
-                style={{
-                  height: "100%",
-                  zIndex: 1000,
-                  //   transform: prop.sc.interpolate((s) => `scale(${s})`),
-                }}
-              >
-                {children[i]}
-              </animated.div>
-            </animated.div>
+    <Container ref={container}>
+      <div className="heading">
+        <h1>Length: {length}</h1>
+      </div>
+      <div className="content">
+        <animated.ul {...bind()} className="slider" ref={slider} style={props}>
+          {children.map((child, i) => (
+            <li>{children[i]}</li>
           ))}
-          {/* <div className="buttonGroup"></div> */}{" "}
-          <Button className="left">
-            <RiArrowLeftSLine />
-          </Button>
-          <Button className="right">
-            <RiArrowRightSLine />
-          </Button>
-        </div>
-      </Container>
-    </BoundingBox>
+        </animated.ul>
+        <Button className="left">
+          <RiArrowLeftSLine />
+        </Button>
+        <Button className="right">
+          <RiArrowRightSLine />
+        </Button>
+      </div>
+    </Container>
   );
 };
 

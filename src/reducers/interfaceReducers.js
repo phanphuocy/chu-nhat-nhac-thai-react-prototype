@@ -1,8 +1,13 @@
-import { SWITCH_LYRICS_LANGUAGE, SWITCH_THEME } from "../actions/types";
+import {
+  SWITCH_LYRICS_LANGUAGE,
+  SWITCH_THEME,
+  SWITCH_LYRICS_VISIBILITY,
+} from "../actions/types";
 
 const initialState = {
   lyricsLang: "th",
   theme: "dark",
+  showLyrics: true,
 };
 
 export default (state = initialState, action) => {
@@ -16,6 +21,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         theme: action.payload,
+      };
+    case SWITCH_LYRICS_VISIBILITY:
+      return {
+        ...state,
+        showLyrics: !state.showLyrics,
       };
     default:
       return state;

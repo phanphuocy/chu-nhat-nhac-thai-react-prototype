@@ -123,7 +123,7 @@ const Header = ({ theme, switchTheme }) => {
               </div>
               <SearchBox />
               <div className="navLinkGroup">
-                <Switch
+                {/* <Switch
                   onChange={switchThemeHandler}
                   handleDiameter={24}
                   height={20}
@@ -136,7 +136,7 @@ const Header = ({ theme, switchTheme }) => {
                   checked={checked}
                   uncheckedIcon={<RiSunLine size={18} />}
                   checkedIcon={<RiMoonClearLine size={18} color="#333" />}
-                />
+                /> */}
                 <Link to="/news">
                   <div className="navLink">
                     <RiNewspaperLine size={24} />

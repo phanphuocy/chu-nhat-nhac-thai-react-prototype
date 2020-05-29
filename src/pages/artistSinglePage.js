@@ -2,13 +2,8 @@ import React from "react";
 import SEO from "../components/SEO";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
-import {
-  RiMvLine,
-  RiPolaroid2Line,
-  RiCheckboxBlankCircleLine,
-  RiCheckboxCircleLine,
-  RiFilter3Line,
-} from "react-icons/ri";
+import { RiMvLine, RiPolaroid2Line } from "react-icons/ri";
+import SimilarArtists from "../components/Artist/SimilarArtists";
 
 // Import Redux
 import { connect } from "react-redux";
@@ -55,13 +50,11 @@ const TabGroup = styled.div`
 const ArtistSinglePage = ({
   artist,
   songs,
+  featuredIds,
   registerQueueSongs,
   setCurrentSong,
 }) => {
   let history = useHistory();
-
-  console.log(artist);
-  console.log("songs", songs);
 
   if (!artist) {
     history.push("/404");
@@ -93,6 +86,7 @@ const ArtistSinglePage = ({
         songs={songs}
         playbuttonHandler={playlistPlayButtonClickedHandler}
       />
+      <SimilarArtists similar={artist.similar ? artist.similar : featuredIds} />
       <div className="dummyheight" style={{ height: "20rem" }}></div>
     </BoundingBox>
   );
@@ -115,6 +109,7 @@ function mapStateToPageProps({ data }, ownProps) {
   return {
     artist: data.artists.byIds[id],
     songs: getArtistsSongs(data, id),
+    featuredIds: data.artists.featuredIds,
   };
 }
 

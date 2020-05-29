@@ -10,10 +10,10 @@
     "@testing-library/user-event": "^7.1.2",
     "contentful": "^7.14.2",
     "dotenv": "^8.2.0",
+    "global": "^4.4.0",
     "lodash.clamp": "^4.0.3",
     "lodash.orderby": "^4.6.0",
     "lodash.sortby": "^4.7.0",
-    "normalizr": "^3.6.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-dropdown": "^1.7.0",
@@ -34,11 +34,9 @@
     "react-spring": "^8.0.27",
     "react-switch": "^5.0.1",
     "react-use-gesture": "^7.0.15",
-    "react-youtube": "^7.11.2",
     "redux": "^4.0.5",
     "redux-devtools-extension": "^2.13.8",
     "redux-thunk": "^2.3.0",
-    "slugify": "^1.4.0",
     "styled-components": "^5.1.0"
   },
   "scripts": {

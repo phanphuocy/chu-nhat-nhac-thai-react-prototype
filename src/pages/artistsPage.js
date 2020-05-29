@@ -1,8 +1,8 @@
 import React, { Fragment, useState } from "react";
 import { connect } from "react-redux";
 import Media from "react-media";
-import ArtistGroup from "../components/Artist/ArtistGroup";
 import SEO from "../components/SEO";
+import BoundingBox from "../components/BoundingBox";
 import Slider from "../components/Slider";
 import ArtistCard from "../components/Artist/ArtistCard";
 
@@ -34,16 +34,18 @@ const ArtistsPage = ({ allIds, byIds }) => {
           }
           return allIds.map((id) => (
             // <ArtistGroup key={id} columns={columns} id={id} />
-            <Slider
-              key={id}
-              columns={columns}
-              length={byIds[id].items.length}
-              height={300}
-            >
-              {byIds[id].items.map((item, i) => (
-                <ArtistCard key={item} id={item} />
-              ))}
-            </Slider>
+            <BoundingBox>
+              <Slider
+                key={id}
+                columns={columns}
+                length={byIds[id].items.length}
+                height={300}
+              >
+                {byIds[id].items.map((item, i) => (
+                  <ArtistCard key={item} id={item} />
+                ))}
+              </Slider>
+            </BoundingBox>
           ));
         }}
       </Media>

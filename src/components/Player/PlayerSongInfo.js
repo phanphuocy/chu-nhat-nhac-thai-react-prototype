@@ -16,8 +16,9 @@ const StyledPlayerSongInfo = styled.div`
 
   .songInfo {
     grid-area: songInfo;
+
     h1 {
-      font-size: 2rem;
+      font-size: 1.5rem;
       font-family: ${(props) => props.theme.fonts.serif};
       margin: 1rem 0;
     }
@@ -43,6 +44,12 @@ const StyledPlayerSongInfo = styled.div`
       "artistsInfo sharing"
       "songInfo sharing"
       "commenting sharing";
+
+    .songInfo {
+      h1 {
+        font-size: 2rem;
+      }
+    }
   }
 `;
 

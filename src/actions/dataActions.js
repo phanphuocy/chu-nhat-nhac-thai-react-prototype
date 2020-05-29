@@ -18,7 +18,7 @@ export const getAlLEntries = () => async (dispatch) => {
       playlists = { byIds: {}, allIds: [] },
       songs = { byIds: {}, allIds: [] },
       artistGroups = { byIds: {}, allIds: [], featuredIds: [] },
-      artists = { byIds: {}, allIds: [] },
+      artists = { byIds: {}, allIds: [], featuredIds: [] },
       news = { byIds: {}, allIds: [] };
 
     var currentWeekChart = {},
@@ -70,12 +70,18 @@ export const getAlLEntries = () => async (dispatch) => {
           artists.byIds[item.fields.slug] = {
             ...item.fields,
             avatar: item.fields.avatar.fields.file,
+            similar:
+              item.fields.similar &&
+              item.fields.similar.map((each) => each.fields.slug),
             songs:
               item.fields.songs !== undefined
                 ? item.fields.songs.map((each) => each.fields.slug)
                 : [],
           };
           artists.allIds.push(item.fields.slug);
+          if (item.fields.isFeatured) {
+            artists.featuredIds.push(item.fields.slug);
+          }
           break;
         case "news":
           news.byIds[item.fields.id.toString()] = {
@@ -85,7 +91,6 @@ export const getAlLEntries = () => async (dispatch) => {
           news.allIds.push(item.fields.id.toString());
           break;
         case "chartBoard":
-          console.log(item.fields.title);
           if (item.fields.isWeek) {
             if (Object.keys(currentWeekChart).length === 0) {
               currentWeekChart = {

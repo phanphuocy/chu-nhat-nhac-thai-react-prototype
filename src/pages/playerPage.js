@@ -11,6 +11,7 @@ import FullWidthBox from "../components/FullWidthBox";
 import PlayerComp from "../components/Player/PlayerComp";
 import PlayerSongInfo from "../components/Player/PlayerSongInfo";
 import PlayerQueue from "../components/Player/PlayerQueue";
+import SimilarSongs from "../components/Player/SimilarSongs";
 
 const PlayerPage = ({ playerQueue, song, lyricsLang }) => {
   //
@@ -28,6 +29,7 @@ const PlayerPage = ({ playerQueue, song, lyricsLang }) => {
         {playerQueue && playerQueue.indexOf(song.slug) !== -1 && (
           <PlayerQueue currentSong={song.slug} playerQueue={playerQueue} />
         )}
+        <SimilarSongs />
       </FullWidthBox>
     </div>
   );
