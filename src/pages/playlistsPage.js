@@ -3,8 +3,19 @@ import { connect } from "react-redux";
 import Media from "react-media";
 import PlaylistGroup from "../components/Playlist/PlaylistGroup";
 
+import { useTrail, animated } from "react-spring";
+
 const PlaylistPage = ({ allIds }) => {
   const [uniqueShowPanel, setUniqueShowPanel] = useState(null);
+
+  const trail = useTrail(allIds.length, {
+    to: { opacity: 1, transform: `translate3d(0px,0,0)` },
+    from: {
+      position: "relative",
+      opacity: 0,
+      transform: `translate3d(0px,40px,0)`,
+    },
+  });
 
   function onRegisterUniquePanel(name) {
     setUniqueShowPanel(name);
@@ -32,15 +43,17 @@ const PlaylistPage = ({ allIds }) => {
           }
           return (
             <Fragment>
-              {allIds.map((id) => (
-                <PlaylistGroup
-                  key={id}
-                  matches={matches}
-                  columns={columns}
-                  id={id}
-                  uniqueShowPanel={uniqueShowPanel}
-                  onRegisterUniquePanel={onRegisterUniquePanel}
-                />
+              {trail.map((props, key) => (
+                <animated.div style={props}>
+                  <PlaylistGroup
+                    key={allIds[key]}
+                    matches={matches}
+                    columns={columns}
+                    id={allIds[key]}
+                    uniqueShowPanel={uniqueShowPanel}
+                    onRegisterUniquePanel={onRegisterUniquePanel}
+                  />
+                </animated.div>
               ))}
             </Fragment>
           );

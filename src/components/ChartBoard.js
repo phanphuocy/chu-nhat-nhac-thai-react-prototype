@@ -5,7 +5,7 @@ import SongRow from "./SongRow";
 
 const StyledChartBoard = styled.div`
   margin: 0 auto;
-  padding: 1rem 0;
+  padding: 4rem 0;
   max-width: 1280px;
   .chartContainer {
     display: grid;

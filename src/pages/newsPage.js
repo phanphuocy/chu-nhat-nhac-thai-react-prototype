@@ -1,10 +1,10 @@
 import React from "react";
 import styled from "styled-components";
-import BoundingBox from "../components/BoundingBox";
 import { connect } from "react-redux";
 import Masonry from "react-masonry-css";
 import Media from "react-media";
 import NewsCard from "../components/News/NewsCard";
+import { useTrail, animated } from "react-spring";
 
 const StyledNewsPage = styled.div`
   max-width: 960px;
@@ -34,6 +34,10 @@ const StyledNewsPage = styled.div`
 `;
 
 const NewsPage = ({ allIds }) => {
+  const trail = useTrail(allIds.length, {
+    to: { opacity: 1 },
+    from: { opacity: 0 },
+  });
   return (
     <StyledNewsPage>
       <Media
@@ -57,8 +61,10 @@ const NewsPage = ({ allIds }) => {
               className="my-masonry-grid"
               columnClassName="my-masonry-grid_column"
             >
-              {allIds.map((id) => (
-                <NewsCard newsId={id} key={id} />
+              {trail.map((props, key) => (
+                <animated.div style={props}>
+                  <NewsCard newsId={allIds[key]} key={key} />
+                </animated.div>
               ))}
             </Masonry>
           );

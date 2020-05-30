@@ -4,13 +4,37 @@ import BoundingBox from "./BoundingBox";
 import { connect } from "react-redux";
 import { useTransition, animated } from "react-spring";
 import { useDrag } from "react-use-gesture";
-import Button from "./Button";
+import { RiArrowLeftSLine, RiArrowRightSLine } from "react-icons/ri";
+
+const Image = styled.div`
+  position: relative;
+  top: -5%;
+  left: 0;
+  height: 110%;
+  width: 100%;
+  @media (min-width: 640px) {
+    width: 200%;
+  }
+  background-color: gray;
+  background-image: ${(props) => `url(${props.url})`};
+  background-size: cover;
+  filter: blur(8px) brightness(75%);
+`;
+
+const GradientFilter = styled.div`
+  position: absolute;
+  background: ${(props) =>
+    `linear-gradient(90deg, ${props.theme.colors.background} 0%, rgba(0,0,0,0) 100%)`};
+  top: -1rem;
+  left: -2rem;
+  height: 120%;
+  width: 36%;
+`;
 
 const StyledFeaturedBanner = styled.div`
   position: relative;
   overflow: hidden;
   cursor: pointer;
-
   .card {
     display: grid;
     grid-template-columns: 1fr 2fr;
@@ -48,7 +72,6 @@ const StyledFeaturedBanner = styled.div`
       color: ${(props) => props.theme.colors.onBackground};
       font-size: 1.2rem;
       margin-bottom: 1rem;
-      font-family: ${(props) => props.theme.fonts.serif};
     }
   }
   .content {
@@ -79,13 +102,12 @@ const StyledFeaturedBanner = styled.div`
       padding: 2rem 8rem;
     }
     .card {
-      padding: 2rem 0 3rem;
       grid-template-columns: 1fr 2fr;
       grid-template-rows: 100px auto 1fr;
       grid-template-areas:
-        "image title"
-        "image action"
-        "image content";
+        "title image"
+        "action image"
+        "content image";
     }
     .image {
       max-height: 100%;
@@ -100,24 +122,6 @@ const StyledFeaturedBanner = styled.div`
       padding: 1rem 1rem 2rem;
     }
   }
-`;
-
-const BackgroundImage = styled.div`
-  z-index: -1000;
-  position: absolute;
-  top: -5%;
-  left: 0;
-  height: 110%;
-  width: 100%;
-
-  @media (min-width: 640px) {
-    width: 200%;
-  }
-  background-color: gray;
-  background-image: ${(props) => `url(${props.url})`};
-  background-size: cover;
-  background-position: center;
-  filter: blur(64px) brightness(30%);
 `;
 
 const FeaturedBanner = ({ allIds, posts }) => {
@@ -138,9 +142,9 @@ const FeaturedBanner = ({ allIds, posts }) => {
 
   return (
     <StyledFeaturedBanner>
-      {transitions.map(({ item, props, key }) => (
-        <animated.div {...bind()} key={key} style={{ ...props }}>
-          <BoundingBox maxwidth={960}>
+      <BoundingBox maxwidth={960}>
+        {transitions.map(({ item, props, key }) => (
+          <animated.div {...bind()} key={key} style={{ ...props }}>
             <div className="card">
               <div className="title">
                 <h4>{posts[item].category}</h4>
@@ -150,9 +154,11 @@ const FeaturedBanner = ({ allIds, posts }) => {
                 <p>{posts[item].body}</p>
               </div>
               <div className="action">
-                <Button>Play</Button>
+                <button>Play</button>
               </div>
               <div className="image">
+                <Image url={posts[item].image && posts[item].image.url}></Image>
+                <GradientFilter></GradientFilter>
                 <img
                   className="main-image"
                   src={posts[item].image && posts[item].image.url}
@@ -160,12 +166,9 @@ const FeaturedBanner = ({ allIds, posts }) => {
                 />
               </div>
             </div>
-          </BoundingBox>
-          <BackgroundImage
-            url={posts[item].image && posts[item].image.url}
-          ></BackgroundImage>
-        </animated.div>
-      ))}
+          </animated.div>
+        ))}
+      </BoundingBox>
     </StyledFeaturedBanner>
   );
 };
