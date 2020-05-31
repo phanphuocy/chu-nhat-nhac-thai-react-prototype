@@ -29,7 +29,7 @@ const PlayerPage = ({ playerQueue, song, lyricsLang }) => {
         {playerQueue && playerQueue.indexOf(song.slug) !== -1 && (
           <PlayerQueue currentSong={song.slug} playerQueue={playerQueue} />
         )}
-        <SimilarSongs />
+        <SimilarSongs song={song} />
       </FullWidthBox>
     </div>
   );
