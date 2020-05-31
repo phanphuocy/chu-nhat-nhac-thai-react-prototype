@@ -99,6 +99,9 @@ const SongRow = ({ song, artist, minimum, isSorted, sortNumber, playing }) => {
   function playButtonHandler(url) {
     history.push(`/p/${url}`);
   }
+  if (!song) {
+    return <p>Empty Song</p>;
+  }
   return (
     <StyledSongRow>
       {isSorted && <span className="sortNumber">{`#${sortNumber}`}</span>}

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
 import SongRow from "./SongRow";
+import { Tabs, TabPane } from "./Tabs";
 
 const StyledChartBoard = styled.div`
   margin: 0 auto;
@@ -15,6 +16,7 @@ const StyledChartBoard = styled.div`
   @media (min-width: 768px) {
     .header {
       margin: 0;
+      font-size: 3rem;
     }
     .chartContainer {
       grid-template-columns: 1fr 1fr;
@@ -23,19 +25,11 @@ const StyledChartBoard = styled.div`
     }
   }
   .header {
-    margin: 0 0.5rem;
-    padding: 1.5rem 1rem;
-    background: ${(props) =>
-      props.light ? "#D13A64" : props.theme.colors.surface};
-    background: linear-gradient(
-      90deg,
-      rgba(131, 58, 180, 1) 0%,
-      rgba(253, 29, 29, 1) 50%,
-      rgba(252, 176, 69, 1) 100%
-    );
+    padding: 1rem 1rem;
     font-weight: bold;
     color: whitesmoke;
-    font-size: 1.25rem;
+    font-size: 2rem;
+    font-family: ${(props) => props.theme.fonts.serif};
     text-align: center;
   }
 
@@ -64,36 +58,13 @@ const StyledChartBoard = styled.div`
 
 const ChartBoard = ({ charts, theme }) => {
   const { currentWeekChart, pastWeekChart, thisMonthChart } = charts;
-  const [selectedButton, setSelectedButton] = useState("currentWeek");
-  function switchButton(label) {
-    setSelectedButton(label);
-  }
+
   return (
     <StyledChartBoard light={theme === "light"}>
       <div className="header">Bảng Xếp Hạng</div>
-      <div className="switchButtonGroup">
-        <button
-          className={selectedButton === "currentWeek" ? "active" : ""}
-          onClick={() => switchButton("currentWeek")}
-        >
-          Tuần Này
-        </button>
-        <button
-          className={selectedButton === "pastWeek" ? "active" : ""}
-          onClick={() => switchButton("pastWeek")}
-        >
-          Tuần Trước
-        </button>
-        <button
-          className={selectedButton === "thisMonth" ? "active" : ""}
-          onClick={() => switchButton("thisMonth")}
-        >
-          Tháng Này
-        </button>
-      </div>
-      <div className="chartContainer">
-        {selectedButton === "currentWeek" &&
-          currentWeekChart.items.map((song, i) => (
+      <Tabs>
+        <TabPane tab="Tuần Này" key="this-week">
+          {currentWeekChart.items.map((song, i) => (
             <SongRow
               songId={song}
               key={song}
@@ -102,8 +73,9 @@ const ChartBoard = ({ charts, theme }) => {
               sortNumber={i + 1}
             />
           ))}
-        {selectedButton === "pastWeek" &&
-          pastWeekChart.items.map((song, i) => (
+        </TabPane>
+        <TabPane tab="Tuần Trước" key="past-week">
+          {pastWeekChart.items.map((song, i) => (
             <SongRow
               songId={song}
               key={song}
@@ -112,8 +84,9 @@ const ChartBoard = ({ charts, theme }) => {
               sortNumber={i + 1}
             />
           ))}
-        {selectedButton === "thisMonth" &&
-          thisMonthChart.items.map((song, i) => (
+        </TabPane>
+        <TabPane tab="Tháng Này" key="this-month">
+          {thisMonthChart.items.map((song, i) => (
             <SongRow
               songId={song}
               key={song}
@@ -122,7 +95,8 @@ const ChartBoard = ({ charts, theme }) => {
               sortNumber={i + 1}
             />
           ))}
-      </div>
+        </TabPane>
+      </Tabs>
     </StyledChartBoard>
   );
 };
