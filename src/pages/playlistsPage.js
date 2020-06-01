@@ -44,7 +44,7 @@ const PlaylistPage = ({ allIds }) => {
           return (
             <Fragment>
               {trail.map((props, key) => (
-                <animated.div style={props}>
+                <animated.div style={props} key={key}>
                   <PlaylistGroup
                     key={allIds[key]}
                     matches={matches}

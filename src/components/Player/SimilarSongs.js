@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import styled from "styled-components";
-import { connect } from "react-redux";
-import Skeleton from "react-loading-skeleton";
-import RatioBoundingBox from "../RatioBoundingBox";
 import { Link } from "react-router-dom";
 import Img from "react-image";
 import dummySquare from "../../images/dummy-post-square-1-300x300.jpg";
+import Skeleton from "react-loading-skeleton";
 
 const StyledPanel = styled.div`
   .header {
@@ -17,45 +15,48 @@ const StyledPanel = styled.div`
     padding: 0 1rem;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: flex-start;
+    justify-content: flex-start;
+    align-items: stretch;
   }
 `;
 
 const StyledCard = styled.div`
   background-color: ${(props) => props.theme.colors.surface};
   width: 48%;
+  margin-right: 2%;
   margin-bottom: 1rem;
   .info {
     padding: 1rem;
   }
   @media (min-width: 768px) {
     width: 19%;
+    margin-right: 1%;
   }
 `;
 
-const SongCard = connect(mapStateToCard)(({ song }) => (
+const LoadingCard = () => (
+  <StyledCard>
+    <Skeleton height={75} style={{ marginBottom: "0.5rem" }} />
+    <Skeleton count={1} style={{ marginBottom: "0.5rem" }} />
+    <Skeleton count={1} />
+  </StyledCard>
+);
+
+const SongCard = ({ song }) => (
   <StyledCard>
     <Link to={`/p/${song.slug}`}>
       <Img
         src={`https://img.youtube.com/vi/${song.url}/mqdefault.jpg`}
-        alt={song.titleEn}
+        alt={song.title}
         width="100%"
         loader={<img src={dummySquare} alt="dummy" />}
       />
       <div className="info">
-        <h3 className="title">{song.titleEn}</h3>
+        <h3 className="title">{song.title}</h3>
       </div>
     </Link>
   </StyledCard>
-));
-
-function mapStateToCard({ data }, ownProps) {
-  const { id } = ownProps;
-  return {
-    song: data.songs.byIds[id],
-  };
-}
+);
 
 const SimilarSongs = ({ song }) => {
   const [similarSongs, setSimilarSongs] = useState([]);
@@ -90,10 +91,11 @@ const SimilarSongs = ({ song }) => {
         <h5>Fan Cũng Thích</h5>
       </div>
       <div className="content">
-        {similarSongs.length > 0 &&
-          similarSongs.map((song) => (
-            <SongCard key={song.slug} id={song.slug}></SongCard>
-          ))}
+        {similarSongs.length > 0
+          ? similarSongs.map((song) => (
+              <SongCard key={song.slug} song={song}></SongCard>
+            ))
+          : [0, 0, 0, 0, 0].map((loading) => <LoadingCard />)}
       </div>
     </StyledPanel>
   );

@@ -56,7 +56,17 @@ function App({ theme, loading, loaded, playlists, getAlLEntries }) {
   }, []);
 
   if (loading === true || loaded === false) {
-    return <LoaderScreen />;
+    return (
+      <ThemeProvider
+        theme={
+          theme === "dark"
+            ? { ...defaultheme, ...darktheme }
+            : { ...defaultheme, ...lighttheme }
+        }
+      >
+        <LoaderScreen />
+      </ThemeProvider>
+    );
   }
 
   return (
