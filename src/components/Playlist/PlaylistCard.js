@@ -81,11 +81,16 @@ const PlaylistCard = ({
   setCurrentSong,
 }) => {
   const history = useHistory();
+  if (!playlist) {
+    return <div>UNDEFINED</div>;
+  }
   return (
     <StyledPlaylistCard>
       <RatioBoundingBox>
         <a>
-          {/* <img src={playlist.cover.url} /> */}
+          {playlist.cover && (
+            <img src={playlist.cover.url} alt={`${playlist.name} thumbnail`} />
+          )}
           <MockCard>
             <h2 className="title">{playlist.name}</h2>
           </MockCard>
@@ -108,6 +113,16 @@ const PlaylistCard = ({
       </RatioBoundingBox>
     </StyledPlaylistCard>
   );
+};
+
+PlaylistCard.propTypes = {
+  playlist: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    songs: PropTypes.array.isRequired,
+    cover: PropTypes.shape({
+      url: PropTypes.string.isRequired,
+    }),
+  }),
 };
 
 function mapStateToProps({ data }, { id }) {

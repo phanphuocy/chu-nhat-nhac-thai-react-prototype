@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Dropdown from "react-dropdown";
 import "react-dropdown/style.css";
 import ArtistSongRow from "./ArtistSongRow";
@@ -66,7 +66,7 @@ const options = [
   },
 ];
 
-const ArtistSongsList = ({ songs, playbuttonHandler }) => {
+const ArtistSongsList = ({ artist, songs, playbuttonHandler }) => {
   const [sortedSongs, setSortedSongs] = useState(
     orderBy(songs, options[0].value[0], "desc")
   );
@@ -75,6 +75,8 @@ const ArtistSongsList = ({ songs, playbuttonHandler }) => {
     var newSongs = orderBy(sortedSongs, value[0], value[1]);
     setSortedSongs(newSongs);
   }
+
+  useEffect(() => console.log("Change artist songs lists"), [artist]);
 
   return (
     <StyledArtistSongsList>

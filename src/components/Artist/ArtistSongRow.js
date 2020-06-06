@@ -4,6 +4,7 @@ import { RiStarLine } from "react-icons/ri";
 import convertLargeNumber from "../../utils/convertLargeNumber";
 import convertToDuration from "../../utils/covertToDuration";
 import { Link } from "react-router-dom";
+import { ReactComponent as TranslatedCheckBoxSVG } from "../../images/translated-icon.svg";
 
 const StyledNewSongRow = styled.div`
   width: 100%;
@@ -12,14 +13,24 @@ const StyledNewSongRow = styled.div`
   display: inline-grid;
   grid-template-columns: 140px 1fr 1fr 1fr;
   grid-template-areas:
-    "thumbnail title title title"
-    "thumbnail stars releaseYear playtime";
+    "checked thumbnail title title title"
+    "checked thumbnail stars releaseYear playtime";
 
   a,
   span {
     align-self: center;
   }
+  .checked {
+    grid-area: checked;
+    display: flex;
+    align-items: center;
 
+    svg {
+      height: 1.5rem;
+      width: 1.5rem;
+      fill: lightgreen;
+    }
+  }
   .thumbnail {
     grid-area: thumbnail;
   }
@@ -49,18 +60,22 @@ const StyledNewSongRow = styled.div`
   }
 
   @media (min-width: 768px) {
-    grid-template-columns: 140px 2fr 1fr 1fr 2rem;
-    grid-template-areas: "thumbnail title stars releaseYear playtime";
+    grid-template-columns: 2rem 140px 2fr 1fr 1fr 2rem;
+    grid-template-areas: "checked thumbnail title stars releaseYear playtime";
   }
 `;
 
 const ArtistSongRow = ({ song }) => {
   return (
     <StyledNewSongRow>
+      <div className="checked">
+        {song.lyricsVi && <TranslatedCheckBoxSVG />}
+      </div>
       <img
         className="thumbnail"
         src={`https://img.youtube.com/vi/${song.url}/mqdefault.jpg`}
         width="120"
+        alt={`${song.title} thumbnail`}
       />
       <Link to={`/p/${song.slug}`} className="title">
         <span>{song.titleEn}</span>

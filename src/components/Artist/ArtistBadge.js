@@ -16,11 +16,20 @@ const StyledArtistBadge = styled.div`
     align-items: center;
   }
 
+  .colorRadius {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 50%;
+    margin-right: 0.5rem;
+  }
+
   img {
     width: 1rem;
     border-radius: 1rem;
-    margin-right: 0.5rem;
-
     @media (min-width: 768px) {
       width: 2rem;
     }
@@ -47,7 +56,12 @@ const ArtistBadge = ({ artist, transparent }) => {
   return (
     <StyledArtistBadge transparent={transparent}>
       <Link to={path}>
-        <img src={artist.avatar.url}></img>
+        <div
+          className="colorRadius"
+          style={{ backgroundColor: artist.coverColor }}
+        >
+          <img src={artist.avatar.url} alt={`${artist.name} badge`}></img>
+        </div>
         <p>{artist.name}</p>
       </Link>
     </StyledArtistBadge>

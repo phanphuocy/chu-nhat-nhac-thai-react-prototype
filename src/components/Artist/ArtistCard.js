@@ -44,6 +44,13 @@ const StyledArtistCard = styled.div`
 `;
 
 const ArtistCard = ({ artist }) => {
+  if (!artist) {
+    return (
+      <div>
+        <p>UNDEFINDED</p>
+      </div>
+    );
+  }
   return (
     <Link to={`/artists/${artist.slug}`}>
       <StyledArtistCard>
@@ -63,7 +70,8 @@ const ArtistCard = ({ artist }) => {
   );
 };
 
-function mapStateToProps({ data }, { id }) {
+function mapStateToProps({ data }, ownProps) {
+  const { id } = ownProps;
   return {
     artist: data.artists.byIds[id],
   };

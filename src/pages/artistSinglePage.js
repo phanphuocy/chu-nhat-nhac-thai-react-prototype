@@ -83,6 +83,7 @@ const ArtistSinglePage = ({
         </button>
       </TabGroup>
       <ArtistSongsList
+        artist={artist.name}
         songs={songs}
         playbuttonHandler={playlistPlayButtonClickedHandler}
       />
