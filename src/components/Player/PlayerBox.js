@@ -11,7 +11,6 @@ const PlayerBox = ({ url }) => {
         height="100%"
         controls
         playing
-        muted
         onReady={() => console.log("onReady")}
         onStart={() => console.log("onStart")}
         onPlay={() => console.log("onPlay")}
@@ -19,7 +18,7 @@ const PlayerBox = ({ url }) => {
         onBuffer={() => console.log("onBuffer")}
         onEnded={() => console.log("onEnded")}
         onError={() => console.log("onError")}
-        onProgress={() => console.log("onProgress")}
+        onProgress={(e) => console.log(e)}
         onDuration={() => console.log("onDuration")}
       />
     </RatioBoundingBox>

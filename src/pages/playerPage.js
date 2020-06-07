@@ -9,6 +9,7 @@ import { connect } from "react-redux";
 
 import FullWidthBox from "../components/FullWidthBox";
 import PlayerComp from "../components/Player/PlayerComp";
+import DynamicLyricsComp from "../components/Player/DynamicLyricsComp";
 import PlayerSongInfo from "../components/Player/PlayerSongInfo";
 import PlayerQueue from "../components/Player/PlayerQueue";
 import SimilarSongs from "../components/Player/SimilarSongs";
@@ -23,8 +24,10 @@ const PlayerPage = ({ playerQueue, song, lyricsLang }) => {
 
   return (
     <div>
+      <DynamicLyricsComp song={song} />
       <FullWidthBox constraint={1200}>
-        <PlayerComp song={song} lyricsLang={lyricsLang} />
+        {/* <PlayerComp song={song} lyricsLang={lyricsLang} /> */}
+
         <PlayerSongInfo song={song} />
         {playerQueue && playerQueue.indexOf(song.slug) !== -1 && (
           <PlayerQueue currentSong={song.slug} playerQueue={playerQueue} />
