@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import ReactPlayer from "react-player";
-import RatioBoundingBox from "../RatioBoundingBox";
-import test from "../../test";
 import styled from "styled-components";
 import { useTransition, animated } from "react-spring";
 
@@ -38,19 +36,21 @@ const DynamicLyricsComp = ({
   const [displayLyrics, setDisplayLyrics] = useState("");
   const url = `https://www.youtube.com/watch?v=${song.url}`;
 
+  const timestamp = JSON.parse(song.timestamp);
+
   if (!song) {
     return <p>ERROR</p>;
   }
 
   function findAndReplaceLyrics(playedSeconds) {
     var playedMs = Math.floor(playedSeconds * 1000);
-    for (var i = 0; i < test.length; i++) {
-      if (playedMs > test[i].start && playedMs < test[i].end) {
-        setDisplayLyrics(test[i].text);
+    for (var i = 0; i < timestamp.length; i++) {
+      if (playedMs > timestamp[i].start && playedMs < timestamp[i].end) {
+        setDisplayLyrics(timestamp[i].text);
         break;
       } else if (
-        i === test.length - 1 &&
-        (playedMs < test[i].start || playedMs > test[i].end)
+        i === timestamp.length - 1 &&
+        (playedMs < timestamp[i].start || playedMs > timestamp[i].end)
       ) {
         setDisplayLyrics("");
       }
@@ -78,7 +78,6 @@ const DynamicLyricsComp = ({
           onProgress={(e) => findAndReplaceLyrics(e.playedSeconds)}
           onDuration={() => console.log("onDuration")}
         />
-
         <LyricsBox className="lyrics" text={displayLyrics} />
       </div>
     </ControlHeight>
@@ -131,6 +130,13 @@ const StyledLyricsBox = styled.div`
     width: 100%;
     text-align: center;
     vertical-align: center;
+    background: -webkit-linear-gradient(
+      0deg,
+      rgba(248, 91, 124, 1) 0%,
+      rgba(255, 120, 148, 1) 100%
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
 
   @media (min-width: 768px) {

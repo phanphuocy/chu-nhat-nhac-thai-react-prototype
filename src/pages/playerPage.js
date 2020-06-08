@@ -24,10 +24,9 @@ const PlayerPage = ({ playerQueue, song, lyricsLang }) => {
 
   return (
     <div>
-      <DynamicLyricsComp song={song} />
+      {song.timestamp && <DynamicLyricsComp song={song} />}
       <FullWidthBox constraint={1200}>
-        {/* <PlayerComp song={song} lyricsLang={lyricsLang} /> */}
-
+        {!song.timestamp && <PlayerComp song={song} lyricsLang={lyricsLang} />}
         <PlayerSongInfo song={song} />
         {playerQueue && playerQueue.indexOf(song.slug) !== -1 && (
           <PlayerQueue currentSong={song.slug} playerQueue={playerQueue} />

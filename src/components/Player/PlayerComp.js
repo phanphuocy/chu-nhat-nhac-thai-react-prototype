@@ -150,10 +150,10 @@ const PlayerComp = ({
                     <Tabs>
                       <TabPane key="lyricsTh" tab="Lời Tiếng Thái">
                         {song.lyricsTh ? (
-                          song.lyricsTh.split("\n\n").map((paragraph) => (
-                            <div style={{ marginBottom: "1.4rem" }}>
-                              {paragraph.split("\n").map((line) => (
-                                <ReactMarkdown source={line} />
+                          song.lyricsTh.split("\n\n").map((paragraph, i) => (
+                            <div style={{ marginBottom: "1.4rem" }} key={i}>
+                              {paragraph.split("\n").map((line, i) => (
+                                <ReactMarkdown source={line} key={i} />
                               ))}
                             </div>
                           ))

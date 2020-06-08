@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Media from "react-media";
 import MobileHeader from "./MobileHeader";
 import SearchBox from "./Search/SearchBox";
-import { ReactComponent as Logo } from "../images/logo-24px.svg";
+import { ReactComponent as Logo } from "../images/logo.svg";
 import {
   RiPlayListLine,
   RiGroup2Line,
@@ -37,6 +37,11 @@ const StyledHeader = styled.div`
     flex-basis: 2;
     display: flex;
     align-items: center;
+
+    .svg {
+      width: 2rem;
+      height: 2rem;
+    }
 
     a {
       text-decoration: none;
@@ -117,7 +122,7 @@ const Header = ({ theme, switchTheme }) => {
             <div className="wrapper">
               <div className="logoContainer">
                 <Link to="/">
-                  <Logo />
+                  <Logo className="svg" />
                   <p className="logotype">Chủ Nhật Nhạc Thái</p>
                 </Link>
               </div>
