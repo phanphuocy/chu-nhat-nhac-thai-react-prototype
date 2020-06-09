@@ -6,7 +6,7 @@ import { useSpring, animated } from "react-spring";
 import ReactGa from "react-ga";
 
 // Import icons
-import { TiChevronLeft, TiChevronRight } from "react-icons/ti";
+import { RiArrowRightSLine, RiArrowLeftSLine } from "react-icons/ri";
 
 // Import Redux
 import { connect } from "react-redux";
@@ -55,21 +55,21 @@ const ArtistGroup = ({ columns, group }) => {
             onClick={decreaseIndexHandler}
             disabled={items.length <= columns || reachStart === true}
           >
-            <TiChevronLeft size={24} />
+            <RiArrowLeftSLine size={24} />
           </button>
           <button
             className="navButton"
             onClick={increaseIndexHandler}
             disabled={items.length <= columns || reachEnd === true}
           >
-            <TiChevronRight size={24} />
+            <RiArrowRightSLine size={24} />
           </button>
         </div>
       </div>
       {/* <pre>{JSON.stringify(items, null, 2)}</pre> */}
       <div
         className="sliderContainer"
-        style={{ height: `calc(100vw * 1.3  / ${columns})` }}
+        style={{ height: `calc(100vw * 1.5  / ${columns})` }}
       >
         <animated.div style={{ ...props }} className="slider">
           {items.map((item, i) => (

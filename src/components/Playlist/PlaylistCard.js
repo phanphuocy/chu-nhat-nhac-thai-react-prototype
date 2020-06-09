@@ -10,21 +10,6 @@ import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import { registerQueueSongs, setCurrentSong } from "../../actions/playerAction";
 
-const MockCard = styled.div`
-  height: 100%;
-  width: 100%;
-  background-color: ${(props) => props.theme.colors.surface};
-  display: flex;
-  align-items: center;
-
-  .title {
-    color: ${(props) => props.theme.colors.onSurface};
-    font-size: 3rem;
-    text-align: center;
-    text-decoration: none;
-  }
-`;
-
 const StyledPlaylistCard = styled.div`
   display: inline-block;
   position: relative;
@@ -87,14 +72,9 @@ const PlaylistCard = ({
   return (
     <StyledPlaylistCard>
       <RatioBoundingBox>
-        <a>
-          {playlist.cover && (
-            <img src={playlist.cover.url} alt={`${playlist.name} thumbnail`} />
-          )}
-          <MockCard>
-            <h2 className="title">{playlist.name}</h2>
-          </MockCard>
-        </a>
+        {playlist.cover && (
+          <img src={playlist.cover.url} alt={`${playlist.name} thumbnail`} />
+        )}
 
         <div className="mask">
           <button onClick={() => onCardClickedHandler(playlist.songs)}>

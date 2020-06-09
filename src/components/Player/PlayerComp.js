@@ -99,11 +99,6 @@ const PlayerComp = ({
     return <p>ERROR</p>;
   }
 
-  function onReadyHandler() {
-    // console.log(`Ready, setting https://www.youtube.com/watch?v=${url}`);
-    // setUrlState(`https://www.youtube.com/watch?v=${url}`);
-  }
-
   function onShowLyricsHandler() {
     switchLyricsVisibility();
   }
@@ -147,34 +142,17 @@ const PlayerComp = ({
               item && (
                 <animated.div className="content" key={key} style={props}>
                   <LyricsRender>
-                    <Tabs>
-                      <TabPane key="lyricsTh" tab="Lời Tiếng Thái">
-                        {song.lyricsTh ? (
-                          song.lyricsTh.split("\n\n").map((paragraph, i) => (
-                            <div style={{ marginBottom: "1.4rem" }} key={i}>
-                              {paragraph.split("\n").map((line, i) => (
-                                <ReactMarkdown source={line} key={i} />
-                              ))}
-                            </div>
-                          ))
-                        ) : (
-                          <p>NO Lyrics</p>
-                        )}
-                      </TabPane>
-                      <TabPane key="lyricsVi" tab="Lời Tiếng Việt">
-                        {song.lyricsVi ? (
-                          song.lyricsVi.split("\n\n").map((paragraph) => (
-                            <div style={{ marginBottom: "1.4rem" }}>
-                              {paragraph.split("\n").map((line) => (
-                                <ReactMarkdown source={line} />
-                              ))}
-                            </div>
-                          ))
-                        ) : (
-                          <p>NO Lyrics</p>
-                        )}
-                      </TabPane>
-                    </Tabs>
+                    {song.lyricsTh ? (
+                      song.lyricsTh.split("\n\n").map((paragraph, i) => (
+                        <div style={{ marginBottom: "1.4rem" }} key={i}>
+                          {paragraph.split("\n").map((line, i) => (
+                            <ReactMarkdown source={line} key={i} />
+                          ))}
+                        </div>
+                      ))
+                    ) : (
+                      <p>NO Lyrics</p>
+                    )}
                   </LyricsRender>
                 </animated.div>
               )

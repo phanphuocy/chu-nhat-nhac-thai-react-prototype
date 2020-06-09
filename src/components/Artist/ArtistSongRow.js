@@ -11,7 +11,7 @@ const StyledNewSongRow = styled.div`
   padding: 0.5rem 1rem;
   background-color: rgba(255, 255, 255, 3%);
   display: inline-grid;
-  grid-template-columns: 140px 1fr 1fr 1fr;
+  grid-template-columns: 2rem 140px 1fr 1fr 1fr;
   grid-template-areas:
     "checked thumbnail title title title"
     "checked thumbnail stars releaseYear playtime";
@@ -69,7 +69,7 @@ const ArtistSongRow = ({ song }) => {
   return (
     <StyledNewSongRow>
       <div className="checked">
-        {song.lyricsVi && <TranslatedCheckBoxSVG />}
+        {song.timestamp && <TranslatedCheckBoxSVG />}
       </div>
       <img
         className="thumbnail"

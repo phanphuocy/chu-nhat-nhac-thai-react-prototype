@@ -25,14 +25,7 @@ const LyricsBox = ({ text }) => {
   );
 };
 
-const DynamicLyricsComp = ({
-  song,
-  songId,
-  showLyrics,
-  switchLyricsVisibility,
-  lyricsLang,
-  switchLyricsLang,
-}) => {
+const DynamicLyricsComp = ({ song }) => {
   const [displayLyrics, setDisplayLyrics] = useState("");
   const url = `https://www.youtube.com/watch?v=${song.url}`;
 
@@ -77,6 +70,13 @@ const DynamicLyricsComp = ({
           onError={() => console.log("onError")}
           onProgress={(e) => findAndReplaceLyrics(e.playedSeconds)}
           onDuration={() => console.log("onDuration")}
+          config={{
+            youtube: {
+              playerVars: {
+                cc_load_policy: 0,
+              },
+            },
+          }}
         />
         <LyricsBox className="lyrics" text={displayLyrics} />
       </div>
@@ -88,9 +88,10 @@ const ControlHeight = styled.div`
   height: 70vh;
   background-color: black;
   width: 100vw;
+  position: relative;
 
   .player {
-    flex-basis: 3;
+    flex-basis: 65%;
     height: 70%;
   }
 
@@ -112,10 +113,10 @@ const ControlHeight = styled.div`
 `;
 
 const StyledLyricsBox = styled.div`
-  flex-basis: 1;
+  flex-basis: 35%;
   min-height: 5rem;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   overflow: hidden;
 
@@ -130,6 +131,7 @@ const StyledLyricsBox = styled.div`
     width: 100%;
     text-align: center;
     vertical-align: center;
+    font-size: ${(props) => props.theme.fontSizes["lg"]};
     background: -webkit-linear-gradient(
       0deg,
       rgba(248, 91, 124, 1) 0%,
@@ -145,7 +147,7 @@ const StyledLyricsBox = styled.div`
       padding: 4rem 2rem;
     }
     p {
-      font-size: 2rem;
+      font-size: ${(props) => props.theme.fontSizes["3xl"]};
     }
   }
 `;

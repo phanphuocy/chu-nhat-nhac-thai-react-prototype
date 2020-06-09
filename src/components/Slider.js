@@ -96,9 +96,7 @@ const Slider = ({ columns, length, height, children }) => {
       });
     }
   });
-  console.log(useLayoutEffect);
   useLayoutEffect(() => {
-    console.log("CALLING LAYOUT EFFECT");
     setDimensions({
       container: container.current.clientWidth,
       slider: slider.current.clientWidth,

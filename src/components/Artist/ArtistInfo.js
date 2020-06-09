@@ -141,6 +141,12 @@ const SocialLinks = styled.div`
     align-items: center;
   }
 
+  .unavailable {
+    svg {
+      fill: ${(props) => props.theme.colors.gray["300"]};
+    }
+  }
+
   svg {
     height: 2rem;
     width: 2rem;
@@ -244,24 +250,42 @@ const ArtistInfo = ({ artist }) => {
       </Info>
       <SocialLinks>
         <h4>{`Theo Dõi ${artist.name}`}</h4>
-        <div className="social-items">
-          <div className="social-item">
+        <ul className="social-items">
+          <li
+            className={`social-item ${artist.instagram ? "" : "unavailable"}`}
+          >
             <RiInstagramLine />
-            <a href="#">insta.co/abc</a>
-          </div>
-          <div className="social-item">
+            {artist.instagram && (
+              <a href={`https://www.instagram.com${artist.instagram}`}>
+                {artist.instagram}
+              </a>
+            )}
+          </li>
+          <li className={`social-item ${artist.facebook ? "" : "unavailable"}`}>
             <RiFacebookBoxLine />
-            <a href="#">facebook.com/abc</a>
-          </div>
-          <div className="social-item">
+            {artist.facebook && (
+              <a href={`https://www.facebook.com${artist.facebook}`}>
+                {artist.facebook}
+              </a>
+            )}
+          </li>
+          <li className={`social-item ${artist.youtube ? "" : "unavailable"}`}>
             <RiYoutubeLine />
-            <a href="#">facebook.com/abc</a>
-          </div>
-          <div className="social-item">
+            {artist.youtube && (
+              <a href={`https://www.youtube.com/channel${artist.youtube}`}>
+                {artist.youtube}
+              </a>
+            )}
+          </li>
+          <li className={`social-item ${artist.spotify ? "" : "unavailable"}`}>
             <RiSpotifyLine />
-            <a href="#">facebook.com/abc</a>
-          </div>
-        </div>
+            {artist.spotify && (
+              <a href={`https://open.spotify.com/artist${artist.spotify}`}>
+                {artist.spotify}
+              </a>
+            )}
+          </li>
+        </ul>
       </SocialLinks>
     </StyledArtistInfo>
   );

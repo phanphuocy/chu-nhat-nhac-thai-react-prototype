@@ -6,7 +6,7 @@ import GroupWithSlider from "../styled-components/GroupWithSlider";
 import ReactGa from "react-ga";
 
 // Import icons
-import { TiChevronLeft, TiChevronRight } from "react-icons/ti";
+import { RiArrowRightSLine, RiArrowLeftSLine } from "react-icons/ri";
 
 // Import Redux
 import { connect } from "react-redux";
@@ -80,13 +80,13 @@ const PlaylistGroup = ({
             className="navButton"
             disabled={items.length <= columns || reachStart === true}
           >
-            <TiChevronLeft onClick={decreaseIndexHandler} size={24} />
+            <RiArrowLeftSLine onClick={decreaseIndexHandler} size={24} />
           </button>
           <button
             className="navButton"
             disabled={items.length <= columns || reachEnd === true}
           >
-            <TiChevronRight onClick={increaseIndexHandler} size={24} />
+            <RiArrowRightSLine onClick={increaseIndexHandler} size={24} />
           </button>
         </div>
       </div>

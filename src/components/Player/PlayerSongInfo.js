@@ -66,7 +66,7 @@ const PlayerSongInfo = ({ song }) => {
     <StyledPlayerSongInfo>
       <div className="artistsInfo">
         {artists.map((artistId) => (
-          <ArtistBadge id={artistId} />
+          <ArtistBadge id={artistId} key={artistId} />
         ))}
       </div>
       <div className="songInfo">

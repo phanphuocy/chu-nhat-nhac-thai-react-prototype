@@ -73,13 +73,9 @@ const ArtistSinglePage = ({
       <ArtistInfo artist={artist} />
 
       <TabGroup>
-        <button className={"active"}>
+        <button className="active">
           <RiMvLine size={24} />
           BÀI HÁT
-        </button>
-        <button>
-          <RiPolaroid2Line size={24} />
-          ẢNH
         </button>
       </TabGroup>
       <ArtistSongsList
@@ -87,7 +83,7 @@ const ArtistSinglePage = ({
         songs={songs}
         playbuttonHandler={playlistPlayButtonClickedHandler}
       />
-      <SimilarArtists similar={artist.similar ? artist.similar : featuredIds} />
+
       <div className="dummyheight" style={{ height: "20rem" }}></div>
     </BoundingBox>
   );

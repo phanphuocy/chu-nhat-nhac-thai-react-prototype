@@ -95,7 +95,7 @@ const SimilarSongs = ({ song }) => {
           ? similarSongs.map((song) => (
               <SongCard key={song.slug} song={song}></SongCard>
             ))
-          : [0, 0, 0, 0, 0].map((loading) => <LoadingCard />)}
+          : [0, 0, 0, 0, 0].map((_, i) => <LoadingCard key={i} />)}
       </div>
     </StyledPanel>
   );

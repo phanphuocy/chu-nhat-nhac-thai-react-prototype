@@ -45,7 +45,7 @@ const QuickResultsBox = ({ results }) => {
       {["songs", "artists", "playlists"]
         .filter((category) => quick[category].length > 0)
         .map((category) => (
-          <div className="segment">
+          <div className="segment" key={category}>
             <div className="header">
               <h4>{names[category]}</h4>
             </div>

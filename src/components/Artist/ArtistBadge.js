@@ -7,7 +7,7 @@ import Skeleton from "react-loading-skeleton";
 const StyledArtistBadge = styled.div`
   background-color: ${(props) =>
     props.transparent ? "transparent" : props.theme.colors.surface};
-  padding: 0.5rem 1rem;
+  padding: 0.5rem;
   border-radius: 0.2rem;
   margin-right: 0.5rem;
 
@@ -28,7 +28,7 @@ const StyledArtistBadge = styled.div`
   }
 
   img {
-    width: 1rem;
+    width: 2rem;
     border-radius: 1rem;
     @media (min-width: 768px) {
       width: 2rem;

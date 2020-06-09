@@ -1,12 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
-import { TiEye } from "react-icons/ti";
-import { MdPlayArrow } from "react-icons/md";
 import RatioBoundingBox from "../RatioBoundingBox";
 import { Link } from "react-router-dom";
 import Img from "react-image";
-import dummySquare from "../../images/dummy-post-square-1-300x300.jpg";
+import { ReactComponent as defaultAvatar } from "../../images/default-avatar.svg";
 
 // Import Redux's
 import { connect } from "react-redux";
@@ -17,6 +15,8 @@ const StyledArtistCard = styled.div`
   position: relative;
   width: 100%;
   transition: all 0.2s ease-in-out;
+  height: 100%;
+  overflow: hidden;
 
   img {
     width: 100%;
@@ -58,7 +58,7 @@ const ArtistCard = ({ artist }) => {
           <Img
             src={artist.avatar.url}
             alt={artist.name}
-            loader={<img src={dummySquare} alt="dummy" />}
+            loader={<img src={defaultAvatar} alt="Dummy Avatar" />}
           />
         </RatioBoundingBox>
         <div className="info">
