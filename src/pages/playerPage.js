@@ -41,13 +41,11 @@ function getSongById(state, id) {
   if (!state.data.loaded) {
     return null;
   }
-  console.log(state.data.songs.byIds);
   return state.data.songs.byIds[id];
 }
 
 function mapStateToPageProps(state, { match }) {
   const { songId } = match.params;
-  console.log(songId);
   return {
     playerQueue: state.player.playerQueue,
     song: getSongById(state, songId),

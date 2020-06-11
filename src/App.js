@@ -1,12 +1,14 @@
 import React, { useEffect } from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { Router, Switch, Route } from "react-router-dom";
 import darktheme from "./themes/darktheme";
 import lighttheme from "./themes/lighttheme";
 import defaultheme from "./themes/defaulttheme";
 import { ThemeProvider } from "styled-components";
+import { createBrowserHistory } from "history";
+import ttiPolyfill from "tti-polyfill";
 
 // Import React Analytics
-import ReactGa from "react-ga";
+import ReactGA from "react-ga";
 
 // Import Redux's
 import { connect } from "react-redux";
@@ -28,6 +30,7 @@ import ScrollToTop from "./components/ScrollToTop";
 
 const StyledApp = styled.div`
   min-height: 100vh;
+  z-index: -1000;
   background-color: ${(props) => props.theme.colors.background};
   color: ${(props) => props.theme.colors.onBackground};
   p {
@@ -46,13 +49,48 @@ const StyledApp = styled.div`
   }
 `;
 
+const history = createBrowserHistory();
+history.listen((location) => {
+  ReactGA.set({ page: location.pathname });
+  ReactGA.pageview(location.pathname);
+});
+
+const callback = (list) => {
+  list.getEntries().forEach((entry) => {
+    ReactGA.timing({
+      category: "Load Performace",
+      variable: "Server Latency",
+      value: entry.responseStart - entry.requestStart,
+    });
+    ReactGA.timing({
+      category: "Load Performace",
+      variable: "Download Time",
+      value: entry.responseEnd - entry.responseStart,
+    });
+    ReactGA.timing({
+      category: "Load Performace",
+      variable: "Total App Load Time",
+      value: entry.responseEnd - entry.requestStart,
+    });
+  });
+};
+var observer = new PerformanceObserver(callback);
+observer.observe({ entryTypes: ["navigation"] });
+
+// Get Time to Interactive
+ttiPolyfill.getFirstConsistentlyInteractive().then((tti) => {
+  ReactGA.timing({
+    category: "Load Performace",
+    variable: "Time to Interactive",
+    value: tti,
+  });
+});
+
 function App({ theme, loading, loaded, playlists, getAlLEntries }) {
   useEffect(() => {
     getAlLEntries();
-    ReactGa.initialize("UA-158673998-2");
-
-    // to report page view
-    ReactGa.pageview(window.location.pathname + window.location.search);
+    ReactGA.initialize("UA-158673998-2", { debug: true });
+    ReactGA.pageview(window.location.pathname + window.location.search);
   }, []);
 
   if (loading === true || loaded === false) {
@@ -78,7 +116,7 @@ function App({ theme, loading, loaded, playlists, getAlLEntries }) {
       }
     >
       <StyledApp>
-        <Router>
+        <Router history={history}>
           <ScrollToTop>
             <Header />
             <Switch>

@@ -21,7 +21,7 @@ const PlaylistPage = ({ allIds }) => {
     setUniqueShowPanel(name);
   }
   return (
-    <Fragment>
+    <div style={{ marginTop: "2rem" }}>
       <Media
         queries={{
           small: "(max-width: 639px)",
@@ -60,7 +60,7 @@ const PlaylistPage = ({ allIds }) => {
         }}
       </Media>
       <div className="dummyheight" style={{ height: "20rem" }}></div>
-    </Fragment>
+    </div>
   );
 };
 

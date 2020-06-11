@@ -3,7 +3,6 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 import convertToDuration from "../utils/covertToDuration";
 import ArtistBadge from "./Artist/ArtistBadge";
-import { MdPlayArrow } from "react-icons/md";
 import { useHistory, Link } from "react-router-dom";
 import { connect } from "react-redux";
 
@@ -114,7 +113,7 @@ const SongRow = ({ song, artist, minimum, isSorted, sortNumber, playing }) => {
       )}
 
       <span className="title">
-        <Link to={`/p/${song.slug}`}>{song.titleEn}</Link>
+        <Link to={`/p/${song.slug}`}>{song.title}</Link>
         {playing && <p>Playing</p>}
         {}
       </span>

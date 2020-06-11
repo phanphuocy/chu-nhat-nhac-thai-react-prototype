@@ -2,12 +2,14 @@ import React from "react";
 import styled from "styled-components";
 import Button from "../Button";
 import ArtistBadge from "../Artist/ArtistBadge";
-import { FacebookShareCount } from "react-share";
+import { FacebookShareCount, FacebookShareButton } from "react-share";
+import { RiShareLine } from "react-icons/ri";
 
 const StyledPlayerSongInfo = styled.div`
   padding: 1rem;
   display: grid;
-
+  column-gap: 1.5rem;
+  row-gap: 1rem;
   grid-template-areas:
     "songInfo"
     "artistsInfo"
@@ -22,8 +24,8 @@ const StyledPlayerSongInfo = styled.div`
       font-family: ${(props) => props.theme.fonts.serif};
       margin: 1rem 0;
     }
-    h3 {
-      font-size: 1.5rem;
+    .subtitle {
+      color: ${(props) => props.theme.colors.gray["700"]};
     }
   }
   .artistsInfo {
@@ -36,12 +38,18 @@ const StyledPlayerSongInfo = styled.div`
   }
   .sharing {
     grid-area: sharing;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    p {
+      margin-bottom: 0.5rem;
+    }
   }
 
   @media (min-width: 768px) {
     grid-template-columns: auto 20rem;
     grid-template-areas:
-      "artistsInfo sharing"
+      "artistsInfo artistsInfo"
       "songInfo sharing"
       "commenting sharing";
 
@@ -59,9 +67,12 @@ const PlayerSongInfo = ({ song }) => {
     titleEn,
     titleRo,
     titleTh,
+    title,
     titleVi,
+    slug,
     deungdutjaisNote,
   } = song;
+  const shareUrl = `${process.env.REACT_APP_WEBSITE_URL}/p/${slug}`;
   return (
     <StyledPlayerSongInfo>
       <div className="artistsInfo">
@@ -70,21 +81,36 @@ const PlayerSongInfo = ({ song }) => {
         ))}
       </div>
       <div className="songInfo">
-        <h1>{`${titleVi ? titleVi : titleEn} - ${titleRo}`}</h1>
-        <h2>{titleVi && titleEn}</h2>
+        <h1>{title}</h1>
+        <h5 className="subtitle">{`${titleTh} ${
+          titleRo !== titleEn ? titleRo : ""
+        }`}</h5>
       </div>
 
       <div className="commenting">
         {deungdutjaisNote && <p>{deungdutjaisNote}</p>}
       </div>
       <div className="sharing">
-        <FacebookShareCount url={`https://www.youtube.com/watch?v=IzMkV4iah5I`}>
-          {(shareCount) => <span>{shareCount}</span>}
+        <p>{`Bạn Thích Bài Hát '${title}' Hông? Nếu Vậy Hãy Share Cho Bạn Bè Cùng Xem Nhé!`}</p>
+        <FacebookShareButton
+          url={shareUrl}
+          children={<ShareButton />}
+          hashtag="#chunhatnhacthai"
+        ></FacebookShareButton>
+        <FacebookShareCount url={shareUrl}>
+          {(shareCount) => (
+            <span>{`${shareCount} người đã chia sẻ bài hát này`}</span>
+          )}
         </FacebookShareCount>
-        <Button>SHARE</Button>
       </div>
     </StyledPlayerSongInfo>
   );
 };
+
+const ShareButton = () => (
+  <Button primary full label="Chia Sẻ">
+    <RiShareLine />
+  </Button>
+);
 
 export default PlayerSongInfo;

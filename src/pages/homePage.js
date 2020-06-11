@@ -18,9 +18,6 @@ const HomePage = ({ playlistIds, artistIds }) => {
   return (
     <React.Fragment>
       <FeaturedBanner />
-      <GradientBackground>
-        <ChartBoard />
-      </GradientBackground>
       <Media
         queries={{
           small: "(max-width: 639px)",
@@ -54,6 +51,9 @@ const HomePage = ({ playlistIds, artistIds }) => {
           );
         }}
       </Media>
+
+      <ChartBoard />
+
       <Media
         queries={{
           small: "(max-width: 639px)",

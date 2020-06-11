@@ -69,7 +69,14 @@ const ArtistSinglePage = ({
 
   return (
     <BoundingBox maxwidth={1024}>
-      <SEO title={artist.name} description="asdad" ogImage={artist.avatar} />
+      <SEO
+        title={artist.name}
+        description={
+          artist.description ||
+          `Thông tin của ${artist.name} đang được cập nhập.`
+        }
+        ogImage={artist.avatar}
+      />
       <ArtistInfo artist={artist} />
 
       <TabGroup>
@@ -94,7 +101,6 @@ function getArtistsSongs(data, id) {
   data.artists.byIds[id].songs.forEach((songId) => {
     if (data.songs.allIds.indexOf(songId) !== -1) {
       songs.push(data.songs.byIds[songId]);
-      console.log(songId);
     }
   });
   return songs;

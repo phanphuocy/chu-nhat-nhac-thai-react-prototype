@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 const StyledGroup = styled.div`
   max-width: 1600px;
-  margin: 2rem auto 0rem;
+  margin: 1rem auto 0rem;
 
   .header {
     align-items: center;

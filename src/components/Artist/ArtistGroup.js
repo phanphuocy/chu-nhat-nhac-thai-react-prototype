@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import GroupWithSlider from "../styled-components/GroupWithSlider";
 import { useSpring, animated } from "react-spring";
 
 // Import React GA
-import ReactGa from "react-ga";
+import ReactGA from "react-ga";
 
 // Import icons
 import { RiArrowRightSLine, RiArrowLeftSLine } from "react-icons/ri";
@@ -16,6 +16,29 @@ import ArtistCard from "./ArtistCard";
 
 const ArtistGroup = ({ columns, group }) => {
   const { name, items } = group;
+
+  const intersectTarget = useRef(null);
+
+  useEffect(() => {
+    const opts = {
+      root: null,
+      rootMargin: "0px",
+      threshold: 0,
+    };
+    const callback = (list) => {
+      list.forEach((entry) => {
+        if (entry.isIntersecting) {
+          ReactGA.event({
+            category: "Scrolling",
+            action: `Scrolled to artist group ${name}`,
+          });
+        }
+      });
+    };
+    const observerScroll = new IntersectionObserver(callback, opts);
+
+    observerScroll.observe(intersectTarget.current);
+  }, []);
 
   // Creating animation
   const [firstIndex, setFirstIndex] = useState(0);
@@ -30,6 +53,11 @@ const ArtistGroup = ({ columns, group }) => {
       setFirstIndex(firstIndex + columns);
     }
     setReachStart(false);
+    ReactGA.event({
+      category: "Engage w/ Artist",
+      action: "Swipe to See More Artist in Group",
+      label: name,
+    });
   }
   function decreaseIndexHandler() {
     if (firstIndex - columns < 0) {
@@ -47,7 +75,7 @@ const ArtistGroup = ({ columns, group }) => {
 
   return (
     <GroupWithSlider disabled={items.length <= columns} columns={columns}>
-      <div className="header">
+      <div className="header" ref={intersectTarget}>
         <h3 className="groupName">{name}</h3>
         <div className="buttonGroup">
           <button
@@ -69,7 +97,7 @@ const ArtistGroup = ({ columns, group }) => {
       {/* <pre>{JSON.stringify(items, null, 2)}</pre> */}
       <div
         className="sliderContainer"
-        style={{ height: `calc(100vw * 1.5  / ${columns})` }}
+        style={{ height: `calc(100vw * 1.4  / ${columns})` }}
       >
         <animated.div style={{ ...props }} className="slider">
           {items.map((item, i) => (

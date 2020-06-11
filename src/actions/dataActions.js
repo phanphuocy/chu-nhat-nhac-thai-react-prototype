@@ -40,15 +40,20 @@ export const getAlLEntries = () => async (dispatch) => {
       }
     });
 
-    const songResults = await Client.getEntries({ content_type: "songs" });
+    const songResults = await Client.getEntries({
+      content_type: "songs",
+      limit: 200,
+    });
 
     songResults.items.forEach((item) => {
       item.fields.artists.forEach((artist) =>
         artists.byIds[artist.fields.slug].songs.push(item.fields.slug)
       );
+
       songs.byIds[item.fields.slug] = {
         ...item.fields,
         id: item.sys.id,
+        title: item.fields.titleVi ? item.fields.titleVi : item.fields.titleEn,
         artists: item.fields.artists.map((artist) => artist.fields.slug),
       };
       songs.allIds.push(item.fields.slug);
@@ -67,28 +72,31 @@ export const getAlLEntries = () => async (dispatch) => {
         if (Object.keys(currentWeekChart).length === 0) {
           currentWeekChart = {
             ...item.fields,
-            items: item.fields.items.map((song) => song.fields.slug),
+            items: item.fields.items.map((song) => song.fields),
           };
-        } else {
-          if (item.fields.endDate > currentWeekChart.endDate) {
-            pastWeekChart = { ...currentWeekChart };
-            currentWeekChart = {
-              ...item.fields,
-              items: item.fields.items.map((song) => song.fields.slug),
-            };
-          }
+        } else if (item.fields.endDate > currentWeekChart.endDate) {
+          pastWeekChart = { ...currentWeekChart };
+          currentWeekChart = {
+            ...item.fields,
+            items: item.fields.items.map((song) => song.fields),
+          };
+        } else if (item.fields.endDate < currentWeekChart.endDate) {
+          pastWeekChart = {
+            ...item.fields,
+            items: item.fields.items.map((song) => song.fields),
+          };
         }
       } else {
         if (Object.keys(thisMonthChart).length === 0) {
           thisMonthChart = {
             ...item.fields,
-            items: item.fields.items.map((song) => song.fields.slug),
+            items: item.fields.items.map((song) => song.fields),
           };
         } else {
           if (item.fields.endDate > thisMonthChart.endDate) {
             thisMonthChart = {
               ...item.fields,
-              items: item.fields.items.map((song) => song.fields.slug),
+              items: item.fields.items.map((song) => song.fields),
             };
           }
         }

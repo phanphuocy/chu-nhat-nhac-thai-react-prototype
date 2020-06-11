@@ -6,7 +6,6 @@ import RatioBoundingBox from "../RatioBoundingBox";
 import { useTransition, animated } from "react-spring";
 import Button from "../Button";
 import Media from "react-media";
-import { Tabs, TabPane } from "../Tabs";
 
 // Import REDUX
 import { connect } from "react-redux";
@@ -105,24 +104,28 @@ const PlayerComp = ({
 
   return (
     <Comp>
-      <RatioBoundingBox ratio={0.4625}>
-        <ReactPlayer
-          url={url}
-          width="100%"
-          height="100%"
-          controls
-          playing
-          onReady={() => console.log("onReady")}
-          onStart={() => console.log("onStart")}
-          onPlay={() => console.log("onPlay")}
-          onPause={() => console.log("onPause")}
-          onBuffer={() => console.log("onBuffer")}
-          onEnded={() => console.log("onEnded")}
-          onError={() => console.log("onError")}
-          onProgress={(e) => console.log(e)}
-          onDuration={() => console.log("onDuration")}
-        />
-      </RatioBoundingBox>
+      <Media query={{ minWidth: 768 }}>
+        {(matches) => (
+          <RatioBoundingBox ratio={matches ? 0.4625 : 0.6}>
+            <ReactPlayer
+              url={url}
+              width="100%"
+              height="100%"
+              controls
+              playing
+              onReady={() => console.log("onReady")}
+              onStart={() => console.log("onStart")}
+              onPlay={() => console.log("onPlay")}
+              onPause={() => console.log("onPause")}
+              onBuffer={() => console.log("onBuffer")}
+              onEnded={() => console.log("onEnded")}
+              onError={() => console.log("onError")}
+              onProgress={(e) => console.log(e)}
+              onDuration={() => console.log("onDuration")}
+            />
+          </RatioBoundingBox>
+        )}
+      </Media>
 
       <LyricsBox>
         <div className="header">

@@ -16,7 +16,7 @@ const ArtistsPage = ({ allIds, byIds }) => {
   });
 
   return (
-    <Fragment>
+    <div style={{ marginTop: "2rem" }}>
       <SEO
         title="Danh Sách Nghệ Sĩ Thái Lan"
         description="Ullamco consequat eu enim do pariatur id. Dmco exercitation qui laborum id fugiat."
@@ -56,7 +56,7 @@ const ArtistsPage = ({ allIds, byIds }) => {
         }}
       </Media>
       <div className="dummyheight" style={{ height: "20rem" }}></div>
-    </Fragment>
+    </div>
   );
 };
 

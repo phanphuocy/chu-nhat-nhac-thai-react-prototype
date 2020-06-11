@@ -6,6 +6,7 @@ import styled from "styled-components";
 import { RiFilter3Line, RiPlayLine } from "react-icons/ri";
 import Button from "../Button";
 import orderBy from "lodash.orderby";
+import ReactGA from "react-ga";
 
 const StyledArtistSongsList = styled.div`
   padding: 1rem;
@@ -74,6 +75,12 @@ const ArtistSongsList = ({ artist, songs, playbuttonHandler }) => {
   function handleDowndownSelected({ value }) {
     var newSongs = orderBy(sortedSongs, value[0], value[1]);
     setSortedSongs(newSongs);
+    ReactGA.event({
+      category: "Engage w/ Artist",
+      action: "Sort Artist Songs",
+      label: artist.name,
+      value: value[0],
+    });
   }
 
   useEffect(() => console.log("Change artist songs lists"), [artist]);

@@ -1,10 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
+import ReactGA from "react-ga";
 import RatioBoundingBox from "../RatioBoundingBox";
 import { Link } from "react-router-dom";
 import Img from "react-image";
-import { ReactComponent as defaultAvatar } from "../../images/default-avatar.svg";
+import { ReactComponent as DefaultAvatar } from "../../images/default-avatar.svg";
 
 // Import Redux's
 import { connect } from "react-redux";
@@ -44,6 +45,13 @@ const StyledArtistCard = styled.div`
 `;
 
 const ArtistCard = ({ artist }) => {
+  function onClick() {
+    ReactGA.event({
+      category: "Engage w/ Artist",
+      action: "Click On Card",
+      label: artist.name,
+    });
+  }
   if (!artist) {
     return (
       <div>
@@ -52,13 +60,13 @@ const ArtistCard = ({ artist }) => {
     );
   }
   return (
-    <Link to={`/artists/${artist.slug}`}>
+    <Link to={`/artists/${artist.slug}`} onClick={onClick}>
       <StyledArtistCard>
         <RatioBoundingBox ratio={1}>
           <Img
             src={artist.avatar.url}
             alt={artist.name}
-            loader={<img src={defaultAvatar} alt="Dummy Avatar" />}
+            loader={<DefaultAvatar />}
           />
         </RatioBoundingBox>
         <div className="info">

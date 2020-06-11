@@ -78,7 +78,7 @@ const ArtistSongRow = ({ song }) => {
         alt={`${song.title} thumbnail`}
       />
       <Link to={`/p/${song.slug}`} className="title">
-        <span>{song.titleEn}</span>
+        <span>{song.title}</span>
       </Link>
       <span className="stars">
         {convertLargeNumber(song.stars)}

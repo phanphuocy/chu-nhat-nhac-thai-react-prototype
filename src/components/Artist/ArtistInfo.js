@@ -5,6 +5,7 @@ import { documentToReactComponents } from "@contentful/rich-text-react-renderer"
 import ActionContainer from "../ActionContainer";
 import DefaultBackground from "../../images/default-cover-image-remember-w1024-h390.jpg";
 import BackButton from "../BackButton";
+import ReactGA from "react-ga";
 
 import {
   RiInstagramLine,
@@ -156,10 +157,14 @@ const SocialLinks = styled.div`
     display: none;
   }
 
+  a.unavailable {
+    pointer-events: none;
+  }
+
   .social-item:hover {
     background-color: ${(props) => props.theme.colors.surface};
     svg,
-    a {
+    & {
       color: ${(props) => props.theme.colors.primary};
     }
   }
@@ -207,10 +212,13 @@ const ArtistInfo = ({ artist }) => {
 
   function showMoreButtonHandler() {
     setFullBio(!showFullBio);
+
+    ReactGA.event({
+      category: "Engage w/ Artist",
+      action: "Click On Show More Info",
+      label: artist.name,
+    });
   }
-
-  console.log("bio", artist.biography);
-
   return (
     <StyledArtistInfo>
       <BackButton />
@@ -251,39 +259,53 @@ const ArtistInfo = ({ artist }) => {
       <SocialLinks>
         <h4>{`Theo Dõi ${artist.name}`}</h4>
         <ul className="social-items">
-          <li
-            className={`social-item ${artist.instagram ? "" : "unavailable"}`}
-          >
-            <RiInstagramLine />
-            {artist.instagram && (
-              <a href={`https://www.instagram.com${artist.instagram}`}>
-                {artist.instagram}
-              </a>
-            )}
+          <li>
+            <ReactGA.OutboundLink
+              to={`https://www.instagram.com${artist.instagram}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`social-item ${artist.instagram ? "" : "unavailable"}`}
+              eventLabel={`${artist.name} Instagram`}
+            >
+              <RiInstagramLine />
+              {artist.instagram && <span>{artist.instagram}</span>}
+            </ReactGA.OutboundLink>
           </li>
-          <li className={`social-item ${artist.facebook ? "" : "unavailable"}`}>
-            <RiFacebookBoxLine />
-            {artist.facebook && (
-              <a href={`https://www.facebook.com${artist.facebook}`}>
-                {artist.facebook}
-              </a>
-            )}
+          <li>
+            <ReactGA.OutboundLink
+              to={`https://www.facebook.com${artist.facebook}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`social-item ${artist.facebook ? "" : "unavailable"}`}
+              eventLabel={`${artist.name} Facebook`}
+            >
+              <RiFacebookBoxLine />
+              {artist.facebook && <span>{artist.facebook}</span>}
+            </ReactGA.OutboundLink>
           </li>
-          <li className={`social-item ${artist.youtube ? "" : "unavailable"}`}>
-            <RiYoutubeLine />
-            {artist.youtube && (
-              <a href={`https://www.youtube.com/channel${artist.youtube}`}>
-                {artist.youtube}
-              </a>
-            )}
+          <li>
+            <ReactGA.OutboundLink
+              to={`https://www.youtube.com/channel${artist.youtube}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`social-item ${artist.youtube ? "" : "unavailable"}`}
+              eventLabel={`${artist.name} Youtube`}
+            >
+              <RiYoutubeLine />
+              {artist.youtube && <span> {artist.youtube}</span>}
+            </ReactGA.OutboundLink>
           </li>
-          <li className={`social-item ${artist.spotify ? "" : "unavailable"}`}>
-            <RiSpotifyLine />
-            {artist.spotify && (
-              <a href={`https://open.spotify.com/artist${artist.spotify}`}>
-                {artist.spotify}
-              </a>
-            )}
+          <li>
+            <ReactGA.OutboundLink
+              to={`https://open.spotify.com/artist${artist.spotify}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`social-item ${artist.spotify ? "" : "unavailable"}`}
+              eventLabel={`${artist.name} Spotify`}
+            >
+              <RiSpotifyLine />
+              {artist.spotify && <span>{artist.spotify}</span>}
+            </ReactGA.OutboundLink>
           </li>
         </ul>
       </SocialLinks>
