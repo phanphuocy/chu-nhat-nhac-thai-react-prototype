@@ -17,9 +17,14 @@ const ArtistsPage = ({ allIds, byIds }) => {
 
   return (
     <div style={{ marginTop: "2rem" }}>
+      <h1 style={{ display: "none" }}>
+        Nghệ Sĩ Thái Lan Nào Hát Lên Tâm Hồn Của Bạn?
+      </h1>
       <SEO
         title="Danh Sách Nghệ Sĩ Thái Lan"
-        description="Ullamco consequat eu enim do pariatur id. Dmco exercitation qui laborum id fugiat."
+        description="Nghệ Sĩ Thái Lan Nào Hát Lên Tâm Hồn Của Bạn? Tìm Hiểu Thêm Ngay Nhé! :*"
+        ogUrl={`${process.env.REACT_APP_WEBSITE_URL}/artists`}
+        ogTitle="50+ Nghệ Sĩ Thái Lan, Với Đủ Thể Loại Nhạc Bạn Yêu Thích"
       />
       <Media
         queries={{

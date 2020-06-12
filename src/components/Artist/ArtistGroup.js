@@ -76,7 +76,7 @@ const ArtistGroup = ({ columns, group }) => {
   return (
     <GroupWithSlider disabled={items.length <= columns} columns={columns}>
       <div className="header" ref={intersectTarget}>
-        <h3 className="groupName">{name}</h3>
+        <h2 className="groupName">{name}</h2>
         <div className="buttonGroup">
           <button
             className="navButton"

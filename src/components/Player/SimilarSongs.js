@@ -88,7 +88,7 @@ const SimilarSongs = ({ song }) => {
   return (
     <StyledPanel>
       <div className="header">
-        <h5>Fan Cũng Thích</h5>
+        <h3>Fan Cũng Thích</h3>
       </div>
       <div className="content">
         {similarSongs.length > 0

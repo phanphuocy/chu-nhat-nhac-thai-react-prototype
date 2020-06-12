@@ -44,6 +44,18 @@ const StyledPlayerSongInfo = styled.div`
     p {
       margin-bottom: 0.5rem;
     }
+
+    .react-share__ShareButton {
+      background-color: ${(props) => props.theme.colors.pink["600"]} !important;
+      color: ${(props) => props.theme.colors.onSurface} !important;
+      width: 100%;
+      padding: 0.25rem !important;
+      border-radius: 0.25rem !important;
+    }
+    .react-share__ShareButton:hover,
+    .react-share__ShareButton:active {
+      background-color: ${(props) => props.theme.colors.pink["700"]} !important;
+    }
   }
 
   @media (min-width: 768px) {
@@ -82,9 +94,9 @@ const PlayerSongInfo = ({ song }) => {
       </div>
       <div className="songInfo">
         <h1>{title}</h1>
-        <h5 className="subtitle">{`${titleTh} ${
+        <h2 className="subtitle">{`${titleTh} ${
           titleRo !== titleEn ? titleRo : ""
-        }`}</h5>
+        }`}</h2>
       </div>
 
       <div className="commenting">
@@ -94,8 +106,9 @@ const PlayerSongInfo = ({ song }) => {
         <p>{`Bạn Thích Bài Hát '${title}' Hông? Nếu Vậy Hãy Share Cho Bạn Bè Cùng Xem Nhé!`}</p>
         <FacebookShareButton
           url={shareUrl}
-          children={<ShareButton />}
+          children={<RiShareLine size={24} />}
           hashtag="#chunhatnhacthai"
+          resetButtonStyle
         ></FacebookShareButton>
         <FacebookShareCount url={shareUrl}>
           {(shareCount) => (
@@ -106,11 +119,5 @@ const PlayerSongInfo = ({ song }) => {
     </StyledPlayerSongInfo>
   );
 };
-
-const ShareButton = () => (
-  <Button primary full label="Chia Sẻ">
-    <RiShareLine />
-  </Button>
-);
 
 export default PlayerSongInfo;

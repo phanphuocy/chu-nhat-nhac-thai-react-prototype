@@ -129,7 +129,7 @@ const PlayerComp = ({
 
       <LyricsBox>
         <div className="header">
-          <h3 className="header-text">Lyrics</h3>
+          <span className="header-text">Lyrics</span>
           <Media
             query="(max-width: 768px)"
             render={() => (

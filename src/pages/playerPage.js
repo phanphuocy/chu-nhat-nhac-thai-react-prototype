@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import SEO from "../components/SEO";
 import { useHistory } from "react-router-dom";
 
 // Import Redux's
@@ -21,9 +22,32 @@ const PlayerPage = ({ playerQueue, song, lyricsLang }) => {
   if (!song) {
     history.push("/404");
   }
-
+  const ogImage = {
+    url: `https://img.youtube.com/vi/${song.url}/mqdefault.jpg`,
+    contentType: "image/jpeg",
+    details: {
+      image: {
+        width: 320,
+        height: 180,
+      },
+    },
+  };
   return (
     <div>
+      <SEO
+        title={song.title}
+        description={`Bài hát ${song.title} (${song.titleTh} - ${song.titleRo}) của ${song.artists[0]} đã thu hút được ${song.stars} lượt thích trên Youtube. Bạn có thể thưởng thức MV và xem lyrics tại Chủ Nhật Nhạc TháI`}
+        ogUrl={`${process.env.REACT_APP_WEBSITE_URL}/p/${song.slug}`}
+        ogTitle={`${song.title} (${song.titleRo})`}
+        ogImage={ogImage}
+        ogType="music.song"
+      >
+        <meta
+          property="music:musician"
+          content={`${process.env.REACT_APP_WEBSITE_URL}/artists/${song.artists[0]}`}
+        />
+        <meta property="music:duration" content={song.duration} />
+      </SEO>
       {song.timestamp && <DynamicLyricsComp song={song} />}
       <FullWidthBox constraint={1200}>
         {!song.timestamp && <PlayerComp song={song} lyricsLang={lyricsLang} />}

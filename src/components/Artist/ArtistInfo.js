@@ -65,7 +65,7 @@ const Info = styled.div`
   align-items: center;
   position: relative;
 
-  h3 {
+  h1 {
     color: white;
     font-size: 2rem;
     font-family: ${(props) => props.theme.fonts.serif};
@@ -238,11 +238,11 @@ const ArtistInfo = ({ artist }) => {
       </BackgroundCover>
       <div className="avatar">
         <div>
-          <img src={artist.avatar.url} alt={artist.avatar.filename} />
+          <img src={artist.avatar.url} alt={`${artist.name} avatar image`} />
         </div>
       </div>
       <Info fullBio={showFullBio}>
-        <h3>{artist.name}</h3>
+        <h1>{artist.name}</h1>
         <div className="bio-content">
           {artist.biography
             ? documentToReactComponents(artist.biography)

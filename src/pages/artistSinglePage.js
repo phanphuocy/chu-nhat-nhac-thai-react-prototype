@@ -66,16 +66,19 @@ const ArtistSinglePage = ({
     registerQueueSongs(songsArray);
     history.push(`/p/${songsArray[0]}`);
   }
-
+  console.log(artist.biography);
   return (
     <BoundingBox maxwidth={1024}>
       <SEO
         title={artist.name}
         description={
-          artist.description ||
-          `Thông tin của ${artist.name} đang được cập nhập.`
+          artist.biography.content[0].content[0].value
+            .slice(0, 140)
+            .concat("...") || `Thông tin của ${artist.name} đang được cập nhập.`
         }
         ogImage={artist.avatar}
+        ogUrl={`${process.env.REACT_APP_WEBSITE_URL}/artists/${artist.slug}`}
+        ogTitle={`Nghệ Sĩ Nhạc Thái ${artist.name}`}
       />
       <ArtistInfo artist={artist} />
 
@@ -90,7 +93,6 @@ const ArtistSinglePage = ({
         songs={songs}
         playbuttonHandler={playlistPlayButtonClickedHandler}
       />
-
       <div className="dummyheight" style={{ height: "20rem" }}></div>
     </BoundingBox>
   );
