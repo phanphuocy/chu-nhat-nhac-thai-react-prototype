@@ -27,6 +27,7 @@ import NewsPage from "./pages/newsPage";
 import PlayerPage from "./pages/playerPage";
 import Header from "./components/Header";
 import ScrollToTop from "./components/ScrollToTop";
+import Footer from "./components/Footer";
 
 const StyledApp = styled.div`
   min-height: 100vh;
@@ -129,6 +130,7 @@ function App({ theme, loading, loaded, playlists, getAlLEntries }) {
                 <HomePage />
               </Route>
             </Switch>
+            <Footer />
           </ScrollToTop>
         </Router>
       </StyledApp>

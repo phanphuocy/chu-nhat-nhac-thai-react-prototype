@@ -72,9 +72,11 @@ const ArtistSinglePage = ({
       <SEO
         title={artist.name}
         description={
-          artist.biography.content[0].content[0].value
-            .slice(0, 140)
-            .concat("...") || `Thông tin của ${artist.name} đang được cập nhập.`
+          artist.biography
+            ? artist.biography.content[0].content[0].value
+                .slice(0, 140)
+                .concat("...")
+            : `Thông tin của ${artist.name} đang được cập nhập.`
         }
         ogImage={artist.avatar}
         ogUrl={`${process.env.REACT_APP_WEBSITE_URL}/artists/${artist.slug}`}

@@ -3,8 +3,8 @@ import axios from "axios";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import Img from "react-image";
-import dummySquare from "../../images/dummy-post-square-1-300x300.jpg";
-import Skeleton from "react-loading-skeleton";
+
+import { ReactComponent as DefaultSong } from "../../images/default-song.svg";
 
 const StyledPanel = styled.div`
   .header {
@@ -36,9 +36,7 @@ const StyledCard = styled.div`
 
 const LoadingCard = () => (
   <StyledCard>
-    <Skeleton height={75} style={{ marginBottom: "0.5rem" }} />
-    <Skeleton count={1} style={{ marginBottom: "0.5rem" }} />
-    <Skeleton count={1} />
+    <DefaultSong />
   </StyledCard>
 );
 
@@ -49,10 +47,11 @@ const SongCard = ({ song }) => (
         src={`https://img.youtube.com/vi/${song.url}/mqdefault.jpg`}
         alt={song.title}
         width="100%"
-        loader={<img src={dummySquare} alt="dummy" />}
+        loader={<DefaultSong />}
       />
       <div className="info">
         <h3 className="title">{song.title}</h3>
+        <p>{song.artist}</p>
       </div>
     </Link>
   </StyledCard>
@@ -60,8 +59,13 @@ const SongCard = ({ song }) => (
 
 const SimilarSongs = ({ song }) => {
   const [similarSongs, setSimilarSongs] = useState([]);
-  const mock = new Array(5);
-  const query = `${song.titleEn} ${song.artists[0]}`;
+
+  const tags = song.tagRefs ? song.tagRefs.map((tag) => tag.fields.slug) : "";
+
+  const query = `${song.titleEn} ${
+    tags.length === 0 ? song.artists[0] : tags.join(" ")
+  }`;
+  console.log(query);
 
   var instance = axios.create({
     baseURL: "https://chu-nhac-nhac-thai.herokuapp.com",
@@ -73,16 +77,18 @@ const SimilarSongs = ({ song }) => {
       await instance
         .post("/getrelevantsongs", {
           query: query,
+          exclude: song.url,
         })
         .then((res) => {
           if (res.data.length > 5) {
-            setSimilarSongs(res.data.splice(0, 5));
+            setSimilarSongs(res.data);
           } else {
             setSimilarSongs(res.data);
           }
         })
         .catch((error) => console.log(error));
     };
+    setSimilarSongs([]);
     fetchData();
   }, [song]);
   return (
@@ -90,6 +96,7 @@ const SimilarSongs = ({ song }) => {
       <div className="header">
         <h3>Fan Cũng Thích</h3>
       </div>
+
       <div className="content">
         {similarSongs.length > 0
           ? similarSongs.map((song) => (
