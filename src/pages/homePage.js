@@ -13,11 +13,13 @@ import { connect } from "react-redux";
 // Import custom components
 import PlaylistGroup from "../components/Playlist/PlaylistGroup";
 import ArtistGroup from "../components/Artist/ArtistGroup";
+import FeaturedGenreSongs from "../components/FeaturedGenreSongs";
 
 const HomePage = ({ playlistIds, artistIds }) => {
   return (
     <React.Fragment>
       <FeaturedBanner />
+      <FeaturedGenreSongs />
       <Media
         queries={{
           small: "(max-width: 639px)",

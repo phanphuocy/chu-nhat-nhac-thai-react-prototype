@@ -71,7 +71,7 @@ const Footer = ({ theme, switchTheme }) => {
         </div>
         <div className="horizontalDivider"></div>
         <div className="credit">
-          <p>Created in vison of Phan Phước Ý</p>
+          <p>Created in vision of Phan Phước Ý</p>
           <p>
             Special Thanks to Tahmnong, owner of ดึงดูดใจ (Deung-Dut-Jai).
             Without you this project would never happened.

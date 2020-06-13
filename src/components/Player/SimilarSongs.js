@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import Img from "react-image";
 
-import { ReactComponent as DefaultSong } from "../../images/default-song.svg";
+import defaultSong from "../../images/default-song.svg";
 
 const StyledPanel = styled.div`
   .header {
@@ -36,7 +36,7 @@ const StyledCard = styled.div`
 
 const LoadingCard = () => (
   <StyledCard>
-    <DefaultSong />
+    <Img src={defaultSong} alt="" width="100%" />
   </StyledCard>
 );
 
@@ -47,7 +47,7 @@ const SongCard = ({ song }) => (
         src={`https://img.youtube.com/vi/${song.url}/mqdefault.jpg`}
         alt={song.title}
         width="100%"
-        loader={<DefaultSong />}
+        loader={<Img src={defaultSong} alt="" width="100%" />}
       />
       <div className="info">
         <h3 className="title">{song.title}</h3>

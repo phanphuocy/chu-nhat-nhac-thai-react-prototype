@@ -7,6 +7,7 @@ import {
   CLEAR_SEARCH,
 } from "./types";
 import Client from "../contentful";
+import genres from "../utils/exportGenres";
 
 export const getAlLEntries = () => async (dispatch) => {
   try {
@@ -14,7 +15,18 @@ export const getAlLEntries = () => async (dispatch) => {
 
     var playlistGroups = { byIds: {}, allIds: [], featuredIds: [] },
       playlists = { byIds: {}, allIds: [] },
-      songs = { byIds: {}, allIds: [] },
+      songs = {
+        byIds: {},
+        allIds: [],
+        genreIds: {
+          pop: [],
+          rnbsoul: [],
+          countryfolk: [],
+          hiphoprap: [],
+          jazzblues: [],
+          rock: [],
+        },
+      },
       artistGroups = { byIds: {}, allIds: [], featuredIds: [] },
       artists = { byIds: {}, allIds: [], featuredIds: [] },
       news = { byIds: {}, allIds: [] };
@@ -57,6 +69,9 @@ export const getAlLEntries = () => async (dispatch) => {
         artists: item.fields.artists.map((artist) => artist.fields.slug),
       };
       songs.allIds.push(item.fields.slug);
+      if (item.fields.thumbnail && item.fields.genre) {
+        songs.genreIds[item.fields.genre].push(item.fields.slug);
+      }
     });
 
     var currentWeekChart = {},
