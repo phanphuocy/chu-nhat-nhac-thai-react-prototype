@@ -22,7 +22,7 @@ const StyledPlayerSongInfo = styled.div`
     h1 {
       font-size: 1.5rem;
       font-family: ${(props) => props.theme.fonts.serif};
-      margin: 1rem 0;
+      margin: 1rem 0 0.5rem;
     }
     .subtitle {
       color: ${(props) => props.theme.colors.gray["700"]};
@@ -94,9 +94,9 @@ const PlayerSongInfo = ({ song }) => {
       </div>
       <div className="songInfo">
         <h1>{title}</h1>
-        <h2 className="subtitle">{`${titleTh} ${
+        <p className="subtitle">{`${titleTh} ${
           titleRo !== titleEn ? titleRo : ""
-        }`}</h2>
+        }`}</p>
       </div>
 
       <div className="commenting">

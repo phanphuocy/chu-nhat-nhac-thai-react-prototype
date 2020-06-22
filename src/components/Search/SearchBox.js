@@ -29,7 +29,7 @@ const StyledSearchBox = styled.form`
     box-sizing: border-box;
     background-color: ${(props) => props.theme.colors.background};
     border: 2px solid hsl(0, 0%, 5%);
-    border-radius: 2px;
+    ${(props) => props.theme.borderRadius["rounded-full"]};
     height: 100%;
     padding: 1rem 1rem;
     font-size: 14px;

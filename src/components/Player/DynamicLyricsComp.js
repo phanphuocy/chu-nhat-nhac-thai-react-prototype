@@ -131,12 +131,14 @@ const StyledLyricsBox = styled.div`
     width: 100%;
     text-align: center;
     vertical-align: center;
-    font-size: ${(props) => props.theme.fontSizes["lg"]};
-    background: -webkit-linear-gradient(
+    font-family: ${(props) => props.theme.fonts.serif};
+    font-size: ${(props) => props.theme.fontSizes["base"]};
+    background: linear-gradient(
       0deg,
       rgba(248, 91, 124, 1) 0%,
-      rgba(255, 120, 148, 1) 100%
+      rgba(244, 140, 124, 1) 100%
     );
+    text-shadow: 1px 1px 2px #f85b7c;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
@@ -147,7 +149,7 @@ const StyledLyricsBox = styled.div`
       padding: 4rem 2rem;
     }
     p {
-      font-size: ${(props) => props.theme.fontSizes["3xl"]};
+      font-size: ${(props) => props.theme.fontSizes["xl"]};
     }
   }
 `;

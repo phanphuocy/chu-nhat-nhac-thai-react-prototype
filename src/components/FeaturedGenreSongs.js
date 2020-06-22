@@ -21,11 +21,12 @@ const StyledFeaturedGenreSongs = styled.div`
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+    margin-bottom: ${(props) => props.theme.spacing["3"]};
 
     .genre-item {
       width: calc((100% - 0.5rem) / 2);
       background-color: #181818;
-      border-radius: 0.25rem;
+      ${(props) => props.theme.borderRadius["rounded-full"]};
       border: none;
       color: #9b9b9b;
       display: flex;
@@ -42,9 +43,13 @@ const StyledFeaturedGenreSongs = styled.div`
       }
     }
 
+    .genre-item:hover {
+      background-color: ${(props) => props.theme.colors.gray["900"]};
+    }
+
     .selected {
-      background-color: #1e1e1e;
-      color: #ffffff;
+      background-color: ${(props) => props.theme.colors.gray["900"]};
+      color: black;
       -webkit-box-shadow: 0px 4px 24px 0px rgba(0, 0, 0, 0.25);
       -moz-box-shadow: 0px 4px 24px 0px rgba(0, 0, 0, 0.25);
       box-shadow: 0px 4px 24px 0px rgba(0, 0, 0, 0.25);
@@ -66,7 +71,6 @@ const StyledFeaturedGenreSongs = styled.div`
       }
     }
     .feat-song-title {
-      font-size: ${(props) => props.theme.fontSizes.sm};
       color: ${(props) => props.theme.colors.onBackground};
       margin: 0.5rem 0;
       text-align: center;
@@ -126,7 +130,7 @@ const FeaturedGenreSongs = ({ genreIds, genreSongs }) => {
               src={genre.icon}
               alt={`${genre.name} icon`}
             />
-            <h4>{genre.name}</h4>
+            <p>{genre.name}</p>
           </button>
         ))}
       </div>

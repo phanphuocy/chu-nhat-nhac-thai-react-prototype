@@ -13,7 +13,8 @@ import ReactGA from "react-ga";
 // Import Redux's
 import { connect } from "react-redux";
 import { getAlLEntries } from "./actions/dataActions";
-import styled from "styled-components";
+
+import StyledApp from "./styled-components/StyledApp";
 
 // Import pages
 import HomePage from "./pages/homePage";
@@ -22,33 +23,13 @@ import PlaylistPage from "./pages/playlistsPage";
 import ArtistPage from "./pages/artistsPage";
 import LoaderScreen from "./pages/loader";
 import NewsPage from "./pages/newsPage";
+import TopSongsPage from "./pages/top100";
 
 // Import custom components
 import PlayerPage from "./pages/playerPage";
 import Header from "./components/Header";
 import ScrollToTop from "./components/ScrollToTop";
 import Footer from "./components/Footer";
-
-const StyledApp = styled.div`
-  min-height: 100vh;
-  z-index: -1000;
-  background-color: ${(props) => props.theme.colors.background};
-  color: ${(props) => props.theme.colors.onBackground};
-  p {
-    line-height: 1.4;
-  }
-  a {
-    text-decoration: none;
-    color: ${(props) => props.theme.colors.onBackground};
-  }
-  a:hover,
-  a:active {
-    text-decoration: underline;
-  }
-  svg {
-    color: ${(props) => props.theme.colors.onBackground};
-  }
-`;
 
 const history = createBrowserHistory();
 history.listen((location) => {
@@ -126,6 +107,7 @@ function App({ theme, loading, loaded, playlists, getAlLEntries }) {
               <Route path="/artists/:id" component={ArtistSinglePage} />
               <Route path="/artists" component={ArtistPage} />
               <Route path="/news" component={NewsPage} />
+              <Route path="/top100" component={TopSongsPage} />
               <Route path="/">
                 <HomePage />
               </Route>

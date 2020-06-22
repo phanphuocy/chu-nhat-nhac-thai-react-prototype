@@ -46,6 +46,7 @@ const StyledGroup = styled.div`
 
   .groupName {
     color: ${(props) => props.theme.colors.onBackground};
+    font-family: ${(props) => props.theme.fonts.serif};
     font-size: 1.5rem;
   }
 

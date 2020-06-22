@@ -5,6 +5,12 @@
   src: local("Proxima Nova"), url("./fonts/regular.otf") format("opentype");
 }
 
+@font-face {
+  font-family: "Proxima Nova";
+  src: local("Proxima Nova"), url("./fonts/bold.otf") format("opentype");
+  font-weight: bold;
+}
+
 ::-webkit-scrollbar {
   width: 1rem;
   background-color: #121212;

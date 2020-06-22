@@ -18,7 +18,7 @@ import FeaturedGenreSongs from "../components/FeaturedGenreSongs";
 const HomePage = ({ playlistIds, artistIds }) => {
   return (
     <React.Fragment>
-      <FeaturedBanner />
+      {/* <FeaturedBanner /> */}
       <FeaturedGenreSongs />
       <Media
         queries={{
