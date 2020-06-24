@@ -2,10 +2,11 @@ import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import ReactGA from "react-ga";
+import VisibilitySensor from "react-visibility-sensor";
 import RatioBoundingBox from "../RatioBoundingBox";
 import { Link } from "react-router-dom";
 import Img from "react-image";
-import { ReactComponent as DefaultAvatar } from "../../images/default-avatar.svg";
+import defaultAvatar from "../../images/default-avatar.svg";
 
 // Import Redux's
 import { connect } from "react-redux";
@@ -63,11 +64,16 @@ const ArtistCard = ({ artist }) => {
     <Link to={`/artists/${artist.slug}`} onClick={onClick}>
       <StyledArtistCard>
         <RatioBoundingBox ratio={1}>
-          <Img
-            src={artist.avatar.url}
-            alt={artist.name}
-            loader={<DefaultAvatar />}
-          />
+          <VisibilitySensor>
+            <Img
+              src={[
+                `${artist.avatar.url}?w=320&h=320&fm=webp`,
+                `${artist.avatar.url}?w=320&h=320&fm=jpg`,
+              ]}
+              alt={artist.name}
+              loader={<img src={defaultAvatar} alt="loading" />}
+            />
+          </VisibilitySensor>
         </RatioBoundingBox>
         <div className="info">
           <h3>{artist.name}</h3>

@@ -141,7 +141,10 @@ const FeaturedGenreSongs = ({ genreIds, genreSongs }) => {
               <div className="featured-song">
                 <Link to={`/p/${song.slug}`}>
                   <Img
-                    src={song.thumbnail.fields.file.url}
+                    src={[
+                      `${song.thumbnail.fields.file.url}?w=640&h=640&fm=webp`,
+                      `${song.thumbnail.fields.file.url}?w=640&h=640&fm=jpg`,
+                    ]}
                     loader={<img src={defaultSong} alt="default song" />}
                   />
                   <p className="feat-song-title">{song.title}</p>

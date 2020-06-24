@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
-import ActionContainer from "../ActionContainer";
+import Img from "react-image";
 import DefaultBackground from "../../images/default-cover-image-remember-w1024-h390.jpg";
 import BackButton from "../BackButton";
 import ReactGA from "react-ga";
@@ -182,6 +182,12 @@ const BackgroundCover = styled.div`
   margin-bottom: -6rem;
   overflow: hidden;
 
+  .defaultCover {
+    height: 15rem;
+    width: 100%;
+    object-fit: center;
+  }
+
   .cover {
     background-color: ${(props) =>
       props.color ? props.color : `rgba(221, 48, 144, 1)`};
@@ -223,15 +229,25 @@ const ArtistInfo = ({ artist }) => {
     <StyledArtistInfo>
       <BackButton />
       <BackgroundCover color={artist.coverColor && artist.coverColor}>
-        <img
+        <Img
           src={
             artist.coverImage
-              ? artist.coverImage.fields.file.url
+              ? [
+                  `${artist.coverImage.fields.file.url}?w=1024&h=240&fit=fill&fm=webp`,
+                  `${artist.coverImage.fields.file.url}?w=1024&h=240&fit=fill&fm=jpg`,
+                ]
               : DefaultBackground
           }
           alt="Default bg"
+          loader={
+            <img
+              src={DefaultBackground}
+              className="defaultCover"
+              alt="loading"
+            />
+          }
           className="cover"
-        ></img>
+        />
         <div className="gradient">
           <div></div>
         </div>
